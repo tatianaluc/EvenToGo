@@ -1,3 +1,4 @@
 <resources>
+    <string name="creado_por">Creado por Tatiana De Luca</string>
     <string name="app_name">EvenToGo</string>
 </resources>
