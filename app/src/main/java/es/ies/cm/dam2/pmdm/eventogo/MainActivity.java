@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnNuevoEvento = findViewById(R.id.btnNuevoEvento);
         txtContador = findViewById(R.id.txtContador);
+        Button btnReg = findViewById(R.id.btnReg);
 
         //incrementar eventos y cambiar de ventana con el intent
         btnNuevoEvento.setOnClickListener(v -> {
@@ -38,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> {
             contador = 0;
             txtContador.setText("Eventos Registrados: " + contador);
+        });
+
+        // Filtrado de boton para pasar directamente a eventos registrados
+        btnReg.setOnClickListener(v->{
+            Intent i = new Intent(MainActivity.this, NumeroEventos.class);
+            startActivity(i);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
