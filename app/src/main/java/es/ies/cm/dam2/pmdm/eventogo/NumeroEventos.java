@@ -18,7 +18,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class NumeroEventos extends AppCompatActivity {
-    private TextView txtEvenSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,33 +40,35 @@ public class NumeroEventos extends AppCompatActivity {
         Button btn8 = findViewById(R.id.btn8);
         Button btn9 = findViewById(R.id.btn9);
 
+        TextView txtBtnPul  = findViewById(R.id.txtBtnPul);
+
         //Mostramos en el txtview según el botón pulsado
         btn1.setOnClickListener(v->{
-            txtEvenSave.setText(btn1 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn1.getText() + " Evento/s Registrado/s");
         });
         btn2.setOnClickListener(v->{
-            txtEvenSave.setText(btn2 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn2.getText() + " Evento/s Registrado/s");
         });
         btn3.setOnClickListener(v->{
-            txtEvenSave.setText(btn3 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn3.getText() + " Evento/s Registrado/s");
         });
         btn4.setOnClickListener(v->{
-            txtEvenSave.setText(btn4 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn4.getText() + " Evento/s Registrado/s");
         });
         btn5.setOnClickListener(v->{
-            txtEvenSave.setText(btn5 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn5.getText() +  " Evento/s Registrado/s");
         });
         btn6.setOnClickListener(v->{
-            txtEvenSave.setText(btn6 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn6 .getText()+ " Evento/s Registrado/s");
         });
         btn7.setOnClickListener(v->{
-            txtEvenSave.setText(btn7 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn7.getText() + " Evento/s Registrado/s");
         });
         btn8.setOnClickListener(v->{
-            txtEvenSave.setText(btn8 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn8.getText() + " Evento/s Registrado/s");
         });
         btn9.setOnClickListener(v->{
-            txtEvenSave.setText(btn9 + "Evento/s Registrado/s");
+            txtBtnPul.setText(btn9.getText() + " Evento/s Registrado/s");
         });
 
         // Segunda parte, cantidad de servicios del 1-10
@@ -137,6 +138,10 @@ public class NumeroEventos extends AppCompatActivity {
             groupStat.clearCheck();
             actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
         });
+
+        // ATRAS
+        Button btnAtras = findViewById(R.id.btnAtras);
+        btnAtras.setOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.numEventos), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
