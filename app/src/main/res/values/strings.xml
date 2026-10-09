@@ -1,7 +1,7 @@
 <resources>
     <string name="creado_por">Creado por Tatiana De Luca</string>
     <string name="app_name">EvenToGo</string>
-    <string name="nombre_evento">Introduzca el Nombre del Evento</string>
+    <string name="nombre_evento">Nombre del Evento</string>
     <string name="num_inv">Número de Invitados: </string>
     <string name="save">Guardar</string>
     <string name="mas">Aumentar</string>
@@ -14,4 +14,11 @@
     <string name="welc">Bienvenido!</string>
     <string name="slogan">El Precio de tu evento, para llevar,\nen minutos</string>
     <string name="selec">Seleccionar Evento</string>
+    <string-array name="tipo_evento">
+        <item>Selecciona</item>
+        <item>Boda</item>
+        <item>Corporativo</item>
+        <item>Cumpleaños</item>
+        <item>Pequeño Concierto</item>
+    </string-array>
 </resources>
