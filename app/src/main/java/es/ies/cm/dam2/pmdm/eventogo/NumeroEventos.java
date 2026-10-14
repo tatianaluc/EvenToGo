@@ -73,16 +73,16 @@ public class NumeroEventos extends AppCompatActivity {
 
         // Segunda parte, cantidad de servicios del 1-10
         //Declaramos edit y txt
-        EditText editServ = findViewById(R.id.editServ);
-        TextView txtError = findViewById(R.id.txtError);
+        // EditText editServ = findViewById(R.id.editServ);
+        //TextView txtError = findViewById(R.id.txtError);
 
         // Con el componente textwatcher chequeamos lo que escribe el usuario
         // y dispara el error si algo esta mal en las condiciones
 
         // se crean automáticamente sus 3 métodos, pero solo usamos el after
         // ya que es el que va actualizando el txt constatemente
-        editServ.addTextChangedListener(new TextWatcher() {
-            @Override
+        // editServ.addTextChangedListener(new TextWatcher() {
+        /*@Override
             public void afterTextChanged(Editable s) {
                 String text = s.toString();
                 boolean validarTxt = false;
@@ -114,9 +114,7 @@ public class NumeroEventos extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
-        });
-
-
+        }); */
         // ahora los radio buttons que cambien el color del activity
         RadioGroup groupStat = findViewById(R.id.groupStat);
         // se usará para cambiar todo el fondo del act
