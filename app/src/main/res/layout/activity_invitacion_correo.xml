@@ -78,11 +78,11 @@
         app:layout_constraintTop_toBottomOf="@id/etCorreo" />
 
     <TextView
-        android:id="@+id/txtInv"
+        android:id="@+id/txtCuerpo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="a"
+        android:text="Mensaje"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -91,15 +91,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtAsunto" />
 
+    <EditText
+        android:id="@+id/etCuerpo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="top"
+        android:hint="Escriba el cuerpo del mensaje..."
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etAsunto" />
+
     <Button
         android:id="@+id/btnCompartir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="124dp"
         android:text="Compartir Invitación"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtInv" />
+        app:layout_constraintTop_toBottomOf="@id/etCuerpo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

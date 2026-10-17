@@ -45,6 +45,15 @@ public class FichaEvento extends AppCompatActivity {
         tvServicios.setText("Cantidad de servicios: " + intent.getIntExtra("servicios", 1));
         tvAV.setText("Incluir AVs en presupuesto: " + (intent.getBooleanExtra("incluyeAV", true) ? "Sí" : "No"));
 
+        //boton siguiente que pasa a crear la reunion
+        /*
+        En la practica se pide en el main, pero se añade a esta ficha porque
+        dentro de esta aplicación, solo tiene sentido uan reunion si el cliente
+        de verdad esta interesado en el evento y en el presupuesto.
+         */
+        Button btnSiguiente = findViewById(R.id.btnSig);
+        btnSiguiente.setOnClickListener(v -> startActivity(new Intent(this, Reunion.class)));
+
         // ATRAS
         Button btnAtras = findViewById(R.id.btnAtras);
         btnAtras.setOnClickListener(v -> finish());
