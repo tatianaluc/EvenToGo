@@ -12,4 +12,8 @@
     <color name="red_claro">#F76E64</color>
     <color name="white">#FAFAFA</color>
     <color name="orange">#FF5E00</color>
+    <color name="lila">#C8AEF2</color>
+    <color name="clear_lila">#E1D5F2</color>
+    <color name="gray">#F2F2F2</color>
+    <color name="dark_gray">#969597</color>
 </resources>

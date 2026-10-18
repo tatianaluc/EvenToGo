@@ -28,7 +28,7 @@ public class InvitacionCorreo extends AppCompatActivity {
 
         btnCompartir.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("compartir a:"));
+            intent.setData(Uri.parse("Compartir a:"));
             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{etCorreo.getText().toString().trim()});
             intent.putExtra(Intent.EXTRA_SUBJECT, etAsunto.getText().toString().trim());
             intent.putExtra(Intent.EXTRA_TEXT, etTexto.getText().toString().trim());
