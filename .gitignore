@@ -19,3 +19,4 @@ local.properties
 /._settings.gradle.kts
 /._*
 ._*
+/app/
