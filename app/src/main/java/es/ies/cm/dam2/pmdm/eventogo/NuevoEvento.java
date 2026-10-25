@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class NuevoEvento extends AppCompatActivity {
@@ -40,6 +41,11 @@ public class NuevoEvento extends AppCompatActivity {
                         etFecha.setError(null);
                     },
                     hoy.get(Calendar.YEAR), hoy.get(Calendar.MONTH), hoy.get(Calendar.DAY_OF_MONTH));
+            /* Para poder evitar que el usuario escoja una fecha pevia al dia de hoy, le decimos al date picker
+            que recoja la fecha minima, que será la que esta denteo de sus parentesis currentime en milisegundos.
+            Y de esta manera no da opción a seleccionar antes de dicha fecha, aparecen las previas en gris.
+             */
+            calendario.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); // - 1000 para evitar que se choque con otas versiones de Android
             calendario.show();
         });
 
