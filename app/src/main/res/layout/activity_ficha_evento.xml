@@ -1,112 +1,149 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- El ScrollView va por si la ficha no cabe entera en pantallas pequeñas.
+     Conserva el id fichaEvento, que es el que usa el Java para los insets -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fichaEvento"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".FichaEvento">
 
-    <TextView
-        android:id="@+id/txtTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Ficha de Registro"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-    <!-- creamos otro liner para meter y mover los botones-->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-    <Button
-        android:id="@+id/btnAtras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Atrás" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <!-- Como es un linear , va todo una cosa debajo de la otra. Así que,
-     añadimos un espacio lateral entre los botones para que el de siguiente
-     se refleje en al esquina superior deerecha -->
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Ficha de Registro"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <!-- creamos otro liner para meter y mover los botones-->
+        <!-- este linear ocupa todo el ancho del parent. Así el Space de abajo,
+             empuja al botón de siguiente a la esquina derecha sin tener
+             que usar un margen fijo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSig"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:text="Siguiente" />
+            <Button
+                android:id="@+id/btnAtras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atrás" />
+
+            <!-- Como es un linear va todo una cosa debajo de la otra. Así que,
+             añadimos un espacio lateral entre los botones para que el de siguiente
+             este en la esquina superior deerecha -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnSig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Siguiente" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgPortadaFicha"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="Portada del evento"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAsistentes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvServ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDuracion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAvs"
+            android:layout_width="335dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/rbValoracion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvFecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvTipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvCliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvAsistentes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvServ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tvAvs"
-        android:layout_width="335dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+</ScrollView>

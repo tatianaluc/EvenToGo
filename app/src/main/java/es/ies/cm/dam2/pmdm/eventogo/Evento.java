@@ -2,26 +2,24 @@ package es.ies.cm.dam2.pmdm.eventogo;
 
 import java.io.Serializable;
 
-// Esta clase es el "Juego" del enunciado, pero con tu temática: un Evento.
-// IMPLEMENTA Serializable para poder meter el objeto ENTERO en un Intent
-// (putExtra) y recibirlo en otra pantalla, en vez de mandar campo a campo.
+// Implementa Serializable para poder mandarlo dentro de un Intent
 public class Evento implements Serializable {
 
-    // Clave con la que el Evento viaja dentro de los Intent
+    // Nombre del extra con el que viaja el Evento en los Intent
     public static final String EXTRA = "evento";
 
     private String nombre;
-    private String tipo;        // la "categoría" del enunciado (Boda, Concierto...)
-    private String cliente;     // la "editorial" del enunciado
-    private int asistentes;     // el "número de jugadores" del enunciado
-    private String fecha;       // el "año" del enunciado, pero completa
-    private int servicios;      // nº de servicios a presupuestar (1-10): la "dificultad"
+    private String tipo;        // categoria
+    private String cliente;
+    private int asistentes;
+    private String fecha;
+    private int servicios;      // nº de servicios a presupuestar (1-10)
     private int duracion;       // en minutos
     private boolean incluyeAV;
-    private float valoracion;   // de 0 a 5, para el RatingBar de la ficha
-    private int portada;        // id del drawable que se usa de portada
+    private float valoracion;   // de 0 a 5 para el RatingBar de la ficha
+    private int portada;        // la imagen de portada
 
-    // Constructor completo (lo usamos para los eventos de ejemplo)
+    // Constructor completo, para los eventos de ejemplo
     public Evento(String nombre, String tipo, String cliente, int asistentes, String fecha,
                   int servicios, int duracion, boolean incluyeAV, float valoracion) {
         this.nombre = nombre;
@@ -33,24 +31,29 @@ public class Evento implements Serializable {
         this.duracion = duracion;
         this.incluyeAV = incluyeAV;
         this.valoracion = valoracion;
-        this.portada = portadaPara(tipo);
+        this.portada = portadaSegun(tipo);
     }
 
-    // Constructor para los eventos que se crean en el formulario (aún sin valorar)
+    // Constructor para los eventos que se crean en el formulario (sin valoración todavía)
     public Evento(String nombre, String tipo, String cliente, int asistentes, String fecha,
                   int servicios, int duracion, boolean incluyeAV) {
         this(nombre, tipo, cliente, asistentes, fecha, servicios, duracion, incluyeAV, 0f);
     }
 
-    // Elige la portada según el tipo de evento. Son dibujos de relleno:
-    // cuando tengas fotos reales en res/drawable, cambia los R.drawable de aquí
-    private static int portadaPara(String tipo) {
-        String t = (tipo == null) ? "" : tipo.toLowerCase();
-        if (t.contains("boda")) return R.drawable.portada_boda;
-        if (t.contains("concierto")) return R.drawable.portada_concierto;
-        if (t.contains("corporativ") || t.contains("empresa")) return R.drawable.portada_corporativo;
-        if (t.contains("cumple")) return R.drawable.portada_cumple;
-        return R.drawable.portada_otro;
+    // Elige la imagen según el tipo de evento desde res/drawable, de moemnto se usan de prueba
+    private int portadaSegun(String tipo) {
+        String t = tipo.toLowerCase();
+        if (t.contains("boda")) {
+            return R.drawable.boda;
+        } else if (t.contains("concierto")) {
+            return R.drawable.concierto;
+        } else if (t.contains("corporativo") || t.contains("empresa")) {
+            return R.drawable.corporativo;
+        } else if (t.contains("cumple")) {
+            return R.drawable.cumple;
+        } else {
+            return R.drawable.otro;
+        }
     }
 
     public String getNombre() { return nombre; }
@@ -64,7 +67,6 @@ public class Evento implements Serializable {
     public float getValoracion() { return valoracion; }
     public int getPortada() { return portada; }
 
-    // El enunciado pide tener toString definido: devuelve el evento en texto
     @Override
     public String toString() {
         return nombre + " (" + tipo + ")\n"

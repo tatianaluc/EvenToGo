@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".Buscar">
 
-    <!-- Título de la pantalla -->
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="wrap_content"
@@ -57,7 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtCat" />
 
-    <!-- Servicio (depende de la categoría) -->
+    <!-- Servicio que dependerá de la categoría -->
     <TextView
         android:id="@+id/txtServicio"
         android:layout_width="wrap_content"
@@ -82,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtServicio" />
 
-    <!-- Ubicación (lista con RadioButtons) -->
+    <!-- Ubicación es una lista con RadioButtons -->
     <TextView
         android:id="@+id/txtUbicacion"
         android:layout_width="wrap_content"
@@ -107,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtUbicacion" />
 
-    <!-- Botón: arranca desactivado, el Java lo activa cuando está todo elegido -->
+    <!-- desactivado hasta que el activity lo activa cuando está todo elegido -->
     <Button
         android:id="@+id/btnBuscar"
         android:layout_width="wrap_content"

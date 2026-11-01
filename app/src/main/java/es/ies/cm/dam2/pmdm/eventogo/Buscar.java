@@ -18,48 +18,42 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class Buscar extends AppCompatActivity {
-
-    // ------------------------------------------------------------------
-    // DATOS: todo guardado en arrays de Java, como pide el enunciado
-    // ------------------------------------------------------------------
-
-    // Categorías. La posición 0 es un texto de relleno: así sabemos
-    // que el usuario no ha elegido nada mientras esté seleccionada la 0
+    // Categorías. La posición 0 es un texto de que por defecto se utilizará para saber que
+    // el usuario no ha elegido nada mientras esté seleccionada
     private final String[] categorias = {
-            "Selecciona categoría", "Sonido", "Iluminación", "Audiovisuales"
+            "Selecciona categoría", "Sonido", "Iluminación", "Video"
     };
 
-    // Servicios de cada categoría. El primer índice es la categoría (el mismo
-    // orden que el array de arriba) y el segundo es el servicio.
-    // Cada fila empieza otra vez con el texto de relleno en la posición 0
+    // Servicios de cada categoría. La posición 0 es un texto de que por defecto se utilizará para saber que
+    // el usuario no ha elegido nada mientras esté seleccionada y el segundo es el servicio.
+    // Cada fila empieza en la posición 0
     private final String[][] servicios = {
             {"Selecciona servicio"},                                                    // 0: sin categoría
-            {"Selecciona servicio", "Equipo pequeño", "Equipo mediano", "DJ con equipo"},        // Sonido
-            {"Selecciona servicio", "Luces básicas", "Luces de escenario", "Efectos especiales"}, // Iluminación
-            {"Selecciona servicio", "Pantalla LED", "Proyector", "Streaming del evento"}         // Audiovisuales
+            {"Selecciona servicio", "0-50 personas", "50-90 personas", "+90 personas"}, // Sonido dependiendo de los asistentes
+            {"Selecciona servicio", "Pack básico", "Pack intermedio", "Pack completo"},
+            {"Selecciona servicio", "Proyector", "Plasmas", "Pantala LED + streaming"}
     };
 
-    // Características de cada servicio, en el MISMO orden que el array servicios,
-    // para que servicios[c][s] y caracteristicas[c][s] hablen de lo mismo
+    // Características de cada servicio, en el mismo orden que el array servicios
     private final String[][] caracteristicas = {
             {""},
-            {"", "2 altavoces y 1 micrófono. Hasta 50 personas.",
-                    "4 altavoces, mesa de mezclas y 2 micrófonos. Hasta 150 personas.",
-                    "DJ, equipo completo y micrófono. 5 horas."},
-            {"", "4 focos LED de ambiente.",
-                    "Focos móviles y barra LED para el escenario.",
-                    "Láser, máquina de humo y bola de espejos."},
-            {"", "Pantalla LED de 3x2 m con técnico incluido.",
-                    "Proyector con pantalla de 2 m.",
-                    "Cámara y retransmisión en directo del evento."}
+            {"", "2 altavoces + 1/2 micrófonos de cable + mesa analógica. ",
+                    "4 altavoces + 1/2 micrófonos de cable/inalámbricos + mesa digital.",
+                    "6 altavoces + hasta 4 micrófonos inalámbricos + mesa digital."},
+            {"", "8 focos LED de ambiente.",
+                    "10 focos LED de ambiente + 2 cabezas móviles + mesa.",
+                    "16 focos LED de ambiente + 4 cabezas móviles + 2 frontales de escenario + mesa."},
+            {"", "Proyector 5000 lúmenes + pantalla de 3x2.20m + portátil. ",
+                    "Plasmas de 65'-86' + soporte + portátil.",
+                    "Pantalla LED 3.5x2.5m + control de video + streaming (opcional)"}
     };
 
     // Las 5 ubicaciones de la lista
     private final String[] ubicaciones = {
-            "Salón de eventos", "Jardín", "Sala de reuniones", "Carpa", "Local del cliente"
+            "Salón de Eventos Interior", "Zona de Eventos Exterior", "Sala de reuniones", "Carpa", "Local Particular"
     };
 
-    // Vistas que usamos en varios métodos, por eso están fuera del onCreate
+    // Vistas que usamos en varios métodos
     private Spinner spCategoria;
     private Spinner spServicio;
     private ListView lvUbicacion;
@@ -78,45 +72,44 @@ public class Buscar extends AppCompatActivity {
         btnBuscar = findViewById(R.id.btnBuscar);
         Button btnAtras = findViewById(R.id.btnAtras);
 
-        // 1) SPINNER DE CATEGORÍAS: el adapter une el array con el Spinner
+        // spinner de las categorias, el adapter lo une con el array
         ArrayAdapter<String> adapterCategorias = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, categorias);
         adapterCategorias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategoria.setAdapter(adapterCategorias);
 
-        // 2) SPINNER DE SERVICIOS: al abrir la pantalla todavía no hay categoría
-        //    elegida (posición 0), así que solo mostrará el texto de relleno
+        // spinner de servicios, al abrir la pantalla todavía no hay categoría
+        // elegida así que solo mostrará el "seleccionar"
         rellenarServicios(0);
 
-        // 3) LISTVIEW DE UBICACIONES: cada fila lleva un RadioButton
+        // listview de ubicaciones que cada fila lleva un RadioButton
         ArrayAdapter<String> adapterUbicaciones = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_single_choice, ubicaciones);
         lvUbicacion.setAdapter(adapterUbicaciones);
-        // Sin este modo, la lista no recuerda cuál has marcado
+        // Sin este modo, la lista no recuerda que radiobutton se marcó
         lvUbicacion.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        // 4) AL ELEGIR CATEGORÍA: color de texto, rellenar los servicios de esa
-        //    categoría (el filtrado) y revisar si ya se puede activar el botón
+        // al elegir categoria, asignamos el color de texto, rellenar los servicios de esa
+        // categoría que se van a  escgoer y revisar si ya se puede activar el botón byscar
         spCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // "view" es la fila que se ve en el Spinner; le cambiamos el color del texto
+                // view es la fila que se ve en el Spinner, aqui le cambiamos el color del texto
                 if (view != null) {
                     ((TextView) view).setTextColor(
-                            ContextCompat.getColor(Buscar.this, R.color.colorPrimary));
+                            ContextCompat.getColor(Buscar.this, R.color.red));
                 }
-                // position es la categoría elegida: con ella sacamos SUS servicios
+                // position es la categoría elegida y con ella sacamos sus servicios
                 rellenarServicios(position);
                 actualizarBoton();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // no lo necesitamos, pero la interfaz obliga a escribirlo
             }
         });
 
-        // 5) AL ELEGIR SERVICIO: otro color de texto y revisar el botón
+        // el elegir el servicio, que se ponga en otro color de texto y revisar el botón
         spServicio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -132,10 +125,10 @@ public class Buscar extends AppCompatActivity {
             }
         });
 
-        // 6) AL ELEGIR UBICACIÓN: revisar el botón
+        // al elegir ubicación, revisar que el botón se active
         lvUbicacion.setOnItemClickListener((parent, view, position, id) -> actualizarBoton());
 
-        // 7) BOTÓN BUSCAR: enseña las características del servicio en un Toast
+        // el botón buscar aquí enseña las características del servicio en un Toast
         btnBuscar.setOnClickListener(v -> {
             int cat = spCategoria.getSelectedItemPosition();
             int serv = spServicio.getSelectedItemPosition();
@@ -150,7 +143,7 @@ public class Buscar extends AppCompatActivity {
         // ATRAS
         btnAtras.setOnClickListener(v -> finish());
 
-        // Estado inicial del botón (desactivado)
+        // Estado inicial del botón buscar desactivado
         actualizarBoton();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.buscar), (v, insets) -> {
@@ -160,8 +153,8 @@ public class Buscar extends AppCompatActivity {
         });
     }
 
-    // FILTRADO DEPENDIENTE: pone en el Spinner de servicios solo los de la
-    // categoría que le pasamos. Al cambiar el adapter, el Spinner vuelve a la posición 0
+    // en el Spinner de servicios solo se muestran
+    // los de la categoría que le pasamos. Al cambiar el adapter, el Spinner vuelve a 0
     private void rellenarServicios(int categoria) {
         ArrayAdapter<String> adapterServicios = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, servicios[categoria]);
@@ -169,10 +162,11 @@ public class Buscar extends AppCompatActivity {
         spServicio.setAdapter(adapterServicios);
     }
 
-    // El botón solo se activa si hay categoría, servicio y ubicación elegidos
+    // El botón solo se activa si hay categoría, servicio y ubicación
     private void actualizarBoton() {
-        boolean hayCategoria = spCategoria.getSelectedItemPosition() > 0;  // 0 = texto de relleno
-        boolean hayServicio = spServicio.getSelectedItemPosition() > 0;    // 0 = texto de relleno
+        // 0 = texto de relleno
+        boolean hayCategoria = spCategoria.getSelectedItemPosition() > 0;
+        boolean hayServicio = spServicio.getSelectedItemPosition() > 0;
         boolean hayUbicacion = lvUbicacion.getCheckedItemPosition() != ListView.INVALID_POSITION;
 
         btnBuscar.setEnabled(hayCategoria && hayServicio && hayUbicacion);
