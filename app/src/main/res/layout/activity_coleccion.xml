@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".Coleccion">
 
-    <!-- Barra de arriba propia (el tema es NoActionBar). Sustituye al título de antes.
-         El título "Mis eventos" lo pone el Java -->
+    <!-- Barra de arriba propia-->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"

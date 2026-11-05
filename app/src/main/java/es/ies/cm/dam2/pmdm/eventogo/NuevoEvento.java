@@ -17,7 +17,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class NuevoEvento extends AppCompatActivity {
@@ -101,6 +100,8 @@ public class NuevoEvento extends AppCompatActivity {
         EditText etNombre = findViewById(R.id.etEscribirNombre);
         EditText etCliente = findViewById(R.id.etEscribirCliente);
         Button btnReset = findViewById(R.id.btnReset);
+        //duración del evento, en horas
+        EditText etDuracion = findViewById(R.id.etDuracion);
 
         btnReset.setOnClickListener(v -> {
             //los edit los pone en nada
@@ -116,8 +117,31 @@ public class NuevoEvento extends AppCompatActivity {
             //y vuelve al check el incluir AVs
             cbConAv.setChecked(true);
             //vuelve a mostrar dd//mm/7aaaa
-            etFecha.setText(etFecha.getHint());
+            etFecha.setText("");
+            //vacía la duración
+            etDuracion.setText("");
         });
+
+        // MODO EDICIÓN: si nos mandan un Evento (desde Editar), rellenamos el formulario con sus datos
+        Evento editar = (Evento) getIntent().getSerializableExtra(Evento.EXTRA);
+        int posicion = getIntent().getIntExtra(Coleccion.EXTRA_POSICION, -1);
+
+        if (editar != null) {
+            etNombre.setText(editar.getNombre());
+            etCliente.setText(editar.getCliente());
+            etAsistentes.setText(String.valueOf(editar.getAsistentes()));
+            etFecha.setText(editar.getFecha());
+            etDuracion.setText(String.valueOf(editar.getDuracion()));
+            cbConAv.setChecked(editar.isIncluyeAV());
+            contServicios = editar.getServicios();
+            txtNumServicios.setText(String.valueOf(contServicios));
+            // el spinner: buscamos en que posición esta el tipo del evento y lo seleccionamos
+            for (int i = 0; i < spTipoEvento.getCount(); i++) {
+                if (spTipoEvento.getItemAtPosition(i).toString().equals(editar.getTipo())) {
+                    spTipoEvento.setSelection(i);
+                }
+            }
+        }
 
         // ENVIAR, comprobamos todos los campos
         Button btnEnviar = findViewById(R.id.btnEnviar);
@@ -147,21 +171,45 @@ public class NuevoEvento extends AppCompatActivity {
                 ok = false;
             }
 
+            // la duración en horas no puede estar vacía ni ser 0
+            String duracionTexto = etDuracion.getText().toString().trim();
+            if (duracionTexto.isEmpty() || Integer.parseInt(duracionTexto) <= 0) {
+                etDuracion.setError("La duración del evento es importante para el personal");
+                ok = false;
+            }
+
             if (!ok) {
                 Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
                 return;
             }
-            // Si todo sale bien, se genera el intent de pasar a la ficha al hacer click en enviar
-            Intent i = new Intent(this, FichaEvento.class);
-            // los valores que se van a guardar en la ficha
-            i.putExtra("nombre", etNombre.getText().toString().trim());
-            i.putExtra("tipo", spTipoEvento.getSelectedItem().toString());
-            i.putExtra("cliente", etCliente.getText().toString().trim());
-            i.putExtra("asistentes", Integer.parseInt(etAsistentes.getText().toString().trim()));
-            i.putExtra("fecha", etFecha.getText().toString());
-            i.putExtra("servicios", contServicios);
-            i.putExtra("incluyeAV", cbConAv.isChecked());
-            startActivity(i);
+            // si estamos editando, conservamos la valoración que ya tenía el evento
+            float valoracion = (editar != null) ? editar.getValoracion() : 0f;
+
+            // montamos el Evento entero con los datos del formulario
+            Evento evento = new Evento(
+                    etNombre.getText().toString().trim(),
+                    spTipoEvento.getSelectedItem().toString(),
+                    etCliente.getText().toString().trim(),
+                    Integer.parseInt(etAsistentes.getText().toString().trim()),
+                    etFecha.getText().toString(),
+                    contServicios,
+                    Integer.parseInt(duracionTexto),
+                    cbConAv.isChecked(),
+                    valoracion);
+
+            if (getCallingActivity() != null) {
+                // nos ha abierto Coleccion esperando respuesta: devolvemos el evento y su posición
+                Intent data = new Intent();
+                data.putExtra(Evento.EXTRA, evento);
+                data.putExtra(Coleccion.EXTRA_POSICION, posicion); // -1 si es un evento nuevo
+                setResult(RESULT_OK, data);
+                finish();
+            } else {
+                // nos han abierto desde otro sitio (como en la 4): vamos a la ficha
+                Intent i = new Intent(this, FichaEvento.class);
+                i.putExtra(Evento.EXTRA, evento);
+                startActivity(i);
+            }
         });
 
         // ATRAS

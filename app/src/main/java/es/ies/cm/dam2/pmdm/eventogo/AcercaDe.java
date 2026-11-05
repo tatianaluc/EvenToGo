@@ -2,7 +2,6 @@ package es.ies.cm.dam2.pmdm.eventogo;
 
 import android.content.ClipData;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.TextView;

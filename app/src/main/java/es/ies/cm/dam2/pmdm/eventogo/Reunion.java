@@ -2,9 +2,6 @@ package es.ies.cm.dam2.pmdm.eventogo;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-
-import java.util.Calendar;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Calendar;
 
 public class Reunion extends AppCompatActivity {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- MENÚ DE OPCIONES de Coleccion (los tres puntitos de la barra de arriba) -->
+<!-- Menú de opcioens que se usa en Coleccion (los tres puntitos de la barra de arriba) -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

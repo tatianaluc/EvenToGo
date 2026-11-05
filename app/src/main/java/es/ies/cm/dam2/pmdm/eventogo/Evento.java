@@ -14,7 +14,7 @@ public class Evento implements Serializable {
     private int asistentes;
     private String fecha;
     private int servicios;      // nº de servicios a presupuestar (1-10)
-    private int duracion;       // en minutos
+    private int duracion;       // en  horas
     private boolean incluyeAV;
     private float valoracion;   // de 0 a 5 para el RatingBar de la ficha
     private int portada;        // la imagen de portada
@@ -34,17 +34,17 @@ public class Evento implements Serializable {
         this.portada = portadaSegun(tipo);
     }
 
-    // Constructor para los eventos que se crean en el formulario (sin valoración todavía)
+    // Constructor para los eventos que se crean en el formulario que no han sido valorados todavia
     public Evento(String nombre, String tipo, String cliente, int asistentes, String fecha,
                   int servicios, int duracion, boolean incluyeAV) {
         this(nombre, tipo, cliente, asistentes, fecha, servicios, duracion, incluyeAV, 0f);
     }
 
-    // Elige la imagen según el tipo de evento desde res/drawable, de moemnto se usan de prueba
+    // Elige la imagen según el tipo de evento desde res/drawable
     private int portadaSegun(String tipo) {
         String t = tipo.toLowerCase();
         if (t.contains("boda")) {
-            return R.drawable.boda;
+            return R.drawable.otro;
         } else if (t.contains("concierto")) {
             return R.drawable.concierto;
         } else if (t.contains("corporativo") || t.contains("empresa")) {
@@ -52,7 +52,7 @@ public class Evento implements Serializable {
         } else if (t.contains("cumple")) {
             return R.drawable.cumple;
         } else {
-            return R.drawable.otro;
+            return R.drawable.boda;
         }
     }
 
@@ -71,6 +71,6 @@ public class Evento implements Serializable {
     public String toString() {
         return nombre + " (" + tipo + ")\n"
                 + "Cliente: " + cliente + " - " + asistentes + " asistentes\n"
-                + "Fecha: " + fecha + " - " + servicios + " servicios - " + duracion + " min";
+                + "Fecha: " + fecha + " - " + servicios + " servicios - " + duracion + " horas";
     }
 }

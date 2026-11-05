@@ -49,8 +49,9 @@ public class FichaEvento extends AppCompatActivity {
         tvCliente.setText("Nombre del cliente/empresa: " + evento.getCliente());
         tvAsistentes.setText("Cantidad de asistentes: " + evento.getAsistentes());
         tvServicios.setText("Cantidad de servicios: " + evento.getServicios());
-        tvDuracion.setText("Duración: " + evento.getDuracion() + " minutos");
+        tvDuracion.setText("Duración: " + evento.getDuracion() + " horas");
         tvAV.setText("Incluir AVs en presupuesto: " + (evento.isIncluyeAV() ? "Sí" : "No"));
+
 
         // RatingBar: las estrellas (0-5). Solo se muestra, el usuario no la cambia
         rbValoracion.setRating(evento.getValoracion());

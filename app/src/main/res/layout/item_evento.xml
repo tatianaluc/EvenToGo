@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Diseño de UNA fila del ListView: portada + nombre + número de asistentes.
-     El color de fondo (tonos de azul) lo pone el adaptador en Java sobre esta raíz -->
+<!-- Diseño de una fila del ListView con portada + nombre + número de asistentes.
+     El color de fondo lo pone el recycler adapter en Java sobre este layout -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
