@@ -1,6 +1,7 @@
 package es.ies.cm.dam2.pmdm.eventogo;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,12 @@ public class NuevoEvento extends AppCompatActivity {
             calendario.show();
         });
 
+        // horas del evento, en cada campo se abre el reloj, como con la fecha
+        EditText etHoraInicio = findViewById(R.id.etHoraInicio);
+        EditText etHoraFin = findViewById(R.id.etHoraFin);
+        etHoraInicio.setOnClickListener(v -> elegirHora(etHoraInicio));
+        etHoraFin.setOnClickListener(v -> elegirHora(etHoraFin));
+
         //spinner d elos tipos de eventos
         Spinner spTipoEvento = findViewById(R.id.spTipoEvento);
         // con el arrayadaptar de una secuencia de caracteres, porque no se puede strings
@@ -57,6 +64,13 @@ public class NuevoEvento extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //y lo añadimos al spinner drop down
         spTipoEvento.setAdapter(adapter);
+
+        // spinner del lugar, mismo sistema que el del tipo de evento pero con el array "lugares"
+        Spinner spLugar = findViewById(R.id.spLugar);
+        ArrayAdapter<CharSequence> adapterLugar = ArrayAdapter.createFromResource(
+                this, R.array.lugares, android.R.layout.simple_spinner_item);
+        adapterLugar.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spLugar.setAdapter(adapterLugar);
 
         // servicios a presupuestar
         Button btnAumentar = findViewById(R.id.btnSumServ);
@@ -100,8 +114,7 @@ public class NuevoEvento extends AppCompatActivity {
         EditText etNombre = findViewById(R.id.etEscribirNombre);
         EditText etCliente = findViewById(R.id.etEscribirCliente);
         Button btnReset = findViewById(R.id.btnReset);
-        //duración del evento, en horas
-        EditText etDuracion = findViewById(R.id.etDuracion);
+
 
         btnReset.setOnClickListener(v -> {
             //los edit los pone en nada
@@ -118,11 +131,15 @@ public class NuevoEvento extends AppCompatActivity {
             cbConAv.setChecked(true);
             //vuelve a mostrar dd//mm/7aaaa
             etFecha.setText("");
-            //vacía la duración
-            etDuracion.setText("");
+            //vacía las horas y deja el lugar en "Selecciona"
+            etHoraInicio.setText("");
+            etHoraInicio.setError(null);
+            etHoraFin.setText("");
+            etHoraFin.setError(null);
+            spLugar.setSelection(0);
         });
 
-        // MODO EDICIÓN: si nos mandan un Evento (desde Editar), rellenamos el formulario con sus datos
+        // En modo ediciñon, si nos mandan un Evento, rellenamos el formulario con sus datos
         Evento editar = (Evento) getIntent().getSerializableExtra(Evento.EXTRA);
         int posicion = getIntent().getIntExtra(Coleccion.EXTRA_POSICION, -1);
 
@@ -131,7 +148,8 @@ public class NuevoEvento extends AppCompatActivity {
             etCliente.setText(editar.getCliente());
             etAsistentes.setText(String.valueOf(editar.getAsistentes()));
             etFecha.setText(editar.getFecha());
-            etDuracion.setText(String.valueOf(editar.getDuracion()));
+            etHoraInicio.setText(editar.getHoraInicio());
+            etHoraFin.setText(editar.getHoraFin());
             cbConAv.setChecked(editar.isIncluyeAV());
             contServicios = editar.getServicios();
             txtNumServicios.setText(String.valueOf(contServicios));
@@ -139,6 +157,12 @@ public class NuevoEvento extends AppCompatActivity {
             for (int i = 0; i < spTipoEvento.getCount(); i++) {
                 if (spTipoEvento.getItemAtPosition(i).toString().equals(editar.getTipo())) {
                     spTipoEvento.setSelection(i);
+                }
+            }
+            // y lo mismo con el lugar
+            for (int i = 0; i < spLugar.getCount(); i++) {
+                if (spLugar.getItemAtPosition(i).toString().equals(editar.getLugar())) {
+                    spLugar.setSelection(i);
                 }
             }
         }
@@ -171,10 +195,23 @@ public class NuevoEvento extends AppCompatActivity {
                 ok = false;
             }
 
-            // la duración en horas no puede estar vacía ni ser 0
-            String duracionTexto = etDuracion.getText().toString().trim();
-            if (duracionTexto.isEmpty() || Integer.parseInt(duracionTexto) <= 0) {
-                etDuracion.setError("La duración del evento es importante para el personal");
+            // las dos horas son obligatorias
+            if (etHoraInicio.getText().toString().isEmpty()) {
+                etHoraInicio.setError("Elige la hora de inicio");
+                ok = false;
+            }
+            if (etHoraFin.getText().toString().isEmpty()) {
+                etHoraFin.setError("Elige la hora de fin");
+                ok = false;
+            }
+            //para que la hora de inicio no se igual a la defin
+            if (!etHoraInicio.getText().toString().isEmpty()
+                    && etHoraInicio.getText().toString().equals(etHoraFin.getText().toString())) {
+                etHoraFin.setError("La hora de fin no puede ser igual a la de inicio");
+                ok = false;
+            }
+            // y el lugar no puede quedarse en la opcion por defecto de "Selecciona"
+            if (spLugar.getSelectedItemPosition() == 0) {
                 ok = false;
             }
 
@@ -182,8 +219,6 @@ public class NuevoEvento extends AppCompatActivity {
                 Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
                 return;
             }
-            // si estamos editando, conservamos la valoración que ya tenía el evento
-            float valoracion = (editar != null) ? editar.getValoracion() : 0f;
 
             // montamos el Evento entero con los datos del formulario
             Evento evento = new Evento(
@@ -192,10 +227,24 @@ public class NuevoEvento extends AppCompatActivity {
                     etCliente.getText().toString().trim(),
                     Integer.parseInt(etAsistentes.getText().toString().trim()),
                     etFecha.getText().toString(),
+                    etHoraInicio.getText().toString(),
+                    etHoraFin.getText().toString(),
                     contServicios,
-                    Integer.parseInt(duracionTexto),
                     cbConAv.isChecked(),
-                    valoracion);
+                    spLugar.getSelectedItem().toString());
+
+            if (editar == null) {
+                // evento nuevo  lo guardamos en la bd, que nos devuelve el id que le ha puesto, o -1 si falla
+                long idNuevo = new EventosDB(this).insertarEvento(evento);
+                if (idNuevo == -1) {
+                    Toast.makeText(this, "No se ha podido guardar el evento", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                evento.setId((int) idNuevo); // así luego se podrá editar o borrar por su id
+            } else {
+                // editando se conserva el id del original
+                evento.setId(editar.getId());
+            }
 
             if (getCallingActivity() != null) {
                 // nos ha abierto Coleccion esperando respuesta: devolvemos el evento y su posición
@@ -238,4 +287,18 @@ public class NuevoEvento extends AppCompatActivity {
         }
         return true;
     }
+
+    // Abre el reloj para elegir una hora y la escribe en el EditText con formato HH:mm
+    private void elegirHora(EditText etHora) {
+        Calendar ahora = Calendar.getInstance(); // la hora actual es la que sale al abrir el reloj
+        TimePickerDialog reloj = new TimePickerDialog(this,
+                (view, hora, minuto) -> {
+                    etHora.setText(String.format("%02d:%02d", hora, minuto)); // %02d para que salga 00:00 y no 0:0
+                    etHora.setError(null);
+                },
+                ahora.get(Calendar.HOUR_OF_DAY), ahora.get(Calendar.MINUTE), true); // formato de 24 horas
+        reloj.show();
+    }
+
+
 }

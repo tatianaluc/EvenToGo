@@ -36,34 +36,34 @@ public class NumeroEventos extends AppCompatActivity {
         Button btn8 = findViewById(R.id.btn8);
         Button btn9 = findViewById(R.id.btn9);
 
-        TextView txtBtnPul  = findViewById(R.id.txtBtnPul);
+        TextView txtBtnPul = findViewById(R.id.txtBtnPul);
 
         //Mostramos en el txtview según el botón pulsado
-        btn1.setOnClickListener(v->{
+        btn1.setOnClickListener(v -> {
             txtBtnPul.setText(btn1.getText() + " Evento/s Registrado/s");
         });
-        btn2.setOnClickListener(v->{
+        btn2.setOnClickListener(v -> {
             txtBtnPul.setText(btn2.getText() + " Evento/s Registrado/s");
         });
-        btn3.setOnClickListener(v->{
+        btn3.setOnClickListener(v -> {
             txtBtnPul.setText(btn3.getText() + " Evento/s Registrado/s");
         });
-        btn4.setOnClickListener(v->{
+        btn4.setOnClickListener(v -> {
             txtBtnPul.setText(btn4.getText() + " Evento/s Registrado/s");
         });
-        btn5.setOnClickListener(v->{
-            txtBtnPul.setText(btn5.getText() +  " Evento/s Registrado/s");
+        btn5.setOnClickListener(v -> {
+            txtBtnPul.setText(btn5.getText() + " Evento/s Registrado/s");
         });
-        btn6.setOnClickListener(v->{
-            txtBtnPul.setText(btn6 .getText()+ " Evento/s Registrado/s");
+        btn6.setOnClickListener(v -> {
+            txtBtnPul.setText(btn6.getText() + " Evento/s Registrado/s");
         });
-        btn7.setOnClickListener(v->{
+        btn7.setOnClickListener(v -> {
             txtBtnPul.setText(btn7.getText() + " Evento/s Registrado/s");
         });
-        btn8.setOnClickListener(v->{
+        btn8.setOnClickListener(v -> {
             txtBtnPul.setText(btn8.getText() + " Evento/s Registrado/s");
         });
-        btn9.setOnClickListener(v->{
+        btn9.setOnClickListener(v -> {
             txtBtnPul.setText(btn9.getText() + " Evento/s Registrado/s");
         });
 
@@ -118,17 +118,17 @@ public class NumeroEventos extends AppCompatActivity {
         Button btnLimpiar = findViewById(R.id.btnLimpiar);
 
         groupStat.setOnCheckedChangeListener((rGroup, rChecked) -> {
-                if(rChecked == R.id.conf){
-                    actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
-                } else if(rChecked == R.id.pend){
-                    actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.org));
-                } else if (rChecked == R.id.canc){
+            if (rChecked == R.id.conf) {
+                actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.green));
+            } else if (rChecked == R.id.pend) {
+                actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.org));
+            } else if (rChecked == R.id.canc) {
                 actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.red_claro));
             }
         });
 
         //le decimos a limpiar que lo ponga todo en orden a blanco
-        btnLimpiar.setOnClickListener(v->{
+        btnLimpiar.setOnClickListener(v -> {
             groupStat.clearCheck();
             actNumEv.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
         });

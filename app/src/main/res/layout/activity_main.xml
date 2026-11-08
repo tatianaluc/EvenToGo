@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:ignore="MissingConstraints" >
+    tools:ignore="MissingConstraints">
 
     <TextView
         android:id="@+id/welcome"
@@ -57,33 +57,33 @@
         android:id="@+id/btnNuevoEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nuevo Evento"
         android:backgroundTint="@color/lila"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:strokeWidth="2dp"
+        android:text="Nuevo Evento"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slogan"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.057"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnSelectEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/selec"
         android:backgroundTint="@color/lila"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:strokeWidth="2dp"
+        android:text="@string/selec"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.809"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slogan"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.059"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
     <TextView
         android:id="@+id/txtContador"
@@ -105,33 +105,33 @@
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
         android:backgroundTint="@color/lila"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:strokeWidth="2dp"
+        android:text="Reset"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSelectEvent"
-        app:layout_constraintVertical_bias="0.034" />
+        app:layout_constraintVertical_bias="0.034"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnWeb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Descubre la Web"
         android:backgroundTint="@color/lila"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:strokeWidth="2dp"
+        android:text="Descubre la Web"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtContador"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.131"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnShare"
@@ -171,19 +171,19 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="260dp"
+        android:background="@color/gray"
+        android:gravity="center"
         android:text="Suelta aqui..."
         android:textAlignment="center"
         android:textColor="@color/dark_gray"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnShare"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.106"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

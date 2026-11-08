@@ -41,10 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="correo@mail.com"
+        android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtInvitacion" />
@@ -69,10 +69,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:hint="Escriba el asunto..."
+        android:inputType="textEmailSubject"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:inputType="textEmailSubject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etCorreo" />
@@ -114,14 +114,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="124dp"
-        android:text="Compartir Invitación"
         android:backgroundTint="@color/lila"
-        app:strokeColor="@color/colorPrimaryDark"
-        app:strokeWidth="2dp"
+        android:text="Compartir Invitación"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCuerpo" />
+        app:layout_constraintTop_toBottomOf="@id/etCuerpo"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

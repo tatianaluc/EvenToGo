@@ -31,7 +31,7 @@ public class Compartir extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 //si el edit  text no esta vacio, activamos el boton
-                if(!etCompEv.getText().toString().trim().isEmpty()){
+                if (!etCompEv.getText().toString().trim().isEmpty()) {
                     btnEnviarEv.setEnabled(true);
                 } else {
                     btnEnviarEv.setEnabled(false);
@@ -50,21 +50,21 @@ public class Compartir extends AppCompatActivity {
         });
 
         //ahora le decimos a enviar lo que tiene que hacer
-        btnEnviarEv.setOnClickListener(v ->{
+        btnEnviarEv.setOnClickListener(v -> {
             String asunto = etCompEv.getText().toString().trim();
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain"); // se envia texto
             i.putExtra(Intent.EXTRA_TEXT, asunto); //le pasamos lo que se ha escrito en el edit txt
             i.setPackage("com.whatsapp"); //identificador de whap en android, lo abre directo
-           //encerramos el intent en un try catch por si ka persona no tiene WHA instalado
+            //encerramos el intent en un try catch por si ka persona no tiene WHA instalado
             try {
-               startActivity(i); //si la tiene, lo lleva
-           }catch (ActivityNotFoundException WhaEx){
+                startActivity(i); //si la tiene, lo lleva
+            } catch (ActivityNotFoundException WhaEx) {
                 //pero si no  la tiene lo lleva al market de google a descargar
                 //el URI es e enlace que deja descargar wha y el id del  wha en package android
                 Intent iDescargaWha = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.whatsapp"));
                 startActivity(iDescargaWha);
-           }
+            }
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.share), (v, insets) -> {

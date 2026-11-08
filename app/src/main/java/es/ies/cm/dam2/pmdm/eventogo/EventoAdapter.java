@@ -13,24 +13,24 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-// ADAPTADOR PROPIO para el ListView (parte 3 de la práctica 8).
-// Un adaptador es el "puente" entre la lista de datos (los Evento) y las filas que se
-// dibujan en pantalla: el ListView le pregunta "dame la vista de la fila N" y responde getView.
+// adapter propio para el ListView
+// Un adapter es el "puente" entre la los eventos con cada informacion y las filas que se
+// dibujan en pantalla con el ListView que devuelve con getview.
 public class EventoAdapter extends ArrayAdapter<Evento> {
 
-    // Dos tonos de azul que se alternan, para ver dónde empieza y termina cada ítem
+    // Dos tonos de azul que se intercalan, para ver dónde empieza y termina cada ítem
     private static final int AZUL_CLARO = 0xFFE3F2FD;
     private static final int AZUL_MEDIO = 0xFFBBDEFB;
 
     public EventoAdapter(Context context, List<Evento> eventos) {
-        // El 0 es el layout por defecto, que no usamos porque dibujamos nosotras la fila
+        // El 0 es el layout por defecto, que no usamos porque ya estamos dibujando la fila
         super(context, 0, eventos);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // convertView es una fila que ya existía y se puede reciclar (así el scroll va fluido).
+        // convertView es una fila que ya existía y se puede reciclar.
         // Solo la inflamos desde el XML si todavía no hay ninguna
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
@@ -48,7 +48,7 @@ public class EventoAdapter extends ArrayAdapter<Evento> {
         txtNombre.setText(evento.getNombre());
         txtAsistentes.setText(evento.getAsistentes() + " asistentes");
 
-        // Posición par: azul claro. Posición impar: azul medio
+        // Posición par, azul claro. Posición impar, azul medio
         convertView.setBackgroundColor(position % 2 == 0 ? AZUL_CLARO : AZUL_MEDIO);
 
         return convertView;

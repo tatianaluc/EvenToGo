@@ -26,7 +26,7 @@ public class AcercaDe extends AppCompatActivity {
         ConstraintLayout raiz = findViewById(R.id.acerca_de);
 
         //Longlcik devuelve un boolean, asi que le decimos que devuelva true
-        txtAcercaDe.setOnLongClickListener(v->{
+        txtAcercaDe.setOnLongClickListener(v -> {
             //EMpezamos el drag and drop
             /*esta funcion pide:
             1. un paquete de datos, que esta vez estará vacío
@@ -34,7 +34,7 @@ public class AcercaDe extends AppCompatActivity {
             3. un dato extra nulo que no necesitaremos esta vez
             4. y 0 de que no nefceistamos nada mas.
              */
-            v.startDragAndDrop(ClipData.newPlainText("",""), new View.DragShadowBuilder(v), null, 0);
+            v.startDragAndDrop(ClipData.newPlainText("", ""), new View.DragShadowBuilder(v), null, 0);
             return true;
         });
         //aqui le decimos que ejecute el arrastre por todo el layout, con true para que lo acepte

@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 //Mis eventos con menú de opciones superior y menú contextual
 // Editar / Eliminar en cada cardview. Se conservan el recyclerview y los botones Añadir y Mostrar.
@@ -34,9 +34,10 @@ public class Coleccion extends AppCompatActivity {
 
     private final ArrayList<Evento> eventos = new ArrayList<>();
     private EventosRecyclerAdapter adapter;
-
     // El launcher es un campo de la clase porque lo usan el botón Añadir, el menú de opciones y el menú contextual  en editar
     private ActivityResultLauncher<Intent> launcher;
+    // si la colección se muestra ordenada por nombre o en el orden en que se guardaron
+    private boolean ordenadoPorNombre = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,6 @@ public class Coleccion extends AppCompatActivity {
         Button btnMostrar = findViewById(R.id.btnMostrar);
         RecyclerView rvEventos = findViewById(R.id.rvEventos);
         Button btnAtras = findViewById(R.id.btnAtras);
-
-        // Carga  de los 20 eventos de ejemplo
-        cargarEjemplos();
 
         // Aqui hacemos funcionar el rv que contiene el layout manager, el cual permite visualizar un cv debajo de otro
         // y nos traemos el recycler adapter
@@ -78,17 +76,15 @@ public class Coleccion extends AppCompatActivity {
 
                         if (evento != null) {
                             if (posicion >= 0) {
-                                // el evento editado sustituye al antiguo, lo "sobre-escribe"
-                                eventos.set(posicion, evento);
-                                Toast.makeText(this, "Nombre del evento actualizado: " + evento.getNombre(),
+                                // evento editado, actualizamos su fila en la bd
+                                new EventosDB(this).actualizarEvento(evento);
+                                Toast.makeText(this, "Evento actualizado: " + evento.getNombre(),
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                //añadirlo al final
-                                eventos.add(evento);
+                                // evento nuevo guardado en la bd, aquí solo avisamos
                                 Toast.makeText(this, "Se ha añadido el evento:  " + evento.getNombre(),
                                         Toast.LENGTH_SHORT).show();
                             }
-                            adapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -133,9 +129,9 @@ public class Coleccion extends AppCompatActivity {
             anadirEvento();
             return true;
         } else if (id == R.id.opcion_ordenar) {
-            // Ordena la colección alfabéticamente por nombre, sin distinguir mayúsculas
-            Collections.sort(eventos, (a, b) -> a.getNombre().compareToIgnoreCase(b.getNombre()));
-            adapter.notifyDataSetChanged();
+            // el orden lo hace la bd con ORDER BY al volver a leer los eventos
+            ordenadoPorNombre = true;
+            recargarEventos();
             Toast.makeText(this, "Eventos ordenados por nombre", Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.opcion_acerca) {
@@ -165,8 +161,8 @@ public class Coleccion extends AppCompatActivity {
                 .setTitle("Eliminar evento")
                 .setMessage("¿Seguro que quieres eliminar \"" + evento.getNombre() + "\"?")
                 .setPositiveButton("Eliminar", (dialog, which) -> {
-                    eventos.remove(evento);
-                    adapter.notifyDataSetChanged();
+                    new EventosDB(this).borrarEvento(evento.getId()); // borra su fila en la bd por el id
+                    recargarEventos();
                     Toast.makeText(this, "Evento eliminado: " + evento.getNombre(),
                             Toast.LENGTH_SHORT).show();
                 })
@@ -174,29 +170,19 @@ public class Coleccion extends AppCompatActivity {
                 .show();
     }
 
-    // Los 20 eventos de ejemploq ue pide la practica 9
-    // Orden de los datos: nombre, tipo, cliente, asistentes, fecha,
-    // nº de servicios (1-10), duración en horas, incluye AV, valoración (0-5)
-    private void cargarEjemplos() {
-        eventos.add(new Evento("Boda de Noemí y Pablo", "Boda", "Familia Ferrero", 250, "26/09/2027", 6, 480, true, 4.5f));
-        eventos.add(new Evento("Festival de Verano", "Concierto", "Ayuntamiento", 800, "18/07/2027", 9, 720, true, 5f));
-        eventos.add(new Evento("Convención de Ventas", "Corporativo", "Tecnova", 200, "03/03/2027", 7, 360, true, 4f));
-        eventos.add(new Evento("Cumpleaños de Marta", "Cumpleaños", "Marta López", 40, "21/11/2026", 3, 240, false, 3.5f));
-        eventos.add(new Evento("Boda en el jardín", "Boda", "Pilar y Dani", 90, "05/09/2027", 5, 420, true, 4f));
-        eventos.add(new Evento("Concierto benéfico", "Concierto", "Cruz Roja", 350, "10/12/2026", 6, 300, true, 4.5f));
-        eventos.add(new Evento("Presentación de producto", "Corporativo", "Aurea", 150, "14/01/2027", 5, 180, true, 3.5f));
-        eventos.add(new Evento("50 cumpleaños de Paco", "Cumpleaños", "Paco Gil", 60, "30/01/2027", 4, 300, false, 4f));
-        eventos.add(new Evento("Boda civil", "Boda", "Elena y Marcos", 50, "22/05/2027", 3, 240, false, 5f));
-        eventos.add(new Evento("Concierto de jazz", "Concierto", "Sala Azul", 200, "27/02/2027", 5, 240, true, 4f));
-        eventos.add(new Evento("Cena de empresa", "Corporativo", "Grupo Norte", 120, "17/12/2026", 4, 240, false, 3f));
-        eventos.add(new Evento("Fiesta infantil", "Cumpleaños", "Familia Soto", 30, "09/01/2027", 2, 180, false, 4.5f));
-        eventos.add(new Evento("Boda de otoño", "Boda", "Rocío y Álex", 140, "10/10/2027", 7, 540, true, 4.5f));
-        eventos.add(new Evento("Gira de verano", "Concierto", "Banda Sur", 500, "25/07/2027", 8, 480, true, 5f));
-        eventos.add(new Evento("Jornada de formación", "Corporativo", "Instituto Tec", 80, "08/02/2027", 3, 480, true, 3.5f));
-        eventos.add(new Evento("Cumpleaños sorpresa", "Cumpleaños", "Nuria Vega", 25, "14/11/2026", 2, 180, false, 4f));
-        eventos.add(new Evento("Aniversario de bodas", "Otro", "Familia Cano", 70, "19/04/2027", 4, 300, false, 4f));
-        eventos.add(new Evento("Gala solidaria", "Otro", "Fundación Luz", 260, "05/03/2027", 8, 360, true, 4.5f));
-        eventos.add(new Evento("Inauguración de tienda", "Corporativo", "Moda Viva", 110, "12/03/2027", 5, 240, true, 3.5f));
-        eventos.add(new Evento("Concierto de Navidad", "Concierto", "Coro Municipal", 300, "20/12/2026", 6, 180, true, 5f));
+    // onResume se ejecuta cada vez que la pantalla vuelve a verse, así la colección siempre está
+// actualizada con la bd
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recargarEventos();
+    }
+
+    // Vacía la lista de eventos y la vuelve a llenar con lo que hay en la bd. Hay que usar la misma
+    // porque el adapter la tiene guardada, y luego avisar de que ha cambiado
+    private void recargarEventos() {
+        eventos.clear();
+        eventos.addAll(new EventosDB(this).obtenerEventos(ordenadoPorNombre));
+        adapter.notifyDataSetChanged();
     }
 }

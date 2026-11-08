@@ -46,20 +46,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Filtrado de boton para pasar directamente a eventos registrados
-        btnSel.setOnClickListener(v->{
-            Intent i = new Intent(MainActivity.this, NumeroEventos.class);
+        // Y abre la colección con todos los eventos DE EJEMPLO
+        btnSel.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, Coleccion.class);
             startActivity(i);
         });
 
         //Boton abrir web accion, no va a ninguna clase, abre un uri
         Button btnWeb = findViewById(R.id.btnWeb);
-        btnWeb.setOnClickListener(v->{
+        btnWeb.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sassotsound.com/eventos/"));
             startActivity(i);
         });
         //abre el alyout de compartir
         Button btnCompEv = findViewById(R.id.btnShare);
-        btnCompEv.setOnClickListener(v->{
+        btnCompEv.setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, Compartir.class);
             startActivity(i);
         });
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         TextView destino = findViewById(R.id.txtDestino);
 
         //Longlcik devuelve un boolean, asi que le decimos que devuelva true
-            //EMpezamos el drag and drop
+        //EMpezamos el drag and drop
             /*esta funcion pide:
             1. un paquete de datos, que esta vez estará vacío
             2. una copia transparente del texto que arrastra
@@ -98,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

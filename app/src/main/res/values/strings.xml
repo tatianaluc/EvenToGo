@@ -13,12 +13,22 @@
     <string name="ownAv">Traemos nuestro AVs!</string>
     <string name="welc">Bienvenido!</string>
     <string name="slogan">El Precio de tu evento, para llevar,\nen minutos</string>
-    <string name="selec">Seleccionar Evento</string>
+    <string name="selec">Mis Eventos</string>
     <string-array name="tipo_evento">
         <item>Selecciona</item>
         <item>Boda</item>
         <item>Corporativo</item>
         <item>Cumpleaños</item>
-        <item>Pequeño Concierto</item>
+        <item>Concierto</item>
+        <item>Otro</item>
+    </string-array>
+    <!-- Lugares donde puede ser el evento, selecciona es la posición 0 es el texto por defecto -->
+    <string-array name="lugares">
+        <item>Selecciona</item>
+        <item>Salón de Eventos Interior</item>
+        <item>Zona de Eventos Exterior</item>
+        <item>Sala de reuniones</item>
+        <item>Carpa</item>
+        <item>Local Particular</item>
     </string-array>
 </resources>

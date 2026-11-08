@@ -35,6 +35,8 @@ public class FichaEvento extends AppCompatActivity {
         TextView tvFecha = findViewById(R.id.tvFecha);
         TextView tvServicios = findViewById(R.id.tvServ);
         TextView tvAV = findViewById(R.id.tvAvs);
+        TextView tvHorario = findViewById(R.id.tvHorario);
+        TextView tvLugar = findViewById(R.id.tvLugar);
 
         // Vistas NUEVAS: la portada grande, la duración y las estrellas
         ImageView imgPortada = findViewById(R.id.imgPortadaFicha);
@@ -51,10 +53,12 @@ public class FichaEvento extends AppCompatActivity {
         tvServicios.setText("Cantidad de servicios: " + evento.getServicios());
         tvDuracion.setText("Duración: " + evento.getDuracion() + " horas");
         tvAV.setText("Incluir AVs en presupuesto: " + (evento.isIncluyeAV() ? "Sí" : "No"));
+        tvHorario.setText("Horario: " + evento.getHoraInicio() + " - " + evento.getHoraFin());
+        tvLugar.setText("Lugar: " + evento.getLugar());
 
 
-        // RatingBar: las estrellas (0-5). Solo se muestra, el usuario no la cambia
-        rbValoracion.setRating(evento.getValoracion());
+        // Mostrar las estrellas de complejidad (según los servicios).
+        rbValoracion.setRating(evento.getComplejidad());
         rbValoracion.setIsIndicator(true);
 
         // ATRAS
