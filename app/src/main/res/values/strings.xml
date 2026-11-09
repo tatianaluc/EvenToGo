@@ -2,6 +2,11 @@
     <string name="creado_por">Creado por Tatiana De Luca</string>
     <string name="app_name">EvenToGo</string>
     <string name="nombre_evento">Nombre del Evento</string>
+    <!-- Texto de Acerca de -->
+    <string name="acerca_texto">EvenToGo te da el precio de tu evento, para llevar, en minutos.\n\nRegistra tu evento, elige los servicios y confirma una reunión con tu project manager.
+        \n\nVersión 1.0\nCreada y desarrollada por Tatiana De Luca\n
+        Proyecto de PMDM · 2º DAM · 2026\n\n
+        Se reservan los derechos de admisión ©.\n\nMantén pulsado y arrastra este texto para volver.</string>
     <string name="num_inv">Número de Invitados: </string>
     <string name="save">Guardar</string>
     <string name="mas">Aumentar</string>
@@ -12,7 +17,8 @@
     <string name="noAv">No incluir AV en Presupuesto</string>
     <string name="ownAv">Traemos nuestro AVs!</string>
     <string name="welc">Bienvenido!</string>
-    <string name="slogan">El Precio de tu evento, para llevar,\nen minutos</string>
+    <!-- Eslogan de la pantalla principal -->
+    <string name="slogan">El precio de tu evento, para llevar.\nPresupuesto en minutos</string>
     <string name="selec">Mis Eventos</string>
     <string-array name="tipo_evento">
         <item>Selecciona</item>

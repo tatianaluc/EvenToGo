@@ -41,6 +41,7 @@ public class EventosRecyclerAdapter
 
         holder.imgPortada.setImageResource(evento.getPortada());
         holder.txtNombre.setText(evento.getNombre());
+        holder.txtDetalle.setText(evento.getTipo() + " · " + evento.getFecha());
         holder.txtAsistentes.setText(evento.getAsistentes() + " asistentes");
 
         // abrimos la ficha con el evento entero
@@ -84,12 +85,14 @@ public class EventosRecyclerAdapter
         ImageView imgPortada;
         TextView txtNombre;
         TextView txtAsistentes;
+        TextView txtDetalle;
 
         EventoViewHolder(@NonNull View itemView) {
             super(itemView);
             imgPortada = itemView.findViewById(R.id.imgPortada);
             txtNombre = itemView.findViewById(R.id.txtNombre);
             txtAsistentes = itemView.findViewById(R.id.txtAsistentes);
+            txtDetalle = itemView.findViewById(R.id.txtDetalle);
         }
     }
 }

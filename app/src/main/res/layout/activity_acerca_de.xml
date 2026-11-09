@@ -21,19 +21,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtAcercaDe"
-        android:layout_width="wrap_content"
+    <!-- Tarjeta que contiene el texto -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Aplicación creada y desarrollada por Tatiana De Luca\n\n
-        Se reservan los derechos de admisión ©."
-        android:textColor="@color/colorPrimary"
-        android:textSize="16dp"
-        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTituloAcercaDe" />
+        app:layout_constraintTop_toBottomOf="@id/txtTituloAcercaDe">
+
+        <!-- Mismo id para que el drag-and-drop lo siga encontrando -->
+        <TextView
+            android:id="@+id/txtAcercaDe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/acerca_texto"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

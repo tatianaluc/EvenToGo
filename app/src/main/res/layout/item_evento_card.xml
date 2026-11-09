@@ -8,7 +8,8 @@
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="6dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/boda"/>
 
         <TextView
             android:id="@+id/txtNombre"
@@ -33,20 +35,36 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgPortada"
-            app:layout_constraintTop_toTopOf="@id/imgPortada" />
+            app:layout_constraintTop_toTopOf="@id/imgPortada"
+            tools:text="Boda de Noemí y Pablo"/>
+
+        <TextView
+            android:id="@+id/txtDetalle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/txtNombre"
+            app:layout_constraintTop_toBottomOf="@id/txtNombre"
+            tools:text="Boda · 25/09/2027"/>
 
         <TextView
             android:id="@+id/txtAsistentes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/txtNombre"
-            app:layout_constraintTop_toBottomOf="@id/txtNombre" />
+            app:layout_constraintTop_toBottomOf="@id/txtDetalle"
+            tools:text="250 asistentes"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

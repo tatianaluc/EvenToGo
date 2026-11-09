@@ -50,11 +50,12 @@ public class Coleccion extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Mis eventos");
+        // Muestra la flecha de volver en la barra de arriba, quitamos boton atras para que se vea mas ordenado el xml
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button btnAnadir = findViewById(R.id.btnAnadir);
         Button btnMostrar = findViewById(R.id.btnMostrar);
         RecyclerView rvEventos = findViewById(R.id.rvEventos);
-        Button btnAtras = findViewById(R.id.btnAtras);
 
         // Aqui hacemos funcionar el rv que contiene el layout manager, el cual permite visualizar un cv debajo de otro
         // y nos traemos el recycler adapter
@@ -103,9 +104,6 @@ public class Coleccion extends AppCompatActivity {
             }
         });
 
-        // ATRAS
-        btnAtras.setOnClickListener(v -> finish());
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.coleccion), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -137,7 +135,11 @@ public class Coleccion extends AppCompatActivity {
         } else if (id == R.id.opcion_acerca) {
             startActivity(new Intent(this, AcercaDe.class));
             return true;
-        }
+        } else if (id == android.R.id.home) {
+        // La flecha de la barra tiene este id: por defecto y cierra la pantalla, como el botón Atrás
+        finish();
+        return true;
+    }
         return super.onOptionsItemSelected(item);
     }
 
