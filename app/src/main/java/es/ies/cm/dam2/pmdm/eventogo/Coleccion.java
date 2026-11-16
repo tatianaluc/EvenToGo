@@ -38,13 +38,16 @@ public class Coleccion extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher;
     // si la colección se muestra ordenada por nombre o en el orden en que se guardaron
     private boolean ordenadoPorNombre = false;
+    // Id del usuario que ha hecho login y -1 si no llega
+    private int usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_coleccion);
-
+        // Recogemos el usuario que mandó Login con putExtra
+        usuarioId = getIntent().getIntExtra(Login.EXTRA_USUARIO_ID, -1);
         // toolbar superior que la declaramos y se la damos a la activity rellenada, como su
         // barra de acciones con opciones de menu infladas y que acepte o reciba el item seleccionado de ese menú
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
@@ -132,23 +135,29 @@ public class Coleccion extends AppCompatActivity {
             recargarEventos();
             Toast.makeText(this, "Eventos ordenados por nombre", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.opcion_buscar) {
+            // abre la búsqueda de eventos en la bd
+            startActivity(new Intent(this, BuscarEvento.class));
+            return true;
         } else if (id == R.id.opcion_acerca) {
             startActivity(new Intent(this, AcercaDe.class));
             return true;
         } else if (id == android.R.id.home) {
-        // La flecha de la barra tiene este id: por defecto y cierra la pantalla, como el botón Atrás
-        finish();
-        return true;
-    }
+            // La flecha de la barra tiene este id: por defecto y cierra la pantalla, como el botón Atrás
+            finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     // apartado de acciones que son llamadas por los botones, el menú de opciones y el menú contextual
     // Abre el formulario en modo alta nuevo evento, sin mandarle ningún evento existente
     private void anadirEvento() {
-        launcher.launch(new Intent(this, NuevoEvento.class));
+        Intent intent = new Intent(this, NuevoEvento.class);
+        // NuevoEvento necesita saber de quién es el evento que se va a crear
+         intent.putExtra(Login.EXTRA_USUARIO_ID, usuarioId);
+        launcher.launch(intent);
     }
-
     // Abre el formulario en modo de edición de evento existente y le mandamos el evento actual que quiere editar y su posición en la lista
     public void editarEvento(Evento evento) {
         Intent intent = new Intent(this, NuevoEvento.class);
@@ -184,7 +193,8 @@ public class Coleccion extends AppCompatActivity {
     // porque el adapter la tiene guardada, y luego avisar de que ha cambiado
     private void recargarEventos() {
         eventos.clear();
-        eventos.addAll(new EventosDB(this).obtenerEventos(ordenadoPorNombre));
+        eventos.addAll(// pedimos solo los eventos de este usuario
+                new EventosDB(this).obtenerEventos(usuarioId, ordenadoPorNombre));
         adapter.notifyDataSetChanged();
     }
 }

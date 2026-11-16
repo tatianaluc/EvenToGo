@@ -234,6 +234,8 @@ public class NuevoEvento extends AppCompatActivity {
                     spLugar.getSelectedItem().toString());
 
             if (editar == null) {
+                // El evento nuevo es de quien hizo login
+                evento.setUsuarioId(getIntent().getIntExtra(Login.EXTRA_USUARIO_ID, -1));
                 // evento nuevo  lo guardamos en la bd, que nos devuelve el id que le ha puesto, o -1 si falla
                 long idNuevo = new EventosDB(this).insertarEvento(evento);
                 if (idNuevo == -1) {

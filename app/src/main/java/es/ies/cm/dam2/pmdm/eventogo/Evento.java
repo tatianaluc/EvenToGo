@@ -21,6 +21,7 @@ public class Evento implements Serializable {
     private String horaFin;     // formato HH:mm
     private String lugar;
     private int portada;        // la imagen de portada
+    private int usuarioId = -1;
 
     // Constructor completo, para los eventos de ejemplo
     public Evento(String nombre, String tipo, String cliente, int asistentes, String fecha,
@@ -105,6 +106,8 @@ public class Evento implements Serializable {
     public float getComplejidad() {
         return servicios / 2f;
     }
+    public int getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
 
     // Calcula cuántas horas dura el evento. Si la hora de fin es menor que la de inicio, el evento acaba
     // al día siguiente, por ejemplo, un evento de 22:00 a 03:00 son 5 horas, pero a partir de las 00h

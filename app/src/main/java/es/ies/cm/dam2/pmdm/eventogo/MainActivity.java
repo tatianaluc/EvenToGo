@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Filtrado de boton para pasar directamente a eventos registrados
-        // Y abre la colección con todos los eventos DE EJEMPLO
+        //antes de ver Mis eventos, hay que iniciar sesión
         btnSel.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, Coleccion.class);
+            Intent i = new Intent(MainActivity.this, Login.class);
             startActivity(i);
         });
 
@@ -56,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
         Button btnWeb = findViewById(R.id.btnWeb);
         btnWeb.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://sassotsound.com/eventos/"));
-            startActivity(i);
-        });
-        //abre el alyout de compartir
-        Button btnCompEv = findViewById(R.id.btnShare);
-        btnCompEv.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, Compartir.class);
             startActivity(i);
         });
 

@@ -46,7 +46,7 @@ public class EventosDB extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLA_EVENTOS + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "nombre TEXT NOT NULL, " + "tipo TEXT NOT NULL, " + "cliente TEXT NOT NULL, " + "asistentes INTEGER NOT NULL CHECK(asistentes BETWEEN " + MIN_ASISTENTES + " AND " + MAX_ASISTENTES + "), " + "fecha TEXT NOT NULL, " + "hora_inicio TEXT NOT NULL, "     // formato HH:mm
                 + "hora_fin TEXT NOT NULL, "        // formato HH:mm
                 + "servicios INTEGER NOT NULL CHECK(servicios BETWEEN 1 AND 10), " + "incluye_av INTEGER NOT NULL DEFAULT 0, "   // 0 = no, 1 = si
-                + "lugar TEXT NOT NULL)");
+                + "lugar TEXT NOT NULL," + "usuario_id INTEGER ," + "FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE)");
 
         // Tabla de usuarios para el login.
         // El nombre es UNIQUE para que no haya dos usuarios iguales
@@ -132,7 +132,19 @@ public class EventosDB extends SQLiteOpenHelper {
     // Misma operación pero recibiendo la bd. Hace falta para el onCreate, donde no se puede pedir
     // datos porque la bd todavía se está creando
     private long insertarEvento(SQLiteDatabase db, Evento e) {
-        return db.insert(TABLA_EVENTOS, null, valoresDe(e));
+        // Guardamos los valores en una variable para poder añadirles el dueño antes de insertar
+        ContentValues valores = valoresDe(e);
+
+        // El dueño solo se guarda al insertar, así al editar un evento nunca se pierde
+        if (e.getUsuarioId() > 0) {
+            valores.put("usuario_id", e.getUsuarioId());
+        } else {
+            // putNull guarda NULL en la columna si algun valor no tiene dueño, como son los de catalogo
+            valores.putNull("usuario_id");
+        }
+
+        // Ahora sí, insertamos con los valores completos (devuelve -1 si falla)
+        return db.insert(TABLA_EVENTOS, null, valores);
     }
 
     // Actualiza la fila del evento que tenga ese id. Devuelve cuántas filas ha cambiado
@@ -148,18 +160,67 @@ public class EventosDB extends SQLiteOpenHelper {
     // Lee todos los eventos de la bd.
     // Si porNombre es true salen ordenados alfabéticamente sin distinguir mayúsculas (COLLATE NOCASE),
     // y si no, por id, que es el orden en el que se guardaron
-    public ArrayList<Evento> obtenerEventos(boolean porNombre) {
+    public ArrayList<Evento> obtenerEventos(int usuarioId, boolean porNombre) {
         ArrayList<Evento> lista = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String orden = porNombre ? "nombre COLLATE NOCASE" : "id";
-        Cursor c = db.query(TABLA_EVENTOS, null, null, null, null, null, orden);
+        // Solo las filas de ese usuario: el ? se sustituye por el id que va en el array
+        Cursor c = db.query(TABLA_EVENTOS, null, "usuario_id = ?",
+                new String[]{String.valueOf(usuarioId)}, null, null, orden);
         while (c.moveToNext()) { // cada vuelta es una fila de la tabla
-            Evento e = new Evento(c.getString(c.getColumnIndexOrThrow("nombre")), c.getString(c.getColumnIndexOrThrow("tipo")), c.getString(c.getColumnIndexOrThrow("cliente")), c.getInt(c.getColumnIndexOrThrow("asistentes")), c.getString(c.getColumnIndexOrThrow("fecha")), c.getString(c.getColumnIndexOrThrow("hora_inicio")), c.getString(c.getColumnIndexOrThrow("hora_fin")), c.getInt(c.getColumnIndexOrThrow("servicios")), c.getInt(c.getColumnIndexOrThrow("incluye_av")) == 1, // true
-                    c.getString(c.getColumnIndexOrThrow("lugar")));
-            e.setId(c.getInt(c.getColumnIndexOrThrow("id"))); // el id no va en el constructor
-            lista.add(e);
+                lista.add(eventoDe(c));
         }
         c.close();
         return lista;
+    }
+
+    // Convierte la fila en la que está el cursor en un Evento. Lo usan obtenerEventos y buscarEventos
+    private Evento eventoDe(Cursor c) {
+        Evento e = new Evento(
+                c.getString(c.getColumnIndexOrThrow("nombre")),
+                c.getString(c.getColumnIndexOrThrow("tipo")),
+                c.getString(c.getColumnIndexOrThrow("cliente")),
+                c.getInt(c.getColumnIndexOrThrow("asistentes")),
+                c.getString(c.getColumnIndexOrThrow("fecha")),
+                c.getString(c.getColumnIndexOrThrow("hora_inicio")),
+                c.getString(c.getColumnIndexOrThrow("hora_fin")),
+                c.getInt(c.getColumnIndexOrThrow("servicios")),
+                c.getInt(c.getColumnIndexOrThrow("incluye_av")) == 1, // 1 = true
+                c.getString(c.getColumnIndexOrThrow("lugar")));
+        e.setId(c.getInt(c.getColumnIndexOrThrow("id"))); // el id no va en el constructor
+        return e;
+    }
+
+    // Busca eventos por nombre y con un mínimo de asistentes
+// empiezaPor = true busca "texto%" si empieza por, y false "%texto%" si aunque sea lo contiene
+    public ArrayList<Evento> buscarEventos(String nombre, boolean empiezaPor, int minAsistentes) {
+        ArrayList<Evento> listaEventos = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String patron = empiezaPor ? nombre + "%" : "%" + nombre + "%";
+        // los ? se rellenan por orden con el array
+        // el primero con el patrón de búsqueda, el segundo con el mínimo de asistentes
+        Cursor c = db.query(TABLA_EVENTOS, null,
+                "nombre LIKE ? AND asistentes >= ?",
+                new String[]{patron, String.valueOf(minAsistentes)},
+                null, null, "nombre COLLATE NOCASE"); //esto es una regla para comparar sin distinguir mayusuclas
+        while (c.moveToNext()) {
+            listaEventos.add(eventoDe(c));
+        }
+        c.close();
+        return listaEventos;
+    }
+    // Comprueba si existe un usuario con ese nombre y clave. Devuelve su id, o -1 si no existe
+    public int comprobarLogin(String nombre, String clave) {
+        SQLiteDatabase db = getReadableDatabase();
+        // los ? se rellenan por orden con el array, el primero con el nombre y el segundo con la clave
+        Cursor c = db.query(TABLA_USUARIOS, new String[]{"id"},
+                "nombre = ? AND clave = ?", new String[]{nombre, clave},
+                null, null, null);
+        int idUsuario = -1;
+        if (c.moveToFirst()) { // si hay una fila, el usuario existe
+            idUsuario = c.getInt(0);
+        }
+        c.close();
+        return idUsuario;
     }
 }
