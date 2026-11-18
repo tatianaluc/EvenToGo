@@ -16,8 +16,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private int contador = 0;
-    private TextView txtContador;
     private Intent intent;
 
     @Override
@@ -26,24 +24,12 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        Button btnNuevoEvento = findViewById(R.id.btnNuevoEvento);
-        txtContador = findViewById(R.id.txtContador);
+        Button btnCatalogo = findViewById(R.id.btnCatalogo);
         Button btnSel = findViewById(R.id.btnSelectEvent);
 
-        //incrementar eventos y cambiar de ventana con el intent
-        btnNuevoEvento.setOnClickListener(v -> {
-            contador++;
-            txtContador.setText("Eventos Registrados: " + contador);
-            Intent intent = new Intent(MainActivity.this, NuevoEvento.class);
-            startActivity(intent);
-        });
+        //ir a buscar evento con el catálogo
+        btnCatalogo.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, BuscarEvento.class)));
 
-        Button btnReset = findViewById(R.id.btnReset);
-        //resetear contador a 0
-        btnReset.setOnClickListener(v -> {
-            contador = 0;
-            txtContador.setText("Eventos Registrados: " + contador);
-        });
 
         // Filtrado de boton para pasar directamente a eventos registrados
         //antes de ver Mis eventos, hay que iniciar sesión

@@ -63,12 +63,12 @@
             app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
         <Button
-            android:id="@+id/btnNuevoEvento"
+            android:id="@+id/btnCatalogo"
             android:layout_width="0dp"
             android:layout_height="53dp"
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/lila"
-            android:text="Nuevo Evento"
+            android:text="@string/cat_eventos"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_marginStart="24dp"
@@ -110,7 +110,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guiaCentro"
-            app:layout_constraintTop_toBottomOf="@+id/btnNuevoEvento"
+            app:layout_constraintTop_toBottomOf="@+id/btnCatalogo"
             app:strokeColor="@color/colorPrimaryDark"
             app:strokeWidth="2dp" />
 
@@ -137,7 +137,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:text="Eventos Registrados: 0"
+            android:text="@string/eventos_registrados"
             android:textColor="@color/colorPrimary"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -183,20 +183,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnReset"
             tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/txtCreado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:text="@string/creado_por"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtDestino"
-            tools:layout_editor_absoluteX="118dp"
-            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

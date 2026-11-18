@@ -196,5 +196,8 @@ public class Coleccion extends AppCompatActivity {
         eventos.addAll(// pedimos solo los eventos de este usuario
                 new EventosDB(this).obtenerEventos(usuarioId, ordenadoPorNombre));
         adapter.notifyDataSetChanged();
+        // Subtítulo de la barra con el nº de eventos de este usuario (se cuenta en la BD)
+        getSupportActionBar().setSubtitle(getString(R.string.eventos_registrados,
+                new EventosDB(this).contarEventos(usuarioId)));
     }
 }

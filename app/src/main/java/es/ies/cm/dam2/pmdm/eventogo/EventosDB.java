@@ -3,6 +3,7 @@ package es.ies.cm.dam2.pmdm.eventogo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -107,6 +108,12 @@ public class EventosDB extends SQLiteOpenHelper {
         c.close();
         return total;
     }
+    // Cuenta los eventos de un usuario. ue cambiará en la práctica 13 (Room) Es la única consulta
+    public int contarEventos(int usuarioId) {
+        // nuevo: queryNumEntries hace un COUNT(*) con filtro y devuelve un long
+        return (int) DatabaseUtils.queryNumEntries(getReadableDatabase(), TABLA_EVENTOS,
+                "usuario_id = ?", new String[]{String.valueOf(usuarioId)});
+    }
 
     // Pasa un Evento a ContentValues columna -> valor, lo usan el insert y el update
     private ContentValues valoresDe(Evento e) {
@@ -200,7 +207,7 @@ public class EventosDB extends SQLiteOpenHelper {
         // los ? se rellenan por orden con el array
         // el primero con el patrón de búsqueda, el segundo con el mínimo de asistentes
         Cursor c = db.query(TABLA_EVENTOS, null,
-                "nombre LIKE ? AND asistentes >= ?",
+                "nombre LIKE ? AND asistentes >= ? AND usuario_id IS NULL",
                 new String[]{patron, String.valueOf(minAsistentes)},
                 null, null, "nombre COLLATE NOCASE"); //esto es una regla para comparar sin distinguir mayusuclas
         while (c.moveToNext()) {
