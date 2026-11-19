@@ -1,9 +1,27 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.EvenToGo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Tema base de la app. Es Light (modo claro fijo): el DayNight anterior ponía el fondo negro en modo oscuro
+         y los textos, que son negros (@color/black), no se leían -->
+    <style name="Base.Theme.EvenToGo" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Colores de la app (los de colors.xml): antes estaban comentados y Material usaba su morado por defecto -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Fondo gris claro en todas las pantallas (el mismo que ya tenía MainActivity) -->
+        <item name="android:colorBackground">@color/gray</item>
     </style>
 
     <style name="Theme.EvenToGo" parent="Base.Theme.EvenToGo" />
+
+    <!-- Igual que el anterior pero CON barra superior (ActionBar). Se usa en las pantallas secundarias para tener
+         la flecha de volver atrás. MainActivity, Login y Coleccion (que tiene su propia toolbar) usan el de arriba -->
+    <style name="Theme.EvenToGo.ConBarra" parent="Theme.Material3.Light">
+        <!-- Colores de la app (los de colors.xml): antes estaban comentados y Material usaba su morado por defecto -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Fondo gris claro en todas las pantallas (el mismo que ya tenía MainActivity) -->
+        <item name="android:colorBackground">@color/gray</item>
+    </style>
 </resources>

@@ -41,13 +41,15 @@ public class EventosRecyclerAdapter
 
         holder.imgPortada.setImageResource(evento.getPortada());
         holder.txtNombre.setText(evento.getNombre());
-        holder.txtDetalle.setText(evento.getTipo() + " · " + evento.getFecha());
-        holder.txtAsistentes.setText(evento.getAsistentes() + " asistentes");
+        holder.txtDetalle.setText(Textos.tipo(coleccion, evento.getTipo()) + " · " + evento.getFecha());
+        holder.txtAsistentes.setText(coleccion.getString(R.string.n_asistentes, evento.getAsistentes()));
 
         // abrimos la ficha con el evento entero
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(coleccion, FichaEvento.class);
             intent.putExtra(Evento.EXTRA, evento);
+            // la ficha necesita saber quién ha entrado para el Switch de favorito
+            intent.putExtra(Login.EXTRA_USUARIO_ID, coleccion.getUsuarioId());
             coleccion.startActivity(intent);
         });
 

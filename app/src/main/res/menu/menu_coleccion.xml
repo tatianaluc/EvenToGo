@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/opcion_anadir"
-        android:title="Añadir evento"
+        android:title="@string/anadir_evento"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/opcion_ordenar"
-        android:title="Ordenar por nombre"
+        android:title="@string/ordenar_nombre"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/opcion_buscar"
-        android:title="Buscar evento"
+        android:title="@string/buscar_evento_titulo"
         app:showAsAction="never" />
 
     <!-- Abre la lista personal del usuario -->
@@ -25,6 +25,6 @@
 
     <item
         android:id="@+id/opcion_acerca"
-        android:title="Acerca de"
+        android:title="@string/nav_acerca"
         app:showAsAction="never" />
 </menu>

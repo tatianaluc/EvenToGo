@@ -2,15 +2,14 @@
     <string name="creado_por">Creado por Tatiana De Luca</string>
     <string name="app_name">EvenToGo</string>
     <string name="nombre_evento">Nombre del Evento</string>
-    <!-- Texto de Acerca de -->
     <string name="acerca_texto">EvenToGo te da el precio de tu evento, para llevar, en minutos.\n\nRegistra tu evento, elige los servicios y confirma una reunión con tu project manager.
         \n\nVersión 1.0\nCreada y desarrollada por Tatiana De Luca\n
         Proyecto de PMDM · 2º DAM · 2026\n\n
         Se reservan los derechos de admisión ©.\n\nMantén pulsado y arrastra este texto para volver.</string>
     <string name="num_inv">Número de Invitados: </string>
     <string name="save">Guardar</string>
-    <string name="mas">Aumentar</string>
-    <string name="menos">Disminuir</string>
+    <string name="mas">+</string>
+    <string name="menos">-</string>
     <string name="btnBack">Atras</string>
     <string name="btnNext">Siguiente</string>
     <string name="addAv">Incluir AV en el presupuesto</string>
@@ -23,7 +22,7 @@
     <string name="selec">Mis Eventos</string>
     <string name="eventos_registrados">Eventos registrados: %1$d</string>
     <string name="eventos_encontrados">%1$d eventos encontrados</string>
-    <!-- Pantalla Wishlist (lista personal de eventos del usuario) -->
+    <!-- Wishlist personal de eventos del usuario -->
     <string name="titulo_wishlist">Mi lista de eventos</string>
     <string name="anadir_wishlist">Añadir a mi lista</string>
     <string name="ayuda_wishlist">Mantén pulsado un evento para quitarlo de tu lista</string>
@@ -33,7 +32,7 @@
     <string name="wishlist_quitado">Quitado de tu lista</string>
     <string name="wishlist_sin_usuario">Inicia sesión para ver tu lista</string>
     <string name="opcion_wishlist">Mi lista</string>
-    <!-- Reuniones de un evento (Room) -->
+    <!-- Reuniones de un evento -->
     <string name="ver_reuniones">Reuniones</string>
     <string name="titulo_reuniones">Reuniones del evento</string>
     <string name="sin_reuniones">Este evento todavía no tiene reuniones</string>
@@ -59,7 +58,7 @@
         <item>Concierto</item>
         <item>Otro</item>
     </string-array>
-    <!-- Lugares donde puede ser el evento, selecciona es la posición 0 es el texto por defecto -->
+    <!-- Lugares donde puede ser el evento, "selecciona" es la posición 0 es el texto por defecto -->
     <string-array name="lugares">
         <item>Selecciona</item>
         <item>Salón de Eventos Interior</item>
@@ -67,5 +66,231 @@
         <item>Sala de reuniones</item>
         <item>Carpa</item>
         <item>Local Particular</item>
+    </string-array>
+    <!-- Menú lateral de Mis eventos -->
+    <string name="nav_mis_eventos">Mis eventos</string>
+    <string name="nav_anadir">Añadir evento</string>
+    <string name="nav_catalogo">Catálogo de eventos</string>
+    <string name="nav_lista">Mi lista</string>
+    <string name="nav_servicios">Buscar servicios</string>
+    <string name="nav_compartir">Compartir la app</string>
+    <string name="nav_acerca">Acerca de</string>
+    <string name="nav_salir">Cerrar sesión</string>
+    <string name="abrir_menu">Abrir menú</string>
+    <string name="cerrar_menu">Cerrar menú</string>
+    <!-- Diálogos de confirmación -->
+    <string name="dialogo_eliminar">Eliminar</string>
+    <string name="dialogo_cancelar">Cancelar</string>
+    <string name="evento_eliminar_titulo">Eliminar evento</string>
+    <string name="evento_eliminar_mensaje">¿Seguro que quieres eliminar \"%1$s\"?</string>
+    <string name="evento_eliminado">Evento eliminado: %1$s</string>
+    <string name="reunion_eliminar_mensaje">¿Seguro que quieres eliminar esta reunión?</string>
+    <!-- Switch de favorito -->
+    <string name="favorito_switch">Favorito</string>
+    <!-- de Acerca de -->
+    <string name="acerca_dato_autora">Autora</string>
+    <string name="acerca_valor_autora">Tatiana De Luca</string>
+    <string name="acerca_dato_asignatura">Asignatura</string>
+    <string name="acerca_valor_asignatura">PMDM</string>
+    <string name="acerca_dato_curso">Curso</string>
+    <string name="acerca_valor_curso">2º DAM · 2026-27</string>
+    <string name="acerca_dato_version">Versión</string>
+    <string name="acerca_valor_version">1.0</string>
+    <!-- Cuenta de usuario, crear, cambiar clave y eliminar  -->
+    <string name="campo_obligatorio">Campo obligatorio</string>
+    <string name="login_crear_cuenta">Crear cuenta</string>
+    <string name="cuenta_crear_titulo">Crear cuenta</string>
+    <string name="cuenta_cambiar_titulo">Cambiar clave</string>
+    <string name="cuenta_usuario">Usuario</string>
+    <string name="cuenta_clave">Clave</string>
+    <string name="cuenta_clave_actual">Clave actual</string>
+    <string name="cuenta_clave_nueva">Clave nueva</string>
+    <string name="cuenta_aceptar">Aceptar</string>
+    <string name="cuenta_creada">Cuenta creada. Ya puedes entrar</string>
+    <string name="cuenta_clave_cambiada">Clave cambiada</string>
+    <string name="cuenta_ya_existe">Ese usuario ya existe</string>
+    <string name="cuenta_clave_incorrecta">Clave actual incorrecta</string>
+    <string name="cuenta_eliminada">Cuenta eliminada</string>
+    <string name="cuenta_eliminar_titulo">Eliminar mi cuenta</string>
+    <string name="cuenta_eliminar_mensaje">Se borrarán tu cuenta, tus eventos y tu lista. ¿Seguro que quieres continuar?</string>
+    <string name="nav_cambiar_clave">Cambiar clave</string>
+    <string name="nav_borrar_cuenta">Eliminar mi cuenta</string>
+    <!-- Textos de layouts, menús y mensajes del código -->
+    <string name="acerca_titulo">Acerca de EvenToGo</string>
+    <string name="buscar_servicio_titulo">Buscar servicio</string>
+    <string name="atras">Atrás</string>
+    <string name="categoria">Categoría</string>
+    <string name="servicio">Servicio</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="buscar">Buscar</string>
+    <string name="buscar_evento_titulo">Buscar evento</string>
+    <string name="nombre_del_evento">Nombre del evento</string>
+    <string name="hint_parte_nombre">Escribe aquí parte del nombre</string>
+    <string name="empieza_por">Empieza por</string>
+    <string name="contiene">Contiene</string>
+    <string name="asistentes_minimos">Asistentes mínimos</string>
+    <string name="hint_min_asistentes">Nº mínimo de asistentes (vacío = todos)</string>
+    <string name="resultados">Resultados</string>
+    <string name="anadir_evento">Añadir evento</string>
+    <string name="mostrar_eventos">Mostrar eventos</string>
+    <string name="ocultar_eventos">Ocultar eventos</string>
+    <string name="compartir_titulo">Compartir Evento</string>
+    <string name="compartir_instruccion">Escriba nombre y fecha del evento (dd/mm/aaaa)</string>
+    <string name="compartir_hint">Concierto para 100 personas en Teatro el 29/11/2026</string>
+    <string name="enviar">Enviar</string>
+    <string name="confirmar_reunion_titulo">Confirmar Reunión</string>
+    <string name="confirmar_reunion_pregunta">¿Desea confirmar la reunión con el Project Manager?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="ficha_titulo">Ficha de Registro</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="portada_evento">Portada del evento</string>
+    <string name="complejidad">Complejidad (según los servicios)</string>
+    <string name="invitar_titulo">Invitar</string>
+    <string name="destinatario">Destinatario</string>
+    <string name="hint_correo">correo@mail.com</string>
+    <string name="asunto">Asunto</string>
+    <string name="hint_asunto">Escriba el asunto...</string>
+    <string name="mensaje">Mensaje</string>
+    <string name="hint_cuerpo">Escriba el cuerpo del mensaje...</string>
+    <string name="compartir_invitacion">Compartir Invitación</string>
+    <string name="login_titulo">Iniciar sesión</string>
+    <string name="hint_usuario">Escribe tu usuario</string>
+    <string name="hint_clave">Escribe tu clave</string>
+    <string name="entrar">Entrar</string>
+    <string name="logo_descripcion">Logo de EvenToGo</string>
+    <string name="bienvenida">Bienvenido a\nEvenToGo</string>
+    <string name="descubre_web">Descubre la Web</string>
+    <string name="suelta_aqui">Suelta aquí \'Acerca de\'</string>
+    <string name="registrar_evento_titulo">Registrar Evento</string>
+    <string name="hint_nombre_evento">Escribe aquí el nombre del evento</string>
+    <string name="fecha_evento">Fecha de Evento</string>
+    <string name="hint_fecha">dd/mm/aaaa</string>
+    <string name="tipo_evento_label">Tipo de Evento</string>
+    <string name="cliente_empresa">Cliente/Empresa</string>
+    <string name="hint_cliente_empresa">Cliente/Empresa organizadora</string>
+    <string name="num_asistentes">Número de Asistentes</string>
+    <string name="hint_asistentes">Nº de Asistentes (max. 300)</string>
+    <string name="num_servicios">Nº de Servicios (1-10)</string>
+    <string name="quiero_av">Si! Quiero incluir AVs en Presupuesto</string>
+    <string name="incluir_avs">Incluir AVs</string>
+    <string name="no_incluir">No incluir</string>
+    <string name="traemos_avs">Traemos AVs</string>
+    <string name="hora_inicio">Hora de inicio</string>
+    <string name="hint_hora">HH:mm</string>
+    <string name="hora_fin">Hora de fin</string>
+    <string name="lugar_evento">Lugar del evento</string>
+    <string name="reset">Reset</string>
+    <string name="crear_reunion_titulo">Crear Reunión</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cliente_encargado">Nombre del cliente o comercial encargado</string>
+    <string name="hint_nombre_apellido">Nombre y apellido</string>
+    <string name="fecha_reunion">Fecha de Reunión</string>
+    <string name="lugar">Lugar</string>
+    <string name="online">Online</string>
+    <string name="oficina">Oficina</string>
+    <string name="invitar_reunion">Invitar a la reunión</string>
+    <string name="ordenar_nombre">Ordenar por nombre</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="evento_actualizado">Evento actualizado: %1$s</string>
+    <string name="evento_anadido">Se ha añadido el evento: %1$s</string>
+    <string name="eventos_ordenados">Eventos ordenados por nombre</string>
+    <string name="n_asistentes">%1$d asistentes</string>
+    <string name="login_error">Usuario o clave incorrectos</string>
+    <string name="login_ok">Sesión iniciada como %1$s</string>
+    <string name="sin_avs">Sin AVs.</string>
+    <string name="elige_fecha">Elige una fecha</string>
+    <string name="elige_hora_inicio">Elige la hora de inicio</string>
+    <string name="elige_hora_fin">Elige la hora de fin</string>
+    <string name="hora_fin_igual">La hora de fin no puede ser igual a la de inicio</string>
+    <string name="datos_incorrectos">Datos incorrectos</string>
+    <string name="rango_asistentes">min. 5 y max. 300</string>
+    <string name="escoja_fecha">Escoja una fecha.</string>
+    <string name="debe_seleccionar">Debe seleccionar una opción.</string>
+    <string name="completar_campos">Debe completar los campos\nantes de confirmar la reunión</string>
+    <string name="reunion_confirmada">De acuerdo %1$s, usted ha %2$s la reunión con el project manager.</string>
+    <string name="estado_aceptado">ACEPTADO</string>
+    <string name="estado_cancelado">CANCELADO</string>
+    <string name="sin_app_correo">Debe tener una app de correo</string>
+    <string name="buscar_toast">%1$s (%2$s)\n%3$s\nUbicación: %4$s</string>
+    <string name="reunion_texto">%1$s - %2$s\nCliente: %3$s - %4$s</string>
+    <string name="evento_resumen">%1$s (%2$s)\nCliente: %3$s - %4$d asistentes\nFecha: %5$s (%6$s - %7$s) - %8$d servicios - %9$d horas\nLugar: %10$s</string>
+    <string name="ficha_nombre">Nombre del evento: %1$s</string>
+    <string name="ficha_fecha">Fecha de evento: %1$s</string>
+    <string name="ficha_tipo">Tipo de evento: %1$s</string>
+    <string name="ficha_cliente">Nombre del cliente/empresa: %1$s</string>
+    <string name="ficha_asistentes">Cantidad de asistentes: %1$d</string>
+    <string name="ficha_servicios">Cantidad de servicios: %1$d</string>
+    <string name="ficha_duracion">Duración: %1$d horas</string>
+    <string name="ficha_av">Incluir AVs en presupuesto: %1$s</string>
+    <string name="ficha_horario">Horario: %1$s - %2$s</string>
+    <string name="ficha_lugar">Lugar: %1$s</string>
+    <string name="respuesta_si">Sí</string>
+    <string name="respuesta_no">No</string>
+    <!-- Valores que se guardan en la bd -->
+    <string-array name="tipo_evento_valor" translatable="false">
+        <item>Selecciona</item>
+        <item>Boda</item>
+        <item>Corporativo</item>
+        <item>Cumpleaños</item>
+        <item>Concierto</item>
+        <item>Otro</item>
+    </string-array>
+    <string-array name="lugares_valor" translatable="false">
+        <item>Selecciona</item>
+        <item>Salón de Eventos Interior</item>
+        <item>Zona de Eventos Exterior</item>
+        <item>Sala de reuniones</item>
+        <item>Carpa</item>
+        <item>Local Particular</item>
+    </string-array>
+    <string-array name="buscar_categorias">
+        <item>Selecciona categoría</item>
+        <item>Sonido</item>
+        <item>Iluminación</item>
+        <item>Video</item>
+    </string-array>
+    <string-array name="buscar_servicios_0">
+        <item>Selecciona servicio</item>
+    </string-array>
+    <string-array name="buscar_servicios_1">
+        <item>Selecciona servicio</item>
+        <item>0-50 personas</item>
+        <item>50-90 personas</item>
+        <item>+90 personas</item>
+    </string-array>
+    <string-array name="buscar_servicios_2">
+        <item>Selecciona servicio</item>
+        <item>Pack básico</item>
+        <item>Pack intermedio</item>
+        <item>Pack completo</item>
+    </string-array>
+    <string-array name="buscar_servicios_3">
+        <item>Selecciona servicio</item>
+        <item>Proyector</item>
+        <item>Plasmas</item>
+        <item>Pantalla LED + streaming</item>
+    </string-array>
+    <string-array name="buscar_caract_0">
+        <item></item>
+    </string-array>
+    <string-array name="buscar_caract_1">
+        <item></item>
+        <item>2 altavoces + 1/2 micrófonos de cable + mesa analógica.</item>
+        <item>4 altavoces + 1/2 micrófonos de cable/inalámbricos + mesa digital.</item>
+        <item>6 altavoces + hasta 4 micrófonos inalámbricos + mesa digital.</item>
+    </string-array>
+    <string-array name="buscar_caract_2">
+        <item></item>
+        <item>8 focos LED de ambiente.</item>
+        <item>10 focos LED de ambiente + 2 cabezas móviles + mesa.</item>
+        <item>16 focos LED de ambiente + 4 cabezas móviles + 2 frontales de escenario + mesa.</item>
+    </string-array>
+    <string-array name="buscar_caract_3">
+        <item></item>
+        <item>Proyector 5000 lúmenes + pantalla de 3x2.20m + portátil.</item>
+        <item>Plasmas de 65\'-86\' + soporte + portátil.</item>
+        <item>Pantalla LED 3.5x2.5m + control de video + streaming (opcional)</item>
     </string-array>
 </resources>

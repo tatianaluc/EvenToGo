@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="24dp">
+
+    <EditText
+        android:id="@+id/etNombreCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cuenta_usuario"
+        android:inputType="text" />
+
+    <!-- textPassword hace que lo que se escribe salga con puntitos -->
+    <EditText
+        android:id="@+id/etClaveCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cuenta_clave"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/etClaveNueva"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cuenta_clave_nueva"
+        android:inputType="textPassword" />
+</LinearLayout>

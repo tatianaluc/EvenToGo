@@ -18,19 +18,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Reuniones del evento. Pulsación larga: cambiar el estado o eliminarla -->
+    <!-- Reuniones del evento. long click poara cambiar el estado o eliminarla -->
+    <!-- Se enseña solo cuando la lista está vacía -->
     <ListView
         android:id="@+id/lvReuniones"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/txtTituloReuniones"
         app:layout_constraintBottom_toTopOf="@id/btnAtrasReuniones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/txtTituloReuniones"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!-- Se enseña solo cuando la lista está vacía -->
     <TextView
         android:id="@+id/txtSinReuniones"
         android:layout_width="0dp"
@@ -42,6 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/btnAtrasReuniones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

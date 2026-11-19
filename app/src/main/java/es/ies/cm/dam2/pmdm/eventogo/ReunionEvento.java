@@ -5,9 +5,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-// Reunión que se pide para un evento (relación 1-N: un evento puede tener varias reuniones).
+// Reunión que se pide para un evento
 // La clave ajena eventoId apunta al id del evento y, con CASCADE, si se borra el evento
-// Room borra solo sus reuniones. Se llama ReunionEvento porque Reunion ya es la pantalla (activity)
+// Room borra solo sus reuniones.
 @Entity(tableName = "reuniones",
         foreignKeys = @ForeignKey(
                 entity = Evento.class,
@@ -17,11 +17,11 @@ import androidx.room.PrimaryKey;
         indices = {@Index("eventoId")}) // Room recomienda un índice en la clave ajena
 public class ReunionEvento {
 
-    // Estados posibles de una reunión, los mismos textos que devuelve ConfirmarReunion
+    // Estados posibles de una reunión
     public static final String ACEPTADA = "ACEPTADO";
     public static final String CANCELADA = "CANCELADO";
 
-    // Atributos públicos para que Room los lea y escriba directamente, sin getters ni setters
+    // Atributos públicos para que Room los lea y escriba directamente
     @PrimaryKey(autoGenerate = true)
     public int id;          // 0 = todavía sin guardar, Room le pone el siguiente número
     public int eventoId;    // a qué evento pertenece

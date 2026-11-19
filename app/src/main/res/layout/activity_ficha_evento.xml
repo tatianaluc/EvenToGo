@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!-- El ScrollView va por si la ficha no cabe entera en pantallas pequeñas.
-     Conserva el id fichaEvento, que es el que usa el Java para los insets -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ScrollView por si al girar la pantalla no cabe todo, se puede hacer scroll
+     y no se solapa ni se corta nada -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Ficha de Registro"
+            android:text="@string/ficha_titulo"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -35,12 +36,13 @@
             android:orientation="horizontal">
 
             <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
                 android:id="@+id/btnAtras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Atrás" />
+                android:text="@string/atras" />
 
-            <!-- Lista las reuniones que tiene este evento (están en Room) -->
+            <!-- Lista las reuniones que tiene este evento -->
             <Button
                 android:id="@+id/btnVerReuniones"
                 android:layout_width="wrap_content"
@@ -60,7 +62,7 @@
                 android:id="@+id/btnSig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Siguiente" />
+                android:text="@string/siguiente" />
 
         </LinearLayout>
 
@@ -69,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginTop="16dp"
-            android:contentDescription="Portada del evento"
+            android:contentDescription="@string/portada_evento"
             android:scaleType="centerCrop" />
 
         <androidx.cardview.widget.CardView
@@ -187,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Complejidad (según los servicios)"
+                    android:text="@string/complejidad"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -200,6 +202,18 @@
                     android:isIndicator="true"
                     android:numStars="5"
                     android:stepSize="0.5" />
+
+                <!-- Switch de favorito.
+                     Solo se ve si hay un usuario con sesión iniciada -->
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/swFavorito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/favorito_switch"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <!-- Presupuesto estimado, lo rellena FichaEvento con la clase Presupuesto -->
                 <TextView

@@ -1,19 +1,21 @@
 package es.ies.cm.dam2.pmdm.eventogo;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// Lista las reuniones de un evento (la parte N de la relación 1-N, guardada en Room).
-// Pulsación larga sobre una reunión: marcarla como aceptada o cancelada (update) o eliminarla (delete)
-public class ListaReuniones extends AppCompatActivity {
+// Lista las reuniones de un evento.
+// Pulsación larga sobre una reunión para marcarla como aceptada, cancelada o eliminarla
+public class ListaReuniones extends ActividadConBarra {
 
     private int eventoId; // el evento del que enseñamos las reuniones (llega por Intent)
     // La lista que tiene guardada el adapter, así que siempre se rellena esta misma
@@ -29,21 +31,43 @@ public class ListaReuniones extends AppCompatActivity {
 
         ListView lvReuniones = findViewById(R.id.lvReuniones);
         TextView txtSinReuniones = findViewById(R.id.txtSinReuniones);
-        // El ArrayAdapter enseña cada reunión con su toString()
-        adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, reuniones);
+        // El ArrayAdapter enseña cada reunión con su to string
+        // monta el texto de cada fila aquí para poder usar strings y traducir
+        adaptador = new ArrayAdapter<ReunionEvento>(this, android.R.layout.simple_list_item_1, reuniones) {
+            @NonNull
+            @Override
+            public View getView(int posicion, View convertView, @NonNull ViewGroup parent) {
+                TextView fila = (TextView) super.getView(posicion, convertView, parent);
+                ReunionEvento r = getItem(posicion);
+                fila.setText(ListaReuniones.this.getString(R.string.reunion_texto, r.fecha,
+                        Textos.modalidad(ListaReuniones.this, r.modalidad), r.cliente,
+                        Textos.estado(ListaReuniones.this, r.estado)));
+                return fila;
+            }
+        };
         lvReuniones.setAdapter(adaptador);
         // Si la lista está vacía se enseña este texto en su lugar
         lvReuniones.setEmptyView(txtSinReuniones);
 
         lvReuniones.setOnItemLongClickListener((parent, view, position, id) -> {
             mostrarOpciones(reuniones.get(position));
-            return true; // true = ya hemos gestionado la pulsación larga
+            return true; // true = gestionando la pulsación larga
         });
 
         findViewById(R.id.btnAtrasReuniones).setOnClickListener(v -> finish());
+
+        // Respuesta del Dialog de confirmar borrado
+        getSupportFragmentManager().setFragmentResultListener(ConfirmarDialog.CLAVE_BORRAR_REUNION, this,
+                (clave, resultado) -> {
+                    int idReunion = resultado.getInt(ConfirmarDialog.RESULTADO_ID);
+                    AppDatabase.ejecutor.execute(() -> {
+                        AppDatabase.getInstance(this).reunionDao().borrarPorId(idReunion);
+                        runOnUiThread(this::cargarReuniones); // se vuelve a leer para que desaparezca de la lista
+                    });
+                });
     }
 
-    // Cada vez que se vuelve a ver la pantalla se lee otra vez de Room (por si se ha guardado una reunión nueva)
+    // Cada vez que se vuelve a ver la pantalla se lee otra vez de Room
     @Override
     protected void onResume() {
         super.onResume();
@@ -71,14 +95,24 @@ public class ListaReuniones extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.reunion_opciones)
                 .setItems(opciones, (dialog, cual) -> {
+                    if (cual == 2) {
+                        // Eliminar pide confirmación con el Dialog antes de borrar nada
+                        ConfirmarDialog.nuevo(
+                                ConfirmarDialog.CLAVE_BORRAR_REUNION,
+                                getString(R.string.reunion_eliminar),
+                                getString(R.string.reunion_eliminar_mensaje),
+                                reunion.id,
+                                "")
+                                .show(getSupportFragmentManager(), "confirmar_reunion");
+                        return;
+                    }
+                    // Las otras dos opciones son un update del estado
                     AppDatabase.ejecutor.execute(() -> {
                         ReunionDao dao = AppDatabase.getInstance(this).reunionDao();
                         if (cual == 0) {
                             dao.cambiarEstado(reunion.id, ReunionEvento.ACEPTADA);
-                        } else if (cual == 1) {
-                            dao.cambiarEstado(reunion.id, ReunionEvento.CANCELADA);
                         } else {
-                            dao.borrarPorId(reunion.id);
+                            dao.cambiarEstado(reunion.id, ReunionEvento.CANCELADA);
                         }
                         runOnUiThread(this::cargarReuniones); // y se vuelve a leer para que se vea el cambio
                     });

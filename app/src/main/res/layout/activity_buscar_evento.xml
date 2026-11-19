@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Buscar evento"
+        android:text="@string/buscar_evento_titulo"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/btnAtras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="Buscar"
+        android:text="@string/buscar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTitBuscarEvento" />
 
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Nombre del evento"
+        android:text="@string/nombre_del_evento"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -60,7 +61,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
-        android:hint="Escribe aquí parte del nombre"
+        android:hint="@string/hint_parte_nombre"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="12sp"
@@ -69,7 +70,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtNombreEvBuscar" />
 
-    <!-- Dos opciones excluyentes -->
+    <!-- dos opciones excluyentes -->
     <RadioGroup
         android:id="@+id/rgModo"
         android:layout_width="wrap_content"
@@ -84,7 +85,7 @@
             android:id="@+id/rbEmpieza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Empieza por" />
+            android:text="@string/empieza_por" />
 
         <RadioButton
             android:id="@+id/rbContiene"
@@ -92,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:checked="true"
-            android:text="Contiene" />
+            android:text="@string/contiene" />
     </RadioGroup>
 
     <TextView
@@ -101,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:text="Asistentes mínimos"
+        android:text="@string/asistentes_minimos"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -115,7 +116,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
-        android:hint="Nº mínimo de asistentes (vacío = todos)"
+        android:hint="@string/hint_min_asistentes"
         android:inputType="number"
         android:maxLength="3"
         android:textColor="@color/black"
@@ -131,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Resultados"
+        android:text="@string/resultados"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"

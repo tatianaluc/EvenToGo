@@ -6,46 +6,43 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
-// Carga inicial de la bd Room, que se hace UNA sola vez (lo apunta un boolean en SharedPreferences):
-//  - Si venimos de la versión anterior de la app (eventos guardados en SQLite), esos eventos se pasan a Room
-//    conservando su id, así la wishlist sigue apuntando a los eventos correctos.
-//  - Si es una instalación limpia, se cargan los 20 eventos de ejemplo (6 de usuarios y 14 de catálogo)
-//    y dos reuniones, para que se pueda probar todo nada más instalar.
+// Carga inicial de la bd Room, que se hace una sola vez (se guarda en un bolleano de SharedPreferences):
 public class DatosIniciales {
 
-    // SharedPreferences: archivo pequeño de clave -> valor que guarda Android. Aquí solo guarda si ya cargamos
+    // SharedPreferences es un archivo de clave -> valor que guarda Android. Aquí solo guarda si ya cargamos
     private static final String PREFERENCIAS = "eventogo";
     private static final String CLAVE_CARGADO = "datos_cargados";
 
-    // Se llama al abrir la app. Todo el trabajo va al hilo aparte; al ser el mismo hilo que usan las
-    // pantallas, lo que pidan después se ejecuta cuando la carga ya ha terminado
+    // Se llama al abrir la app. Todo el trabajo va al hilo aparte del room,
+    //  al ser el mismo hilo que usan las pantallas, lo que pidan después
+    //  se ejecuta cuando la carga ya ha terminado
     public static void cargarSiHaceFalta(Context contexto) {
         Context app = contexto.getApplicationContext();
         AppDatabase.ejecutor.execute(() -> {
             SharedPreferences pref = app.getSharedPreferences(PREFERENCIAS, Context.MODE_PRIVATE);
             if (pref.getBoolean(CLAVE_CARGADO, false)) {
-                return; // ya se hizo en otra ocasión
+                return; // se sale
             }
 
             AppDatabase room = AppDatabase.getInstance(app);
-            // Solo cargamos si Room está vacía, para no duplicar nunca nada
+            // Solo cargamos si Room está vacía, para no duplicar
             if (room.eventoDao().contarTodos() == 0) {
                 EventosDB sqlite = new EventosDB(app);
                 ArrayList<Evento> antiguos = sqlite.leerEventosAntiguos();
                 if (!antiguos.isEmpty()) {
-                    // Migración: los eventos viejos de SQLite pasan a Room con su mismo id
+                    // Migrar los eventos viejos de SQLite a Room con su mismo id
                     room.eventoDao().insertarVarios(antiguos);
                     sqlite.borrarEventosAntiguos(); // y se quita la tabla vieja, ya no hace falta
                 } else {
                     cargarEjemplos(room);
                 }
             }
-            // Apuntamos que ya está hecho, así no se repite
+            // aqui decimos ya está hecho, así no se repite
             pref.edit().putBoolean(CLAVE_CARGADO, true).apply();
         });
     }
 
-    // Instalación limpia: 20 eventos (los 6 primeros con dueño) y dos reuniones
+    // Instalación de datos de ejemplo: 20 eventos (los 6 primeros con dueño) y dos reuniones pautadas
     private static void cargarEjemplos(AppDatabase room) {
         List<Evento> eventos = new ArrayList<>();
         // de admin
@@ -75,10 +72,10 @@ public class DatosIniciales {
         eventos.add(new Evento("Inauguración de tienda", "Corporativo", "Moda Viva", 110, "12/03/2027", "18:00", "22:00", 5, true, "Local Particular"));
         eventos.add(new Evento("Concierto de Navidad", "Concierto", "Coro Municipal", 300, "20/12/2026", "20:00", "23:00", 6, true, "Salón de Eventos Interior"));
 
-        // insertarVarios devuelve el id de cada evento, en el mismo orden en que los hemos metido
+        // insertarVarios devuelve el id de cada evento, en el mismo orden en que los hemos añadido
         List<Long> ids = room.eventoDao().insertarVarios(eventos);
 
-        // Dos reuniones de ejemplo (la relación 1-N): una aceptada y otra cancelada
+        // Dos reuniones de ejemplo, una aceptada y otra cancelada
         List<ReunionEvento> reuniones = new ArrayList<>();
         reuniones.add(new ReunionEvento(ids.get(0).intValue(), "Familia Ruiz", "15/12/2026",
                 "Oficina", ReunionEvento.ACEPTADA));
@@ -87,7 +84,7 @@ public class DatosIniciales {
         room.reunionDao().insertarVarias(reuniones);
     }
 
-    // Devuelve el evento con su dueño puesto (1 = admin, 2 = carlos), para escribir los ejemplos más corto
+    // Devuelve el evento con su dueño puesto
     private static Evento conDueno(int usuarioId, Evento evento) {
         evento.setUsuarioId(usuarioId);
         return evento;

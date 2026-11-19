@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ConfirmarReunion extends AppCompatActivity {
+public class ConfirmarReunion extends ActividadConBarra {
 
     // clave para devolver la respuesta a la pantalla Reunion
     public static final String EXTRA_ASISTENCIA = "asistencia";

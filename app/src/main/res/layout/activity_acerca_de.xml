@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- ScrollView por si al girar la pantalla no cabe todo, se puede hacer scroll
+     y no se solapa ni se corta nada -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/acerca_de"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".AcercaDe">
 
     <TextView
@@ -12,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Acerca de EvenToGo"
+        android:text="@string/acerca_titulo"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -23,6 +30,7 @@
 
     <!-- Tarjeta que contiene el texto -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardTexto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -46,4 +54,78 @@
             android:textSize="14sp" />
     </androidx.cardview.widget.CardView>
 
+    <!-- Segunda tarjeta con los datos del proyecto en una tabla  -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardTexto">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:stretchColumns="1">
+
+            <TableRow android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:paddingEnd="16dp"
+                    android:text="@string/acerca_dato_autora"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="@string/acerca_valor_autora"
+                    android:textColor="@color/black" />
+            </TableRow>
+
+            <TableRow android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:paddingEnd="16dp"
+                    android:text="@string/acerca_dato_asignatura"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="@string/acerca_valor_asignatura"
+                    android:textColor="@color/black" />
+            </TableRow>
+
+            <TableRow android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:paddingEnd="16dp"
+                    android:text="@string/acerca_dato_curso"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="@string/acerca_valor_curso"
+                    android:textColor="@color/black" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:paddingEnd="16dp"
+                    android:text="@string/acerca_dato_version"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="@string/acerca_valor_version"
+                    android:textColor="@color/black" />
+            </TableRow>
+        </TableLayout>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

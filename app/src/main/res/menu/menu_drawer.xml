@@ -1,27 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?><!-- MENÚ LATERAL (Navigation Drawer) de MainActivity -->
+<?xml version="1.0" encoding="utf-8"?><!-- MENÚ LATERAL (Navigation Drawer) de Mis eventos (Coleccion).
+     Se abre con el icono de hamburguesa de la barra o deslizando desde el borde izquierdo -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/nav_inicio"
-        android:title="Inicio" />
-
+    <!-- Es la pantalla en la que ya estamos, así que solo cierra el menú -->
     <item
         android:id="@+id/nav_coleccion"
-        android:title="Mi colección" />
-
-    <item
-        android:id="@+id/nav_buscar"
-        android:title="Buscar" />
+        android:title="@string/nav_mis_eventos" />
 
     <item
         android:id="@+id/nav_anadir"
-        android:title="Añadir evento" />
+        android:title="@string/nav_anadir" />
+
+    <!-- Catálogo de eventos de ejemplo, con búsqueda en la bd -->
+    <item
+        android:id="@+id/nav_buscar_evento"
+        android:title="@string/nav_catalogo" />
+
+    <!-- Lista personal del usuario (wishlist, en SQLite) -->
+    <item
+        android:id="@+id/nav_wishlist"
+        android:title="@string/nav_lista" />
+
+    <!-- Buscador de servicios con los dos Spinner dependientes -->
+    <item
+        android:id="@+id/nav_buscar"
+        android:title="@string/nav_servicios" />
 
     <item
-        android:id="@+id/nav_ajustes"
-        android:title="Ajustes" />
+        android:id="@+id/nav_compartir"
+        android:title="@string/nav_compartir" />
 
     <item
         android:id="@+id/nav_acerca"
-        android:title="Acerca de" />
+        android:title="@string/nav_acerca" />
+
+    <!-- Cuenta del usuario: abre el diálogo de cambiar la clave -->
+    <item
+        android:id="@+id/nav_cambiar_clave"
+        android:title="@string/nav_cambiar_clave" />
+
+    <!-- Pide confirmación y borra la cuenta, sus eventos y su lista -->
+    <item
+        android:id="@+id/nav_borrar_cuenta"
+        android:title="@string/nav_borrar_cuenta" />
+
+    <!-- Vuelve a la pantalla principal y cierra la sesión -->
+    <item
+        android:id="@+id/nav_salir"
+        android:title="@string/nav_salir" />
 </menu>

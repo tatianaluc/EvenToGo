@@ -4,24 +4,24 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 // Calcula el presupuesto estimado de un evento a partir de lo que se ha rellenado en el formulario.
-// Todas las tarifas están aquí arriba, en un solo sitio, para cambiarlas basta con tocar estos números
+// Todas las tarifas están aquí arriba, en un solo sitio
 public class Presupuesto {
 
-    // --- Tarifas del personal técnico ---
-    public static final double JORNADA_TECNICO = 280.0;      // € por técnico y por jornada
+    // personal técnico
+    public static final double JORNADA_TECNICO = 280.0;      // por técnico y por jornada
     public static final int HORAS_JORNADA = 8;               // horas que cubre la jornada
-    public static final double PRECIO_HORA_EXTRA = 20.0;     // € por cada hora a partir de las 8 h (por técnico)
-    public static final double MONTAJE_DESMONTAJE = 150.0;   // € fijos por montar y desmontar
-    public static final int ASISTENTES_POR_TECNICO = 50;     // un técnico más por cada 50 asistentes (estimación)
+    public static final double PRECIO_HORA_EXTRA = 20.0;     //por cada hora a partir de las 8 h (por técnico)
+    public static final double MONTAJE_DESMONTAJE = 150.0;   // fijos por montar y desmontar
+    public static final int ASISTENTES_POR_TECNICO = 50;     // un técnico más por cada 50 asistentes
     // Si el evento NO incluye AV y el cliente solo quiere personal, el precio es una tarifa fija
     public static final double TARIFA_SOLO_PERSONAL = 1500.0;
 
-    // --- Tarifa del AV (estimación según la magnitud, la dificultad y los asistentes) ---
-    public static final double AV_BASE = 500.0;              // € mínimos de cualquier montaje de AV
-    public static final double AV_POR_ASISTENTE = 5.0;       // € por cada asistente (magnitud del evento)
-    public static final double AV_POR_SERVICIO = 100.0;      // € por cada servicio (dificultad del evento)
+    // Tarifa del AV según la magnitud, la dificultad y los asistentes
+    public static final double AV_BASE = 500.0;              // mínimos de cualquier montaje de AV
+    public static final double AV_POR_ASISTENTE = 5.0;       // por cada asistente
+    public static final double AV_POR_SERVICIO = 100.0;      // por cada servicio  y estrella dificultad del evento
 
-    // Técnicos necesarios: uno por cada 50 asistentes (redondeando hacia arriba) y como mínimo uno
+    // Técnicos necesarios, uno por cada 50 asistentes y como mínimo uno
     public static int tecnicos(Evento e) {
         int tecnicos = (int) Math.ceil(e.getAsistentes() / (double) ASISTENTES_POR_TECNICO);
         return Math.max(1, tecnicos);
@@ -32,7 +32,7 @@ public class Presupuesto {
         return Math.max(0, e.getDuracion() - HORAS_JORNADA);
     }
 
-    // Coste de las jornadas del personal: técnicos x jornada
+    // Coste de las jornadas del personal técnicos x jornada
     public static double jornadas(Evento e) {
         return tecnicos(e) * JORNADA_TECNICO;
     }
@@ -42,7 +42,7 @@ public class Presupuesto {
         return tecnicos(e) * horasExtra(e) * PRECIO_HORA_EXTRA;
     }
 
-    // Coste del AV: solo si el evento lo incluye. Sube con los asistentes y con los servicios (la complejidad)
+    // Coste del AV, solo si el evento lo incluye. Sube con los asistentes y con la complejidad
     public static double av(Evento e) {
         if (!e.isIncluyeAV()) {
             return 0;
@@ -58,7 +58,7 @@ public class Presupuesto {
         return jornadas(e) + extras(e) + MONTAJE_DESMONTAJE + av(e);
     }
 
-    // Da formato de dinero en español, por ejemplo 1.234,50 €
+    // Da formato de dinero en español
     public static String euros(double importe) {
         return NumberFormat.getCurrencyInstance(new Locale("es", "ES")).format(importe);
     }

@@ -12,10 +12,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-// Pantalla de login: comprueba usuario y clave en la tabla usuarios de la bd
+// login comprueba usuario y clave en la tabla usuarios de la bd
 public class Login extends AppCompatActivity {
 
-    // Claves de los extras con los datos del usuario que ha entrado, para que las pantallas siguientes sepan quién es
+    // Claves de los extras con los datos del usuario que ha entrado, para que lo que muestren sepan quién es
     public static final String EXTRA_USUARIO_ID = "usuarioId";
     public static final String EXTRA_USUARIO = "usuario";
 
@@ -37,34 +37,44 @@ public class Login extends AppCompatActivity {
             // primero comprobamos que no deje nada vacío
             boolean ok = true;
             if (usuario.isEmpty()) {
-                etUsuario.setError("Campo Obligatorio");
+                etUsuario.setError(getString(R.string.campo_obligatorio));
                 ok = false;
             }
             if (clave.isEmpty()) {
-                etClave.setError("Campo Obligatorio");
+                etClave.setError(getString(R.string.campo_obligatorio));
                 ok = false;
             }
             if (!ok) return;
 
-            // preguntamos a la bd: devuelve el id del usuario, o -1 si no existe esa combinación
-            int idUsuario = new EventosDB(this).comprobarLogin(usuario, clave);
+            // preguntamos a la bd de room en el hilo aparte
+            // devuelve el id del usuario, o -1 si no existe
+            AppDatabase.ejecutor.execute(() -> {
+                int idUsuario = new EventosDB(this).comprobarLogin(usuario, clave);
 
-            if (idUsuario == -1) {
-                Toast.makeText(this, "Usuario o clave incorrectos", Toast.LENGTH_SHORT).show();
-                etClave.setText(""); // vaciamos la clave para que la vuelva a escribir
-                return;
-            }
+                // lo que toca la pantalla vuelve al hilo principal
+                runOnUiThread(() -> {
+                    if (idUsuario == -1) {
+                        Toast.makeText(this, R.string.login_error, Toast.LENGTH_SHORT).show();
+                        etClave.setText(""); // vaciamos la clave para que la vuelva a escribir
+                        return;
+                    }
 
-            Toast.makeText(this, "Sesión iniciada como " + usuario, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.login_ok, usuario), Toast.LENGTH_SHORT).show();
 
-            // Por ahora vamos a Mis eventos (Coleccion), pasando quién ha entrado.
-            // Más adelante cambiará el destino cuando tengamos la lista del usuario
-            Intent intent = new Intent(this, Coleccion.class);
-            intent.putExtra(EXTRA_USUARIO_ID, idUsuario);
-            intent.putExtra(EXTRA_USUARIO, usuario);
-            startActivity(intent);
-            finish(); // así al darle atrás desde Mis eventos vuelve al Main y no al login
+                    // Vamos a Mis eventos, pasando quién ha entrado
+                    Intent intent = new Intent(this, Coleccion.class);
+                    intent.putExtra(EXTRA_USUARIO_ID, idUsuario);
+                    intent.putExtra(EXTRA_USUARIO, usuario);
+                    startActivity(intent);
+                    finish(); // así al darle atrás desde Mis eventos vuelve al Main y no al login
+                });
+            });
         });
+
+        // CREAR CUENTA abre el Dialog para registrar un usuario nuevo
+        findViewById(R.id.btnCrearCuenta).setOnClickListener(v ->
+                CuentaDialog.nuevo(CuentaDialog.MODO_REGISTRAR, -1)
+                        .show(getSupportFragmentManager(), "crear_cuenta"));
 
         // ATRAS
         btnAtras.setOnClickListener(v -> finish());

@@ -7,13 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class AcercaDe extends AppCompatActivity {
+public class AcercaDe extends ActividadConBarra {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,47 +11,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Buscar extends AppCompatActivity {
-    // Categorías. La posición 0 es un texto de que por defecto se utilizará para saber que
-    // el usuario no ha elegido nada mientras esté seleccionada
-    private final String[] categorias = {
-            "Selecciona categoría", "Sonido", "Iluminación", "Video"
-    };
+import java.util.Arrays;
 
-    // Servicios de cada categoría. La posición 0 es un texto de que por defecto se utilizará para saber que
-    // el usuario no ha elegido nada mientras esté seleccionada y el segundo es el servicio.
+public class Buscar extends ActividadConBarra {
+    // Categorías. La posición 0 es un texto que por defecto se utilizará para saber que
+    // el usuario no ha elegido nada mientras esté seleccionada.
+    // Los textos están en strings y se cargan en onCreate
+    private String[] categorias;
+
+    // Servicios de cada categoría. La posición 0 es el texto por defecto "Selecciona servicio".
     // Cada fila empieza en la posición 0
-    private final String[][] servicios = {
-            {"Selecciona servicio"},                                                    // 0: sin categoría
-            {"Selecciona servicio", "0-50 personas", "50-90 personas", "+90 personas"}, // Sonido dependiendo de los asistentes
-            {"Selecciona servicio", "Pack básico", "Pack intermedio", "Pack completo"},
-            {"Selecciona servicio", "Proyector", "Plasmas", "Pantala LED + streaming"}
-    };
+    private String[][] servicios;
 
     // Características de cada servicio, en el mismo orden que el array servicios
-    private final String[][] caracteristicas = {
-            {""},
-            {"", "2 altavoces + 1/2 micrófonos de cable + mesa analógica. ",
-                    "4 altavoces + 1/2 micrófonos de cable/inalámbricos + mesa digital.",
-                    "6 altavoces + hasta 4 micrófonos inalámbricos + mesa digital."},
-            {"", "8 focos LED de ambiente.",
-                    "10 focos LED de ambiente + 2 cabezas móviles + mesa.",
-                    "16 focos LED de ambiente + 4 cabezas móviles + 2 frontales de escenario + mesa."},
-            {"", "Proyector 5000 lúmenes + pantalla de 3x2.20m + portátil. ",
-                    "Plasmas de 65'-86' + soporte + portátil.",
-                    "Pantalla LED 3.5x2.5m + control de video + streaming (opcional)"}
-    };
+    private String[][] caracteristicas;
 
-    // Las 5 ubicaciones de la lista
-    private final String[] ubicaciones = {
-            "Salón de Eventos Interior", "Zona de Eventos Exterior", "Sala de reuniones", "Carpa", "Local Particular"
-    };
+    // Las 5 ubicaciones de la lista son los mismos lugares del evento, sin el "Selecciona"
+    private String[] ubicaciones;
 
     // Vistas que usamos en varios métodos
     private Spinner spCategoria;
@@ -65,7 +46,23 @@ public class Buscar extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_buscar);
 
-        // Buscamos las vistas del layout
+        // Cargamos los textos desde strings, así cambian solos con el idioma del dispositivo
+        categorias = getResources().getStringArray(R.array.buscar_categorias);
+        servicios = new String[][]{
+                getResources().getStringArray(R.array.buscar_servicios_0), // 0: sin categoría
+                getResources().getStringArray(R.array.buscar_servicios_1), // Sonido dependiendo de los asistentes
+                getResources().getStringArray(R.array.buscar_servicios_2), // Iluminación
+                getResources().getStringArray(R.array.buscar_servicios_3)  // Video
+        };
+        caracteristicas = new String[][]{
+                getResources().getStringArray(R.array.buscar_caract_0),
+                getResources().getStringArray(R.array.buscar_caract_1),
+                getResources().getStringArray(R.array.buscar_caract_2),
+                getResources().getStringArray(R.array.buscar_caract_3)
+        };
+        String[] lugares = getResources().getStringArray(R.array.lugares);
+        ubicaciones = Arrays.copyOfRange(lugares, 1, lugares.length); // quitamos el "Selecciona" de la posición 0
+
         spCategoria = findViewById(R.id.spCat);
         spServicio = findViewById(R.id.spServicio);
         lvUbicacion = findViewById(R.id.lvUbicacion);
@@ -82,7 +79,7 @@ public class Buscar extends AppCompatActivity {
         // elegida así que solo mostrará el "seleccionar"
         rellenarServicios(0);
 
-        // listview de ubicaciones que cada fila lleva un RadioButton
+        // listview de ubicaciones, que cada fila lleva un RadioButton
         ArrayAdapter<String> adapterUbicaciones = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_single_choice, ubicaciones);
         lvUbicacion.setAdapter(adapterUbicaciones);
@@ -134,9 +131,8 @@ public class Buscar extends AppCompatActivity {
             int serv = spServicio.getSelectedItemPosition();
             String ubicacion = ubicaciones[lvUbicacion.getCheckedItemPosition()];
 
-            String texto = servicios[cat][serv] + " (" + categorias[cat] + ")\n"
-                    + caracteristicas[cat][serv] + "\n"
-                    + "Ubicación: " + ubicacion;
+            String texto = getString(R.string.buscar_toast,
+                    servicios[cat][serv], categorias[cat], caracteristicas[cat][serv], ubicacion);
             Toast.makeText(this, texto, Toast.LENGTH_LONG).show();
         });
 

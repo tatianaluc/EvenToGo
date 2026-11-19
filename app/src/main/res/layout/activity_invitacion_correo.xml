@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- ScrollView por si al girar la pantalla no cabe todo, se puede hacer scroll
+     y no se solapa ni se corta nada -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/correo"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".InvitacionCorreo">
 
     <TextView
@@ -12,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Invitar"
+        android:text="@string/invitar_titulo"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -26,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Destinatario"
+        android:text="@string/destinatario"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -40,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="correo@mail.com"
+        android:hint="@string/hint_correo"
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textSize="12sp"
@@ -54,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Asunto"
+        android:text="@string/asunto"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -68,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="Escriba el asunto..."
+        android:hint="@string/hint_asunto"
         android:inputType="textEmailSubject"
         android:textColor="@color/black"
         android:textSize="12sp"
@@ -82,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Mensaje"
+        android:text="@string/mensaje"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -99,7 +106,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="24dp"
         android:gravity="top"
-        android:hint="Escriba el cuerpo del mensaje..."
+        android:hint="@string/hint_cuerpo"
         android:inputType="textMultiLine"
         android:minLines="4"
         android:textColor="@color/black"
@@ -114,9 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="124dp"
-        android:backgroundTint="@color/lila"
-        android:text="Compartir Invitación"
-        android:textColor="@color/black"
+        android:text="@string/compartir_invitacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +129,9 @@
         app:strokeColor="@color/colorPrimaryDark"
         app:strokeWidth="2dp" />
 
-    <!-- Vuelve a la pantalla anterior (la reunión) -->
+    <!-- Vuelve a la pantalla anterior -->
     <Button
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/btnAtrasCorreo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,3 +142,4 @@
         app:layout_constraintTop_toBottomOf="@id/btnCompartir" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

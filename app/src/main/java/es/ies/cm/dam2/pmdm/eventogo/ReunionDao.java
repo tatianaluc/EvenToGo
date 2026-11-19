@@ -6,7 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-// DAO de la tabla reuniones: crear, leer, cambiar de estado y borrar (CRUD).
+// DAO de la tabla reuniones
 // Se llama siempre desde un hilo aparte (AppDatabase.ejecutor)
 @Dao
 public interface ReunionDao {
@@ -15,11 +15,11 @@ public interface ReunionDao {
     @Insert
     long insertar(ReunionEvento reunion);
 
-    // Guarda varias de golpe (carga inicial)
+    // Guarda varias en la carga inicial
     @Insert
     void insertarVarias(List<ReunionEvento> reuniones);
 
-    // Cambia solo el estado de una reunión (ACEPTADO / CANCELADO)
+    // Cambia solo el estado de una reunión ACEPTADO / CANCELADO
     @Query("UPDATE reuniones SET estado = :estado WHERE id = :id")
     int cambiarEstado(int id, String estado);
 
@@ -27,7 +27,7 @@ public interface ReunionDao {
     @Query("DELETE FROM reuniones WHERE id = :id")
     int borrarPorId(int id);
 
-    // Reuniones de un evento (la parte N de la relación 1-N)
+    // Reuniones de un evento
     @Query("SELECT * FROM reuniones WHERE eventoId = :eventoId ORDER BY id")
     List<ReunionEvento> reunionesDe(int eventoId);
 

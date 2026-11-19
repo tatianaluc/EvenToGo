@@ -9,12 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class InvitacionCorreo extends AppCompatActivity {
+public class InvitacionCorreo extends ActividadConBarra {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class InvitacionCorreo extends AppCompatActivity {
 
         btnCompartir.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            // "mailto:" hace que solo respondan las apps de correo (con otro texto no se abría ninguna)
+            // "mailto:" hace que solo respondan las apps de correo
             intent.setData(Uri.parse("mailto:"));
             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{etCorreo.getText().toString().trim()});
             intent.putExtra(Intent.EXTRA_SUBJECT, etAsunto.getText().toString().trim());
@@ -36,7 +35,7 @@ public class InvitacionCorreo extends AppCompatActivity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Toast.makeText(this, "Debe tener una app de correo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.sin_app_correo, Toast.LENGTH_SHORT).show();
             }
         });
 

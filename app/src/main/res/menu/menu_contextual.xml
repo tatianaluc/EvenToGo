@@ -3,9 +3,9 @@
 
     <item
         android:id="@+id/ctx_editar"
-        android:title="Editar" />
+        android:title="@string/editar" />
 
     <item
         android:id="@+id/ctx_eliminar"
-        android:title="Eliminar" />
+        android:title="@string/eliminar" />
 </menu>

@@ -16,4 +16,6 @@
     <color name="clear_lila">#E1D5F2</color>
     <color name="gray">#F2F2F2</color>
     <color name="dark_gray">#969597</color>
+    <color name="sky">#FFE3F2FD</color>
+    <color name="sky_dark">#FFBBDEFB</color>
 </resources>
