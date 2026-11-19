@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 //Mis eventos con menú de opciones superior y menú contextual
@@ -81,7 +82,10 @@ public class Coleccion extends AppCompatActivity {
                         if (evento != null) {
                             if (posicion >= 0) {
                                 // evento editado, actualizamos su fila en la bd
-                                new EventosDB(this).actualizarEvento(evento);
+                                // Room, en el hilo aparte. Al ir en el mismo hilo que la recarga de onResume,
+                                // la lista se vuelve a leer ya con el cambio hecho
+                                AppDatabase.ejecutor.execute(() ->
+                                        AppDatabase.getInstance(this).eventoDao().actualizar(evento));
                                 Toast.makeText(this, "Evento actualizado: " + evento.getNombre(),
                                         Toast.LENGTH_SHORT).show();
                             } else {
@@ -139,6 +143,12 @@ public class Coleccion extends AppCompatActivity {
             // abre la búsqueda de eventos en la bd
             startActivity(new Intent(this, BuscarEvento.class));
             return true;
+        } else if (id == R.id.opcion_wishlist) {
+            // pasamos el usuario para que Wishlist sepa de quién es la lista
+            Intent i = new Intent(this, Wishlist.class);
+            i.putExtra(Login.EXTRA_USUARIO_ID, usuarioId);
+            startActivity(i);
+            return true;
         } else if (id == R.id.opcion_acerca) {
             startActivity(new Intent(this, AcercaDe.class));
             return true;
@@ -172,7 +182,10 @@ public class Coleccion extends AppCompatActivity {
                 .setTitle("Eliminar evento")
                 .setMessage("¿Seguro que quieres eliminar \"" + evento.getNombre() + "\"?")
                 .setPositiveButton("Eliminar", (dialog, which) -> {
-                    new EventosDB(this).borrarEvento(evento.getId()); // borra su fila en la bd por el id
+                    // borra su fila en Room por el id (y en cascada sus reuniones), en el hilo aparte;
+                    // la recarga va después en el mismo hilo, así ya no sale el evento borrado
+                    AppDatabase.ejecutor.execute(() ->
+                            AppDatabase.getInstance(this).eventoDao().borrarPorId(evento.getId()));
                     recargarEventos();
                     Toast.makeText(this, "Evento eliminado: " + evento.getNombre(),
                             Toast.LENGTH_SHORT).show();
@@ -189,15 +202,21 @@ public class Coleccion extends AppCompatActivity {
         recargarEventos();
     }
 
-    // Vacía la lista de eventos y la vuelve a llenar con lo que hay en la bd. Hay que usar la misma
-    // porque el adapter la tiene guardada, y luego avisar de que ha cambiado
+    // Vuelve a leer de Room los eventos de este usuario y refresca la pantalla. La lectura va en el hilo
+    // aparte y el refresco en el principal. Hay que rellenar la misma lista porque el adapter la tiene guardada
     private void recargarEventos() {
-        eventos.clear();
-        eventos.addAll(// pedimos solo los eventos de este usuario
-                new EventosDB(this).obtenerEventos(usuarioId, ordenadoPorNombre));
-        adapter.notifyDataSetChanged();
-        // Subtítulo de la barra con el nº de eventos de este usuario (se cuenta en la BD)
-        getSupportActionBar().setSubtitle(getString(R.string.eventos_registrados,
-                new EventosDB(this).contarEventos(usuarioId)));
+        AppDatabase.ejecutor.execute(() -> {
+            EventoDao dao = AppDatabase.getInstance(this).eventoDao();
+            // pedimos solo los eventos de este usuario, en el orden que toque
+            List<Evento> lista = ordenadoPorNombre ? dao.eventosDePorNombre(usuarioId) : dao.eventosDe(usuarioId);
+            int total = dao.contarDe(usuarioId);
+            runOnUiThread(() -> {
+                eventos.clear();
+                eventos.addAll(lista);
+                adapter.notifyDataSetChanged();
+                // Subtítulo de la barra con el nº de eventos de este usuario (se cuenta en la BD)
+                getSupportActionBar().setSubtitle(getString(R.string.eventos_registrados, total));
+            });
+        });
     }
 }

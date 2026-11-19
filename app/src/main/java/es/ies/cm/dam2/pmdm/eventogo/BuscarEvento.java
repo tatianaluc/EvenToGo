@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuscarEvento extends AppCompatActivity {
 
@@ -64,7 +65,7 @@ public class BuscarEvento extends AppCompatActivity {
         });
     }
 
-    // Lee los filtros, pregunta a la bd y enseña lo que devuelve
+    // Lee los filtros, pregunta a Room y enseña lo que devuelve
     private void buscar() {
         String nombre = etNombre.getText().toString().trim();
         // qué radiobutton está marcado en el grupo: Empieza por o Contiene
@@ -73,10 +74,20 @@ public class BuscarEvento extends AppCompatActivity {
         String textoMin = etMinAsistentes.getText().toString().trim();
         int minAsistentes = textoMin.isEmpty() ? 0 : Integer.parseInt(textoMin);
 
-        resultados.clear();
-        resultados.addAll(new EventosDB(this).buscarEventos(nombre, empiezaPor, minAsistentes));
-        adapterResultados.notifyDataSetChanged();
+        // El patrón del LIKE: "Empieza por" -> texto%, "Contiene" -> %texto% (el % vale por cualquier cantidad de letras)
+        String patron = empiezaPor ? nombre + "%" : "%" + nombre + "%";
 
-        Toast.makeText(this, resultados.size() + " eventos encontrados", Toast.LENGTH_SHORT).show();
+        // La consulta a Room va en el hilo aparte y los resultados se pintan en el principal
+        AppDatabase.ejecutor.execute(() -> {
+            List<Evento> encontrados = AppDatabase.getInstance(this).eventoDao()
+                    .buscarCatalogo(patron, minAsistentes); // solo busca en el catálogo
+            runOnUiThread(() -> {
+                resultados.clear();
+                resultados.addAll(encontrados);
+                adapterResultados.notifyDataSetChanged();
+                Toast.makeText(this, getString(R.string.eventos_encontrados, resultados.size()),
+                        Toast.LENGTH_SHORT).show();
+            });
+        });
     }
 }

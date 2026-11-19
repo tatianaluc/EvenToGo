@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // Carga inicial de la bd Room (una sola vez; en el hilo aparte, no bloquea la pantalla)
+        DatosIniciales.cargarSiHaceFalta(this);
+
         Button btnCatalogo = findViewById(R.id.btnCatalogo);
         Button btnSel = findViewById(R.id.btnSelectEvent);
 

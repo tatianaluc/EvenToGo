@@ -22,6 +22,35 @@
     <string name="slogan">El precio de tu evento, para llevar.\nPresupuesto en minutos</string>
     <string name="selec">Mis Eventos</string>
     <string name="eventos_registrados">Eventos registrados: %1$d</string>
+    <string name="eventos_encontrados">%1$d eventos encontrados</string>
+    <!-- Pantalla Wishlist (lista personal de eventos del usuario) -->
+    <string name="titulo_wishlist">Mi lista de eventos</string>
+    <string name="anadir_wishlist">Añadir a mi lista</string>
+    <string name="ayuda_wishlist">Mantén pulsado un evento para quitarlo de tu lista</string>
+    <string name="wishlist_atras">Atrás</string>
+    <string name="wishlist_anadido">Añadido a tu lista</string>
+    <string name="wishlist_duplicado">Ese evento ya está en tu lista</string>
+    <string name="wishlist_quitado">Quitado de tu lista</string>
+    <string name="wishlist_sin_usuario">Inicia sesión para ver tu lista</string>
+    <string name="opcion_wishlist">Mi lista</string>
+    <!-- Reuniones de un evento (Room) -->
+    <string name="ver_reuniones">Reuniones</string>
+    <string name="titulo_reuniones">Reuniones del evento</string>
+    <string name="sin_reuniones">Este evento todavía no tiene reuniones</string>
+    <string name="reuniones_atras">Atrás</string>
+    <string name="reunion_opciones">¿Qué quieres hacer?</string>
+    <string name="reunion_marcar_aceptada">Marcar como aceptada</string>
+    <string name="reunion_marcar_cancelada">Marcar como cancelada</string>
+    <string name="reunion_eliminar">Eliminar reunión</string>
+    <!-- Presupuesto estimado en la ficha del evento -->
+    <string name="presupuesto_titulo">Presupuesto estimado</string>
+    <string name="presupuesto_personal">Personal técnico (%1$d técnicos, jornada de 8 h): %2$s</string>
+    <string name="presupuesto_extra">Horas extra (%1$d h por técnico): %2$s</string>
+    <string name="presupuesto_montaje">Montaje y desmontaje: %1$s</string>
+    <string name="presupuesto_av">Equipo AV (según asistentes y complejidad): %1$s</string>
+    <string name="presupuesto_solo_personal">Solo personal técnico (tarifa fija): %1$s</string>
+    <string name="presupuesto_total">TOTAL: %1$s</string>
+    <string name="presupuesto_aviso">Horarios de personal incluyendo montar, operar y desmontar. IVA no incluido.</string>
     <string-array name="tipo_evento">
         <item>Selecciona</item>
         <item>Boda</item>

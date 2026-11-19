@@ -24,11 +24,17 @@ import java.util.Calendar;
 
 public class Reunion extends AppCompatActivity {
 
+    // Clave del extra con el id del evento al que pertenece la reunión
+    public static final String EXTRA_EVENTO_ID = "eventoId";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reunion);
+
+        // Id del evento al que pertenece la reunión (viene de la ficha). -1 si no llega
+        int eventoId = getIntent().getIntExtra(EXTRA_EVENTO_ID, -1);
 
         EditText etNomCliente = findViewById(R.id.etEscribirCliente2);
         TextView txtConf = findViewById(R.id.txtConf);
@@ -80,6 +86,15 @@ public class Reunion extends AppCompatActivity {
                         String respuesta = result.getData()
                                 .getStringExtra(ConfirmarReunion.EXTRA_ASISTENCIA);
                         String nombre = etNomCliente.getText().toString().trim();
+
+                        // Guardamos la reunión en Room (hilo aparte), ligada al evento por su id
+                        if (eventoId != -1) {
+                            String fechaReunion = etFechaReu.getText().toString().trim();
+                            String modalidad = grpLugar.getCheckedRadioButtonId() == R.id.online ? "Online" : "Oficina";
+                            ReunionEvento reunion = new ReunionEvento(eventoId, nombre, fechaReunion, modalidad, respuesta);
+                            AppDatabase.ejecutor.execute(() ->
+                                    AppDatabase.getInstance(this).reunionDao().insertar(reunion));
+                        }
                         txtConf.setText("De acuerdo " + nombre + ", usted ha " + respuesta
                                 + " la reunión con el project manager.");
                         if ("ACEPTADO".equals(respuesta)) {

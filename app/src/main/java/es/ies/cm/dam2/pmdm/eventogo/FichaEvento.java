@@ -2,6 +2,7 @@ package es.ies.cm.dam2.pmdm.eventogo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -61,13 +62,53 @@ public class FichaEvento extends AppCompatActivity {
         rbValoracion.setRating(evento.getComplejidad());
         rbValoracion.setIsIndicator(true);
 
+        // Presupuesto estimado: cada línea sale de la clase Presupuesto (las tarifas están allí).
+        // Solo se enseña en los eventos de una cuenta, no en los ejemplos del catálogo (que no tienen dueño)
+        TextView tvPresupuesto = findViewById(R.id.tvPresupuesto);
+        if (evento.getUsuarioId() == Evento.SIN_DUENO) {
+            tvPresupuesto.setVisibility(View.GONE);
+        } else {
+            String presupuesto = getString(R.string.presupuesto_titulo) + "\n";
+            if (evento.isIncluyeAV()) {
+                // con AV: personal + horas extra (si las hay) + montaje + AV
+                presupuesto += getString(R.string.presupuesto_personal, Presupuesto.tecnicos(evento),
+                        Presupuesto.euros(Presupuesto.jornadas(evento))) + "\n";
+                if (Presupuesto.horasExtra(evento) > 0) {
+                    presupuesto += getString(R.string.presupuesto_extra, Presupuesto.horasExtra(evento),
+                            Presupuesto.euros(Presupuesto.extras(evento))) + "\n";
+                }
+                presupuesto += getString(R.string.presupuesto_montaje, Presupuesto.euros(Presupuesto.MONTAJE_DESMONTAJE)) + "\n"
+                        + getString(R.string.presupuesto_av, Presupuesto.euros(Presupuesto.av(evento))) + "\n";
+            } else {
+                // sin AV: el cliente solo quiere personal y es una tarifa fija
+                presupuesto += getString(R.string.presupuesto_solo_personal,
+                        Presupuesto.euros(Presupuesto.TARIFA_SOLO_PERSONAL)) + "\n";
+            }
+            presupuesto += getString(R.string.presupuesto_total, Presupuesto.euros(Presupuesto.total(evento))) + "\n"
+                    + getString(R.string.presupuesto_aviso);
+            tvPresupuesto.setText(presupuesto);
+        }
+
         // ATRAS
         Button btnAtras = findViewById(R.id.btnAtras);
         btnAtras.setOnClickListener(v -> finish());
 
         // SIGUIENTE: lleva a la reunión (flujo de la práctica 5)
         Button btnSiguiente = findViewById(R.id.btnSig);
-        btnSiguiente.setOnClickListener(v -> startActivity(new Intent(this, Reunion.class)));
+        btnSiguiente.setOnClickListener(v -> {
+            Intent i = new Intent(this, Reunion.class);
+            // la reunión se guarda en Room ligada a este evento, así que le mandamos su id
+            i.putExtra(Reunion.EXTRA_EVENTO_ID, evento.getId());
+            startActivity(i);
+        });
+
+        // VER REUNIONES: lista las reuniones de este evento
+        Button btnVerReuniones = findViewById(R.id.btnVerReuniones);
+        btnVerReuniones.setOnClickListener(v -> {
+            Intent i = new Intent(this, ListaReuniones.class);
+            i.putExtra(Reunion.EXTRA_EVENTO_ID, evento.getId());
+            startActivity(i);
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.fichaEvento), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

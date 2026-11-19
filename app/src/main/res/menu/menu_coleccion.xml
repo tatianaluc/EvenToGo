@@ -17,6 +17,12 @@
         android:title="Buscar evento"
         app:showAsAction="never" />
 
+    <!-- Abre la lista personal del usuario -->
+    <item
+        android:id="@+id/opcion_wishlist"
+        android:title="@string/opcion_wishlist"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/opcion_acerca"
         android:title="Acerca de"

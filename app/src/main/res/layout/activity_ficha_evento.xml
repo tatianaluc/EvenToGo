@@ -40,6 +40,14 @@
                 android:layout_height="wrap_content"
                 android:text="Atrás" />
 
+            <!-- Lista las reuniones que tiene este evento (están en Room) -->
+            <Button
+                android:id="@+id/btnVerReuniones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/ver_reuniones" />
+
             <!-- Como es un linear va todo una cosa debajo de la otra. Así que,
              añadimos un espacio lateral entre los botones para que el de siguiente
              este en la esquina superior deerecha -->
@@ -192,6 +200,15 @@
                     android:isIndicator="true"
                     android:numStars="5"
                     android:stepSize="0.5" />
+
+                <!-- Presupuesto estimado, lo rellena FichaEvento con la clase Presupuesto -->
+                <TextView
+                    android:id="@+id/tvPresupuesto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

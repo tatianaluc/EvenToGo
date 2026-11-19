@@ -236,30 +236,21 @@ public class NuevoEvento extends AppCompatActivity {
             if (editar == null) {
                 // El evento nuevo es de quien hizo login
                 evento.setUsuarioId(getIntent().getIntExtra(Login.EXTRA_USUARIO_ID, -1));
-                // evento nuevo  lo guardamos en la bd, que nos devuelve el id que le ha puesto, o -1 si falla
-                long idNuevo = new EventosDB(this).insertarEvento(evento);
-                if (idNuevo == -1) {
-                    Toast.makeText(this, "No se ha podido guardar el evento", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                evento.setId((int) idNuevo); // así luego se podrá editar o borrar por su id
+                // Lo guardamos en Room, en el hilo aparte. insertar nos devuelve el id que le ha puesto
+                AppDatabase.ejecutor.execute(() -> {
+                    long idNuevo = AppDatabase.getInstance(this).eventoDao().insertar(evento);
+                    // lo que toca pantallas se hace en el hilo principal
+                    runOnUiThread(() -> {
+                        evento.setId((int) idNuevo); // así luego se podrá editar o borrar por su id
+                        terminar(evento, posicion);
+                    });
+                });
             } else {
-                // editando se conserva el id del original
+                // editando se conserva el id y el dueño del original: el update de Room cambia todas las columnas
+                // y si no, el evento se quedaría sin dueño
                 evento.setId(editar.getId());
-            }
-
-            if (getCallingActivity() != null) {
-                // nos ha abierto Coleccion esperando respuesta: devolvemos el evento y su posición
-                Intent data = new Intent();
-                data.putExtra(Evento.EXTRA, evento);
-                data.putExtra(Coleccion.EXTRA_POSICION, posicion); // -1 si es un evento nuevo
-                setResult(RESULT_OK, data);
-                finish();
-            } else {
-                // nos han abierto desde otro sitio (como en la 4): vamos a la ficha
-                Intent i = new Intent(this, FichaEvento.class);
-                i.putExtra(Evento.EXTRA, evento);
-                startActivity(i);
+                evento.setUsuarioId(editar.getUsuarioId());
+                terminar(evento, posicion);
             }
         });
 
@@ -302,5 +293,20 @@ public class NuevoEvento extends AppCompatActivity {
         reloj.show();
     }
 
-
+    // Último paso del ENVIAR, cuando el evento ya está guardado (o editado): si nos abrió Coleccion esperando
+    // respuesta se lo devolvemos con su posición, y si no, abrimos su ficha
+    private void terminar(Evento evento, int posicion) {
+        if (getCallingActivity() != null) {
+            Intent data = new Intent();
+            data.putExtra(Evento.EXTRA, evento);
+            data.putExtra(Coleccion.EXTRA_POSICION, posicion); // -1 si es un evento nuevo
+            setResult(RESULT_OK, data);
+            finish();
+        } else {
+            // nos han abierto desde otro sitio (como en la 4): vamos a la ficha
+            Intent i = new Intent(this, FichaEvento.class);
+            i.putExtra(Evento.EXTRA, evento);
+            startActivity(i);
+        }
+    }
 }

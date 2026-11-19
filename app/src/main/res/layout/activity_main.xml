@@ -133,38 +133,6 @@
             app:strokeWidth="2dp" />
 
         <TextView
-            android:id="@+id/txtContador"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="@string/eventos_registrados"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guiaCentro"
-            app:layout_constraintTop_toBottomOf="@+id/btnWeb" />
-
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/lila"
-            android:text="Reset"
-            android:textColor="@color/black"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintStart_toEndOf="@id/guiaCentro"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAcercaDe"
-            app:layout_constraintTop_toTopOf="@id/txtContador"
-            app:layout_constraintBottom_toBottomOf="@id/txtContador"
-            app:strokeColor="@color/colorPrimaryDark"
-            app:strokeWidth="2dp" />
-
-        <TextView
             android:id="@+id/txtDestino"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -181,7 +149,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnReset"
+            app:layout_constraintTop_toBottomOf="@id/btnAcercaDe"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,6 +68,12 @@
             android:name=".Login"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+            <activity
+            android:name=".Wishlist"
+            android:exported="false" />
+            <activity
+            android:name=".ListaReuniones"
+            android:exported="false" />
     </application>
 
 </manifest>

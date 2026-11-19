@@ -1,8 +1,14 @@
 package es.ies.cm.dam2.pmdm.eventogo;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
-// Implementa Serializable para poder mandarlo dentro de un Intent
+// Implementa Serializable para poder mandarlo dentro de un Intent.
+// @Entity hace que Room cree una tabla "eventos" con una columna por cada atributo
+@Entity(tableName = "eventos")
 public class Evento implements Serializable {
 
     // Nombre del extra con el que viaja el Evento en los Intent
@@ -15,13 +21,20 @@ public class Evento implements Serializable {
     private String fecha;
     private int servicios;      // nº de servicios a presupuestar (1-10)
     private boolean incluyeAV;
-    // id con el que se guarda en la bd, que su valor es -1 mientras el evento no se haya guardado todavía
-    private int id = -1;
+    // id con el que se guarda en la bd. Vale 0 mientras el evento no se haya guardado todavía: cuando Room ve
+    // un 0 en una clave autogenerada, le pone él solo el siguiente número
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
     private String horaInicio;  // formato HH:mm
     private String horaFin;     // formato HH:mm
     private String lugar;
+    // @Ignore: la portada no se guarda en la bd, se calcula en el constructor a partir del tipo
+    @Ignore
     private int portada;        // la imagen de portada
-    private int usuarioId = -1;
+    // Valor de usuarioId de los eventos de ejemplo (catálogo), que no son de ningún usuario
+    public static final int SIN_DUENO = -1;
+    // Dueño del evento: id del usuario (que vive en SQLite, por eso aquí es solo un número, sin clave ajena)
+    private int usuarioId = SIN_DUENO;
 
     // Constructor completo, para los eventos de ejemplo
     public Evento(String nombre, String tipo, String cliente, int asistentes, String fecha,

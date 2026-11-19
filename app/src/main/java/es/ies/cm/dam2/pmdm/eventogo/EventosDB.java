@@ -3,27 +3,29 @@ package es.ies.cm.dam2.pmdm.eventogo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
 // Clase que crea y gestiona la base de datos SQLite de la app. Extiende SQLiteOpenHelper, que se encarga de
-// crear la bd la primera vez que se abre y de actualizarla cuando subimos la versión
+// crear la bd la primera vez que se abre y de actualizarla cuando subimos la versión.
+// Desde la práctica 13 aquí solo quedan los USUARIOS y la WISHLIST. Los eventos y las reuniones
+// ahora están en Room (AppDatabase), por eso la wishlist guarda solo el id del evento, sin clave ajena
 public class EventosDB extends SQLiteOpenHelper {
 
     // Nombres de las tablas, públicos para usarlos desde las activities sin escribirlos a mano
+    // TABLA_EVENTOS ya no se crea: es la tabla de la versión 1, que solo se lee una vez para pasar sus eventos a Room
     public static final String TABLA_EVENTOS = "eventos";
     public static final String TABLA_USUARIOS = "usuarios";
     public static final String TABLA_WISHLIST = "wishlist";
-    // Límites de asistentes en un solo sitio, así el formulario, los ejemplos y la bd usan siempre los mismos
+    // Límites de asistentes en un solo sitio, así el formulario y los ejemplos usan siempre los mismos
     public static final int MIN_ASISTENTES = 5;
     public static final int MAX_ASISTENTES = 300;
     private static final String NOMBRE_BD = "eventogo.db";
-    // La bd nace en la versión 1 porque no existe ninguna anterior. Si en el futuro cambiamos la estructura
-    // subiremos este número
-    private static final int VERSION_BD = 1;
+    // Versión 1: usuarios, wishlist (con clave ajena a eventos) y eventos.
+    // Versión 2 (práctica 13): los eventos pasan a Room y la wishlist pierde esa clave ajena
+    private static final int VERSION_BD = 2;
 
     public EventosDB(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);
@@ -36,152 +38,75 @@ public class EventosDB extends SQLiteOpenHelper {
         db.setForeignKeyConstraintsEnabled(true);
     }
 
-    // Se ejecuta una vez, cuando la bd no existe todavía
-    // aquí creamos las 3 tablas y metemos los usuarios
+    // Se ejecuta una vez, cuando la bd no existe todavía (instalación limpia)
+    // aquí creamos las 2 tablas y metemos los usuarios
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        // Tabla de eventos.
-        // El CHECK hace que la propia bd rechace entre
-        // asistentes fuera de rango o servicios fuera de 1-10
-        db.execSQL("CREATE TABLE " + TABLA_EVENTOS + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "nombre TEXT NOT NULL, " + "tipo TEXT NOT NULL, " + "cliente TEXT NOT NULL, " + "asistentes INTEGER NOT NULL CHECK(asistentes BETWEEN " + MIN_ASISTENTES + " AND " + MAX_ASISTENTES + "), " + "fecha TEXT NOT NULL, " + "hora_inicio TEXT NOT NULL, "     // formato HH:mm
-                + "hora_fin TEXT NOT NULL, "        // formato HH:mm
-                + "servicios INTEGER NOT NULL CHECK(servicios BETWEEN 1 AND 10), " + "incluye_av INTEGER NOT NULL DEFAULT 0, "   // 0 = no, 1 = si
-                + "lugar TEXT NOT NULL," + "usuario_id INTEGER ," + "FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE)");
 
         // Tabla de usuarios para el login.
         // El nombre es UNIQUE para que no haya dos usuarios iguales
         db.execSQL("CREATE TABLE " + TABLA_USUARIOS + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "nombre TEXT NOT NULL UNIQUE, " + "clave TEXT NOT NULL)");
 
-        // Tabla wishlist Es la relación entre usuarios y eventos.
-        // UNIQUE evita guardar dos veces el mismo evento, y las claves foráneas en cascada hacen que
-        // si se borra un usuario o un evento, desaparezcan también sus filas de aquí
-        db.execSQL("CREATE TABLE " + TABLA_WISHLIST + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "usuario_id INTEGER NOT NULL, " + "evento_id INTEGER NOT NULL, " + "UNIQUE(usuario_id, evento_id), " + "FOREIGN KEY(usuario_id) REFERENCES " + TABLA_USUARIOS + "(id) ON DELETE CASCADE, " + "FOREIGN KEY(evento_id) REFERENCES " + TABLA_EVENTOS + "(id) ON DELETE CASCADE)");
+        // Tabla wishlist: la lista personal de cada usuario. Guarda el id de usuario y el id del evento,
+        // pero como los eventos están en otra bd (Room), no puede haber clave ajena hacia ellos.
+        // UNIQUE evita guardar dos veces el mismo evento, y la clave foránea en cascada hace que
+        // si se borra un usuario, desaparezcan también sus filas de aquí
+        crearTablaWishlist(db, TABLA_WISHLIST);
 
-        // Los dos usuarios que pide la práctica
+        // Los dos usuarios que pide la práctica (admin tiene el id 1 y carlos el 2)
         db.execSQL("INSERT INTO " + TABLA_USUARIOS + " (nombre, clave) VALUES ('admin', 'admin')");
         db.execSQL("INSERT INTO " + TABLA_USUARIOS + " (nombre, clave) VALUES ('carlos', 'carlos')");
-        // y los 20 eventos de ejemplo
-        cargarEjemplos(db);
     }
 
-    // Se ejecutaría al subir de version. Mientras esté en la versión 1, no hay nada que migrar
+    // Se ejecuta al subir de versión: de la 1 a la 2 la wishlist tiene que dejar de tener la clave
+    // ajena hacia eventos (SQLite no puede quitar una clave ajena, así que se crea una tabla nueva y se copian los datos)
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAntigua, int versionNueva) {
-
-    }
-
-    // Los 20 eventos de ejemplo, ahora guardados en la bd
-    private void cargarEjemplos(SQLiteDatabase db) {
-        // Los 20 eventos de ejemplo
-        insertarEvento(db, new Evento("Boda de Noemí y Pablo", "Boda", "Familia Ruiz", 250, "25/09/2027", "18:00", "02:00", 6, true, "Zona de Eventos Exterior"));
-        insertarEvento(db, new Evento("Presentación disco Maluma", "Concierto", "WarnerBros Music", 180, "18/07/2027", "12:00", "00:00", 9, true, "Carpa"));
-        insertarEvento(db, new Evento("Quest Global", "Corporativo", "NewLink", 200, "03/03/2027", "09:00", "15:00", 7, true, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Los 60 de Rosa", "Cumpleaños", "Rosa Pérez", 40, "21/11/2026", "20:00", "00:00", 3, false, "Local Particular"));
-        insertarEvento(db, new Evento("Boda Civil Ana y JuanMa", "Boda", "Pilar y Dani", 90, "05/09/2027", "12:00", "19:00", 5, true, "Zona de Eventos Exterior"));
-        insertarEvento(db, new Evento("Concierto benéfico Isabel Gemio", "Concierto", "Fundación Isabel Gemio", 250, "10/12/2026", "19:00", "00:00", 6, true, "Carpa"));
-        insertarEvento(db, new Evento("Babor new line", "Corporativo", "Viajes El Corte Inglés", 150, "14/01/2027", "10:00", "13:00", 5, true, "Sala de reuniones"));
-        insertarEvento(db, new Evento("50 cumpleaños Director del Hotel", "Cumpleaños", "NH Habana", 60, "30/01/2027", "21:00", "02:00", 4, false, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Boda Jack & Phillipe", "Boda", "Media Naranja", 50, "22/05/2027", "17:00", "21:00", 3, false, "Local Particular"));
-        insertarEvento(db, new Evento("Presentación Videoclip Aitana", "Concierto", "Cuarto Azul", 200, "27/02/2027", "16:00", "20:00", 5, true, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Cena de navidad empresa", "Corporativo", "Dormakaba", 120, "17/12/2026", "21:00", "01:00", 4, false, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Cumpelaños Memphis DePay", "Cumpleaños", "TOP Spain", 300, "09/01/2027", "20:00", "05:00", 10, true, "Carpa"));
-        insertarEvento(db, new Evento("Boda temática Drag", "Boda", "Rings to Sunrise", 140, "10/10/2027", "18:00", "03:00", 7, true, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Gira de verano Joss Stone", "Concierto", "Sony Music", 100, "25/07/2027", "18:00", "02:00", 8, true, "Zona de Eventos Exterior"));
-        insertarEvento(db, new Evento("Jornada de formación", "Corporativo", "Instituto Claudio Moyano", 80, "08/02/2027", "09:00", "17:00", 3, true, "Sala de reuniones"));
-        insertarEvento(db, new Evento("Cumpleaños sorpresa", "Cumpleaños", "Nuria Vega", 25, "14/11/2026", "20:00", "23:00", 2, false, "Local Particular"));
-        insertarEvento(db, new Evento("Aniversario 25 de bodas", "Otro", "Familia Cano", 70, "19/04/2027", "14:00", "19:00", 4, false, "Local Particular"));
-        insertarEvento(db, new Evento("Comunión Elena", "Otro", "Brilla tu Peque", 260, "05/03/2027", "13:00", "19:00", 8, true, "Salón de Eventos Interior"));
-        insertarEvento(db, new Evento("Inauguración de tienda", "Corporativo", "Moda Viva", 110, "12/03/2027", "18:00", "22:00", 5, true, "Local Particular"));
-        insertarEvento(db, new Evento("Concierto de Navidad", "Concierto", "Coro Municipal", 300, "20/12/2026", "20:00", "23:00", 6, true, "Salón de Eventos Interior"));
-    }
-
-    // Devuelve cuántos eventos hay guardados. Se usará para la pantalla de los 9 botones y el
-    // contador del Main
-    public int contarEventos() {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT COUNT(*) FROM " + TABLA_EVENTOS, null);
-        int total = 0;
-        if (c.moveToFirst()) {
-            total = c.getInt(0);   // el contador viene en la columna 0 de la única fila
+        if (versionAntigua < 2) {
+            crearTablaWishlist(db, "wishlist_nueva");
+            db.execSQL("INSERT INTO wishlist_nueva (usuario_id, evento_id) SELECT usuario_id, evento_id FROM " + TABLA_WISHLIST);
+            db.execSQL("DROP TABLE " + TABLA_WISHLIST);
+            db.execSQL("ALTER TABLE wishlist_nueva RENAME TO " + TABLA_WISHLIST);
+            // La tabla eventos de la versión 1 se queda de momento: DatosIniciales pasará sus filas a Room y luego la borra
         }
-        c.close();
-        return total;
-    }
-    // Cuenta los eventos de un usuario. ue cambiará en la práctica 13 (Room) Es la única consulta
-    public int contarEventos(int usuarioId) {
-        // nuevo: queryNumEntries hace un COUNT(*) con filtro y devuelve un long
-        return (int) DatabaseUtils.queryNumEntries(getReadableDatabase(), TABLA_EVENTOS,
-                "usuario_id = ?", new String[]{String.valueOf(usuarioId)});
     }
 
-    // Pasa un Evento a ContentValues columna -> valor, lo usan el insert y el update
-    private ContentValues valoresDe(Evento e) {
-        ContentValues valores = new ContentValues();
-        valores.put("nombre", e.getNombre());
-        valores.put("tipo", e.getTipo());
-        valores.put("cliente", e.getCliente());
-        valores.put("asistentes", e.getAsistentes());
-        valores.put("fecha", e.getFecha());
-        valores.put("hora_inicio", e.getHoraInicio());
-        valores.put("hora_fin", e.getHoraFin());
-        valores.put("servicios", e.getServicios());
-        valores.put("incluye_av", e.isIncluyeAV() ? 1 : 0);
-        valores.put("lugar", e.getLugar());
-        return valores;
+    // Crea la tabla de la wishlist con el nombre que le digamos (se usa al crearla y al migrar)
+    private void crearTablaWishlist(SQLiteDatabase db, String nombreTabla) {
+        db.execSQL("CREATE TABLE " + nombreTabla + " (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "usuario_id INTEGER NOT NULL, " + "evento_id INTEGER NOT NULL, "
+                + "UNIQUE(usuario_id, evento_id), "
+                + "FOREIGN KEY(usuario_id) REFERENCES " + TABLA_USUARIOS + "(id) ON DELETE CASCADE)");
     }
 
-    // Guarda un evento y devuelve el id que le ha puesto la bd, -1 si ha fallado
-    public long insertarEvento(Evento e) {
-        return insertarEvento(getWritableDatabase(), e);
-    }
+    // ---------- MIGRACIÓN de la versión 1 (eventos en SQLite) a Room ----------
 
-    // Misma operación pero recibiendo la bd. Hace falta para el onCreate, donde no se puede pedir
-    // datos porque la bd todavía se está creando
-    private long insertarEvento(SQLiteDatabase db, Evento e) {
-        // Guardamos los valores en una variable para poder añadirles el dueño antes de insertar
-        ContentValues valores = valoresDe(e);
-
-        // El dueño solo se guarda al insertar, así al editar un evento nunca se pierde
-        if (e.getUsuarioId() > 0) {
-            valores.put("usuario_id", e.getUsuarioId());
-        } else {
-            // putNull guarda NULL en la columna si algun valor no tiene dueño, como son los de catalogo
-            valores.putNull("usuario_id");
-        }
-
-        // Ahora sí, insertamos con los valores completos (devuelve -1 si falla)
-        return db.insert(TABLA_EVENTOS, null, valores);
-    }
-
-    // Actualiza la fila del evento que tenga ese id. Devuelve cuántas filas ha cambiado
-    public int actualizarEvento(Evento e) {
-        return getWritableDatabase().update(TABLA_EVENTOS, valoresDe(e), "id = ?", new String[]{String.valueOf(e.getId())});
-    }
-
-    // Borra el evento con ese id. Si tuviera filas en la wishlist, en cascada las borra también
-    public int borrarEvento(int id) {
-        return getWritableDatabase().delete(TABLA_EVENTOS, "id = ?", new String[]{String.valueOf(id)});
-    }
-
-    // Lee todos los eventos de la bd.
-    // Si porNombre es true salen ordenados alfabéticamente sin distinguir mayúsculas (COLLATE NOCASE),
-    // y si no, por id, que es el orden en el que se guardaron
-    public ArrayList<Evento> obtenerEventos(int usuarioId, boolean porNombre) {
+    // Lee los eventos que quedaran en la tabla antigua. Si no existe (instalación limpia) devuelve la lista vacía
+    public ArrayList<Evento> leerEventosAntiguos() {
         ArrayList<Evento> lista = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String orden = porNombre ? "nombre COLLATE NOCASE" : "id";
-        // Solo las filas de ese usuario: el ? se sustituye por el id que va en el array
-        Cursor c = db.query(TABLA_EVENTOS, null, "usuario_id = ?",
-                new String[]{String.valueOf(usuarioId)}, null, null, orden);
+        // sqlite_master es la tabla donde SQLite apunta todas las tablas que existen
+        Cursor existe = db.rawQuery("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
+                new String[]{TABLA_EVENTOS});
+        boolean hayTabla = existe.moveToFirst();
+        existe.close();
+        if (!hayTabla) {
+            return lista;
+        }
+        Cursor c = db.query(TABLA_EVENTOS, null, null, null, null, null, "id");
         while (c.moveToNext()) { // cada vuelta es una fila de la tabla
-                lista.add(eventoDe(c));
+            lista.add(eventoDe(c));
         }
         c.close();
         return lista;
     }
 
-    // Convierte la fila en la que está el cursor en un Evento. Lo usan obtenerEventos y buscarEventos
+    // Borra la tabla antigua de eventos, una vez que sus filas ya están en Room
+    public void borrarEventosAntiguos() {
+        getWritableDatabase().execSQL("DROP TABLE IF EXISTS " + TABLA_EVENTOS);
+    }
+
+    // Convierte la fila en la que está el cursor en un Evento (solo lo usa la migración)
     private Evento eventoDe(Cursor c) {
         Evento e = new Evento(
                 c.getString(c.getColumnIndexOrThrow("nombre")),
@@ -194,28 +119,15 @@ public class EventosDB extends SQLiteOpenHelper {
                 c.getInt(c.getColumnIndexOrThrow("servicios")),
                 c.getInt(c.getColumnIndexOrThrow("incluye_av")) == 1, // 1 = true
                 c.getString(c.getColumnIndexOrThrow("lugar")));
-        e.setId(c.getInt(c.getColumnIndexOrThrow("id"))); // el id no va en el constructor
+        e.setId(c.getInt(c.getColumnIndexOrThrow("id"))); // se conserva el id para que la wishlist siga valiendo
+        int colDueno = c.getColumnIndexOrThrow("usuario_id");
+        // en la tabla antigua el usuario_id vacío (NULL) era un evento de catálogo
+        e.setUsuarioId(c.isNull(colDueno) ? Evento.SIN_DUENO : c.getInt(colDueno));
         return e;
     }
 
-    // Busca eventos por nombre y con un mínimo de asistentes
-// empiezaPor = true busca "texto%" si empieza por, y false "%texto%" si aunque sea lo contiene
-    public ArrayList<Evento> buscarEventos(String nombre, boolean empiezaPor, int minAsistentes) {
-        ArrayList<Evento> listaEventos = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String patron = empiezaPor ? nombre + "%" : "%" + nombre + "%";
-        // los ? se rellenan por orden con el array
-        // el primero con el patrón de búsqueda, el segundo con el mínimo de asistentes
-        Cursor c = db.query(TABLA_EVENTOS, null,
-                "nombre LIKE ? AND asistentes >= ? AND usuario_id IS NULL",
-                new String[]{patron, String.valueOf(minAsistentes)},
-                null, null, "nombre COLLATE NOCASE"); //esto es una regla para comparar sin distinguir mayusuclas
-        while (c.moveToNext()) {
-            listaEventos.add(eventoDe(c));
-        }
-        c.close();
-        return listaEventos;
-    }
+    // ---------- USUARIOS ----------
+
     // Comprueba si existe un usuario con ese nombre y clave. Devuelve su id, o -1 si no existe
     public int comprobarLogin(String nombre, String clave) {
         SQLiteDatabase db = getReadableDatabase();
@@ -229,5 +141,34 @@ public class EventosDB extends SQLiteOpenHelper {
         }
         c.close();
         return idUsuario;
+    }
+
+    // ---------- WISHLIST ----------
+
+    // Añade un evento a la lista del usuario. Devuelve false si ya estaba
+    public boolean anadirAWishlist(int usuarioId, int eventoId) {
+        ContentValues valores = new ContentValues();
+        valores.put("usuario_id", usuarioId);
+        valores.put("evento_id", eventoId);
+        // UNIQUE(usuario_id, evento_id): si ya existe, insert no duplica y devuelve -1
+        return getWritableDatabase().insert(TABLA_WISHLIST, null, valores) != -1;
+    }
+
+    // Quita un evento de la lista del usuario
+    public void quitarDeWishlist(int usuarioId, int eventoId) {
+        getWritableDatabase().delete(TABLA_WISHLIST, "usuario_id = ? AND evento_id = ?",
+                new String[]{String.valueOf(usuarioId), String.valueOf(eventoId)});
+    }
+
+    // Ids de los eventos que el usuario tiene en su lista (solo ids, el evento se busca luego en Room)
+    public ArrayList<Integer> obtenerIdsWishlist(int usuarioId) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        Cursor c = getReadableDatabase().query(TABLA_WISHLIST, new String[]{"evento_id"},
+                "usuario_id = ?", new String[]{String.valueOf(usuarioId)}, null, null, "id");
+        while (c.moveToNext()) {
+            ids.add(c.getInt(0)); // columna 0 = evento_id, la única que hemos pedido
+        }
+        c.close();
+        return ids;
     }
 }

@@ -28,7 +28,8 @@ public class InvitacionCorreo extends AppCompatActivity {
 
         btnCompartir.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("Compartir a:"));
+            // "mailto:" hace que solo respondan las apps de correo (con otro texto no se abría ninguna)
+            intent.setData(Uri.parse("mailto:"));
             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{etCorreo.getText().toString().trim()});
             intent.putExtra(Intent.EXTRA_SUBJECT, etAsunto.getText().toString().trim());
             intent.putExtra(Intent.EXTRA_TEXT, etTexto.getText().toString().trim());
@@ -38,6 +39,10 @@ public class InvitacionCorreo extends AppCompatActivity {
                 Toast.makeText(this, "Debe tener una app de correo", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // ATRAS: cierra esta pantalla y vuelve a la reunión
+        Button btnAtras = findViewById(R.id.btnAtrasCorreo);
+        btnAtras.setOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.correo), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
