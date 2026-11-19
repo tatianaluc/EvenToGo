@@ -10,13 +10,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class NuevoEvento extends ActividadConBarra {
+public class NuevoEvento extends AppCompatActivity {
     private int contServicios = 1;
     // Claves de lo que se guarda al girar la pantalla
     private static final String ESTADO_SERVICIOS = "contServicios";
@@ -74,8 +75,8 @@ public class NuevoEvento extends ActividadConBarra {
         adapterLugar.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spLugar.setAdapter(adapterLugar);
 
-        // Los Spinner enseñan los textos traducidos (tipo_evento y lugares), pero en la bd se guarda siempre el valor en
-        // español (tipo_evento_valor y lugares_valor, en la misma posición). Así la portada, que sale del tipo, y las
+        // Los Spinner enseñan los textos traducidos, pero en la bd se guarda siempre el valor en
+        // español. Así la portada, que sale del tipo, y las
         // búsquedas no cambian aunque el móvil esté en otro idioma
         String[] tiposValor = getResources().getStringArray(R.array.tipo_evento_valor);
         String[] lugaresValor = getResources().getStringArray(R.array.lugares_valor);

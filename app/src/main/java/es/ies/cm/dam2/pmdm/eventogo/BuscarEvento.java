@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.Insets;
@@ -21,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscarEvento extends ActividadConBarra {
+public class BuscarEvento extends AppCompatActivity {
 
     // lista con los resultados,como  el adapter la tiene guardada, usamos esta misma opción
     private final ArrayList<Evento> resultados = new ArrayList<>();

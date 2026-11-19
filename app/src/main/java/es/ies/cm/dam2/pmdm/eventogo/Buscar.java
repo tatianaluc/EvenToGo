@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -18,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.Arrays;
 
-public class Buscar extends ActividadConBarra {
+public class Buscar extends AppCompatActivity {
     // Categorías. La posición 0 es un texto que por defecto se utilizará para saber que
     // el usuario no ha elegido nada mientras esté seleccionada.
     // Los textos están en strings y se cargan en onCreate

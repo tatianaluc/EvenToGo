@@ -6,13 +6,14 @@ import android.view.DragEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class AcercaDe extends ActividadConBarra {
+public class AcercaDe extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class AcercaDe extends ActividadConBarra {
             }
             return true;
         });
+
+        // Botón Atrás: finish() cierra esta activity y Android vuelve a la pantalla anterior
+        findViewById(R.id.btnAtrasAcercaDe).setOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.acerca_de), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

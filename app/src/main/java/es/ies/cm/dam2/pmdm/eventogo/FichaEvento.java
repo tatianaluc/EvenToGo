@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,7 +19,7 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 // FICHA del evento
 // recibe el Evento entero (Serializable) en vez de campos sueltos.
 // La abren NuevoEvento y Coleccion.
-public class FichaEvento extends ActividadConBarra {
+public class FichaEvento extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

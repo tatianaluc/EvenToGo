@@ -73,7 +73,7 @@
     <string name="nav_catalogo">Catálogo de eventos</string>
     <string name="nav_lista">Mi lista</string>
     <string name="nav_servicios">Buscar servicios</string>
-    <string name="nav_compartir">Compartir la app</string>
+    <string name="nav_compartir">Compartir evento</string>
     <string name="nav_acerca">Acerca de</string>
     <string name="nav_salir">Cerrar sesión</string>
     <string name="abrir_menu">Abrir menú</string>
@@ -135,7 +135,7 @@
     <string name="mostrar_eventos">Mostrar eventos</string>
     <string name="ocultar_eventos">Ocultar eventos</string>
     <string name="compartir_titulo">Compartir Evento</string>
-    <string name="compartir_instruccion">Escriba nombre y fecha del evento (dd/mm/aaaa)</string>
+    <string name="compartir_instruccion">Elige uno de tus eventos para compartirlo con tus colegas</string>
     <string name="compartir_hint">Concierto para 100 personas en Teatro el 29/11/2026</string>
     <string name="enviar">Enviar</string>
     <string name="confirmar_reunion_titulo">Confirmar Reunión</string>
@@ -293,4 +293,8 @@
         <item>Plasmas de 65\'-86\' + soporte + portátil.</item>
         <item>Pantalla LED 3.5x2.5m + control de video + streaming (opcional)</item>
     </string-array>
+    <string name="compartir_boton">Compartir</string>
+    <string name="compartir_mensaje">Hola, te invito al evento «%1$s» (%2$s). Fecha: %3$s, de %4$s a %5$s. Lugar: %6$s. Asistentes: %7$d. Organizado con EvenToGo.</string>
+    <string name="compartir_sin_eventos">Todavía no tienes eventos para compartir. Añade uno desde Mis eventos.</string>
+    <string name="compartir_chooser">Compartir evento con…</string>
 </resources>

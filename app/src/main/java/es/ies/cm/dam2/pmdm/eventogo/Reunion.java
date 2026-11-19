@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,7 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Reunion extends ActividadConBarra {
+public class Reunion extends AppCompatActivity {
 
     // Clave del extra con el id del evento al que pertenece la reunión
     public static final String EXTRA_EVENTO_ID = "eventoId";
@@ -76,7 +77,7 @@ public class Reunion extends ActividadConBarra {
                                 .getStringExtra(ConfirmarReunion.EXTRA_ASISTENCIA);
                         String nombre = etNomCliente.getText().toString().trim();
 
-                        // Guardamos la reunión en Room (hilo aparte), ligada al evento por su id
+                        // Guardamos la reunión en Room (hilo aparte), conectada al evento por su id
                         if (eventoId != -1) {
                             String fechaReunion = etFechaReu.getText().toString().trim();
                             String modalidad = grpLugar.getCheckedRadioButtonId() == R.id.online ? "Online" : "Oficina";

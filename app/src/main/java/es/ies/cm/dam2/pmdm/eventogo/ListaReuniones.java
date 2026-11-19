@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 // Lista las reuniones de un evento.
 // Pulsación larga sobre una reunión para marcarla como aceptada, cancelada o eliminarla
-public class ListaReuniones extends ActividadConBarra {
+public class ListaReuniones extends AppCompatActivity {
 
     private int eventoId; // el evento del que enseñamos las reuniones (llega por Intent)
     // La lista que tiene guardada el adapter, así que siempre se rellena esta misma

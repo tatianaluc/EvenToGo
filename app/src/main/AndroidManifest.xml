@@ -23,49 +23,41 @@
         <activity
             android:name=".NuevoEvento"
             android:label="@string/registrar_evento_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".FichaEvento"
             android:label="@string/ficha_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Reunion"
             android:label="@string/crear_reunion_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ConfirmarReunion"
             android:label="@string/confirmar_reunion_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".InvitacionCorreo"
             android:label="@string/invitar_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Compartir"
             android:label="@string/compartir_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".AcercaDe"
             android:label="@string/acerca_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Buscar"
             android:label="@string/buscar_servicio_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -75,7 +67,6 @@
         <activity
             android:name=".BuscarEvento"
             android:label="@string/buscar_evento_titulo"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -85,12 +76,10 @@
             <activity
             android:name=".Wishlist"
             android:label="@string/titulo_wishlist"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false" />
             <activity
             android:name=".ListaReuniones"
             android:label="@string/titulo_reuniones"
-            android:theme="@style/Theme.EvenToGo.ConBarra"
             android:exported="false" />
     </application>
 

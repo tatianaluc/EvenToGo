@@ -1,5 +1,6 @@
 package es.ies.cm.dam2.pmdm.eventogo;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -13,7 +14,7 @@ import java.util.List;
 // Lista personal de eventos de cada usuario, se elige un ejemplo del catálogo y se añade a "mi lista".
 // Las consultas a la bd utilizando Room para los eventos y SQLite para la wishlist, van en un hilo aparte
 // y las vistas solo se tocan en el hilo principal
-public class Wishlist extends ActividadConBarra {
+public class Wishlist extends AppCompatActivity {
 
     private int usuarioId;                       // quién ha hecho login
     private EventosDB bd;

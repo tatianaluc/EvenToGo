@@ -245,7 +245,10 @@ public class Coleccion extends AppCompatActivity {
         } else if (id == R.id.nav_buscar) {
             startActivity(new Intent(this, Buscar.class));
         } else if (id == R.id.nav_compartir) {
-            startActivity(new Intent(this, Compartir.class));
+            // pasamos el usuario para que Compartir sepa de quién son los eventos que puede elegir
+            Intent i = new Intent(this, Compartir.class);
+            i.putExtra(Login.EXTRA_USUARIO_ID, usuarioId);
+            startActivity(i);
         } else if (id == R.id.nav_acerca) {
             startActivity(new Intent(this, AcercaDe.class));
         } else if (id == R.id.nav_cambiar_clave) {

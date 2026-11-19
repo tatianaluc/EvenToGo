@@ -8,12 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class InvitacionCorreo extends ActividadConBarra {
+public class InvitacionCorreo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
