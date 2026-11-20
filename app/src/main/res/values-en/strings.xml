@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Traducción al inglés con las mismas claves, mismo orden. Android la usa solo si el móvil está en inglés -->
+<resources>
+    <string name="creado_por">Created by Tatiana De Luca</string>
+    <string name="app_name">EvenToGo</string>
+    <string name="nombre_evento">Event name</string>
+    <string name="acerca_texto">EvenToGo gives you the price of your event, to go, in minutes.\n\nRegister your event, choose the services and confirm a meeting with your project manager.\n\nVersion 1.0\nCreated and developed by Tatiana De Luca\nPMDM project · 2nd year DAM · 2026\n\nRight of admission reserved ©.\n\nPress, hold and drag this text to go back.</string>
+    <string name="num_inv">Number of guests: </string>
+    <string name="save">Save</string>
+    <string name="mas">+</string>
+    <string name="menos">-</string>
+    <string name="btnBack">Back</string>
+    <string name="btnNext">Next</string>
+    <string name="addAv">Include AV in the quote</string>
+    <string name="noAv">Do not include AVs in the quote</string>
+    <string name="ownAv">We bring our own AVs!</string>
+    <string name="welc">Welcome!</string>
+    <string name="cat_eventos">Our events</string>
+    <string name="slogan">The price of your event, to go.\nQuote in minutes</string>
+    <string name="selec">My Events</string>
+    <string name="eventos_registrados">Registered events: %1$d</string>
+    <string name="eventos_encontrados">%1$d events found</string>
+    <string name="titulo_wishlist">My wishlist</string>
+    <string name="anadir_wishlist">Add to my list</string>
+    <string name="ayuda_wishlist">Press and hold an event to remove it from your list</string>
+    <string name="wishlist_atras">Back</string>
+    <string name="wishlist_anadido">Added to your list</string>
+    <string name="wishlist_duplicado">That event is already in your list</string>
+    <string name="wishlist_quitado">Removed from your list</string>
+    <string name="wishlist_sin_usuario">Log in to see your list</string>
+    <string name="opcion_wishlist">My list</string>
+    <string name="ver_reuniones">Meetings</string>
+    <string name="titulo_reuniones">Event meetings</string>
+    <string name="sin_reuniones">This event has no meetings yet</string>
+    <string name="reuniones_atras">Back</string>
+    <string name="reunion_opciones">What do you want to do?</string>
+    <string name="reunion_marcar_aceptada">Mark as accepted</string>
+    <string name="reunion_marcar_cancelada">Mark as canceled</string>
+    <string name="reunion_eliminar">Delete meeting</string>
+    <string name="presupuesto_titulo">Estimated quote</string>
+    <string name="presupuesto_personal">Technical staff (%1$d technicians, 8-hour day): %2$s</string>
+    <string name="presupuesto_extra">Extra hours (%1$d h per technician): %2$s</string>
+    <string name="presupuesto_montaje">Setup and dismantle: %1$s</string>
+    <string name="presupuesto_av">AV equipment: %1$s</string>
+    <string name="presupuesto_solo_personal">No AVs included (flat rate): %1$s</string>
+    <string name="presupuesto_total">TOTAL: %1$s</string>
+    <string name="presupuesto_aviso">Staff hours including setup, event and dismantle. VAT not included.</string>
+    <string-array name="tipo_evento">
+        <item>Select</item>
+        <item>Wedding</item>
+        <item>Corporate</item>
+        <item>Birthday</item>
+        <item>Concert</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="lugares">
+        <item>Select</item>
+        <item>Indoor Event Hall</item>
+        <item>Outdoor Event Area</item>
+        <item>Meeting room</item>
+        <item>Party tent</item>
+        <item>Private venue</item>
+    </string-array>
+    <string name="nav_mis_eventos">My events</string>
+    <string name="nav_anadir">Add event</string>
+    <string name="nav_catalogo">Event catalogue</string>
+    <string name="nav_lista">My list</string>
+    <string name="nav_servicios">Search services</string>
+    <string name="nav_compartir">Share event</string>
+    <string name="nav_acerca">About</string>
+    <string name="nav_salir">Log out</string>
+    <string name="abrir_menu">Open menu</string>
+    <string name="cerrar_menu">Close menu</string>
+    <string name="dialogo_eliminar">Delete</string>
+    <string name="dialogo_cancelar">Cancel</string>
+    <string name="evento_eliminar_titulo">Delete event</string>
+    <string name="evento_eliminar_mensaje">Are you sure you want to delete \"%1$s\"?</string>
+    <string name="evento_eliminado">Event deleted: %1$s</string>
+    <string name="reunion_eliminar_mensaje">Are you sure you want to delete this meeting?</string>
+    <string name="favorito_switch">Favorite</string>
+    <string name="acerca_dato_autora">Author</string>
+    <string name="acerca_valor_autora">Tatiana De Luca</string>
+    <string name="acerca_dato_asignatura">Subject</string>
+    <string name="acerca_valor_asignatura">PMDM</string>
+    <string name="acerca_dato_curso">Course</string>
+    <string name="acerca_valor_curso">2nd year Cross-platform App Development · 2026-27</string>
+    <string name="acerca_dato_version">Version</string>
+    <string name="acerca_valor_version">1.0</string>
+    <string name="campo_obligatorio">Required field</string>
+    <string name="login_crear_cuenta">Create account</string>
+    <string name="cuenta_crear_titulo">Create account</string>
+    <string name="cuenta_cambiar_titulo">Change password</string>
+    <string name="cuenta_usuario">User</string>
+    <string name="cuenta_clave">Password</string>
+    <string name="cuenta_clave_actual">Current password</string>
+    <string name="cuenta_clave_nueva">New password</string>
+    <string name="cuenta_aceptar">Accept</string>
+    <string name="cuenta_creada">Welcome. You can now log in</string>
+    <string name="cuenta_clave_cambiada">Password changed</string>
+    <string name="cuenta_ya_existe">That user already exists</string>
+    <string name="cuenta_clave_incorrecta">Current password is incorrect</string>
+    <string name="cuenta_eliminada">Account deleted</string>
+    <string name="cuenta_eliminar_titulo">Delete my account</string>
+    <string name="cuenta_eliminar_mensaje">All the data from your account will be deleted. Are you sure you want to continue?</string>
+    <string name="nav_cambiar_clave">Change password</string>
+    <string name="nav_borrar_cuenta">Delete my account</string>
+    <string name="acerca_titulo">About EvenToGo</string>
+    <string name="buscar_servicio_titulo">Search services</string>
+    <string name="atras">Back</string>
+    <string name="categoria">Category</string>
+    <string name="servicio">Service</string>
+    <string name="ubicacion">Location</string>
+    <string name="buscar">Search</string>
+    <string name="buscar_evento_titulo">Search event</string>
+    <string name="nombre_del_evento">Event name</string>
+    <string name="hint_parte_nombre">Type part of the name here</string>
+    <string name="empieza_por">Starts with</string>
+    <string name="contiene">Contains</string>
+    <string name="asistentes_minimos">Minimum attendees</string>
+    <string name="hint_min_asistentes">Min. no. of attendees (empty = all)</string>
+    <string name="resultados">Results</string>
+    <string name="anadir_evento">Add event</string>
+    <string name="mostrar_eventos">Show events</string>
+    <string name="ocultar_eventos">Hide events</string>
+    <string name="compartir_titulo">Share event</string>
+    <string name="compartir_instruccion">Pick one of your events to share it with your colleagues</string>
+    <string name="compartir_hint">Concert for 100 people at the Theatre on 29/11/2026</string>
+    <string name="enviar">Send</string>
+    <string name="confirmar_reunion_titulo">Confirm meeting</string>
+    <string name="confirmar_reunion_pregunta">Do you want to confirm the meeting with the Project Manager?</string>
+    <string name="cancelar">Cancel</string>
+    <string name="aceptar">Accept</string>
+    <string name="ficha_titulo">Registration form</string>
+    <string name="siguiente">Next</string>
+    <string name="portada_evento">Event cover</string>
+    <string name="complejidad">Complexity (based on services)</string>
+    <string name="invitar_titulo">Invite</string>
+    <string name="destinatario">Recipient</string>
+    <string name="hint_correo">email@mail.com</string>
+    <string name="asunto">Subject</string>
+    <string name="hint_asunto">Write the subject...</string>
+    <string name="mensaje">Message</string>
+    <string name="hint_cuerpo">Write the body of the message...</string>
+    <string name="compartir_invitacion">Share invitation</string>
+    <string name="login_titulo">Sign in</string>
+    <string name="hint_usuario">Type your username</string>
+    <string name="hint_clave">Type your password</string>
+    <string name="entrar">Enter</string>
+    <string name="logo_descripcion">EvenToGo logo</string>
+    <string name="bienvenida">Welcome to\nEvenToGo</string>
+    <string name="descubre_web">Discover our website</string>
+    <string name="suelta_aqui">Drop \'About\' here</string>
+    <string name="registrar_evento_titulo">Register event</string>
+    <string name="hint_nombre_evento">Type the name of the event here</string>
+    <string name="fecha_evento">Event date</string>
+    <string name="hint_fecha">dd/mm/yyyy</string>
+    <string name="tipo_evento_label">Event type</string>
+    <string name="cliente_empresa">Client/Company</string>
+    <string name="hint_cliente_empresa">Organizing client/company</string>
+    <string name="num_asistentes">Number of attendees</string>
+    <string name="hint_asistentes">No. of attendees (max. 300)</string>
+    <string name="num_servicios">No. of services (1-10)</string>
+    <string name="quiero_av">Yes! I want to include AV in the quote</string>
+    <string name="incluir_avs">Include AV</string>
+    <string name="no_incluir">Do not include</string>
+    <string name="traemos_avs">We bring our own AV</string>
+    <string name="hora_inicio">Start time</string>
+    <string name="hint_hora">HH:mm</string>
+    <string name="hora_fin">End time</string>
+    <string name="lugar_evento">Event venue</string>
+    <string name="reset">Reset</string>
+    <string name="crear_reunion_titulo">Create meeting</string>
+    <string name="confirmar">Confirm</string>
+    <string name="cliente_encargado">Name of the client or sales rep in charge</string>
+    <string name="hint_nombre_apellido">First and last name</string>
+    <string name="fecha_reunion">Meeting date</string>
+    <string name="lugar">Place</string>
+    <string name="online">Online</string>
+    <string name="oficina">Office</string>
+    <string name="invitar_reunion">Invite to the meeting</string>
+    <string name="ordenar_nombre">Sort by name</string>
+    <string name="editar">Edit</string>
+    <string name="eliminar">Delete</string>
+    <string name="evento_actualizado">Event updated: %1$s</string>
+    <string name="evento_anadido">Event added: %1$s</string>
+    <string name="eventos_ordenados">Events sorted by name</string>
+    <string name="n_asistentes">%1$d attendees</string>
+    <string name="login_error">Incorrect username or password</string>
+    <string name="login_ok">Signed in as %1$s</string>
+    <string name="sin_avs">No AV.</string>
+    <string name="elige_fecha">Choose a date</string>
+    <string name="elige_hora_inicio">Choose the start time</string>
+    <string name="elige_hora_fin">Choose the end time</string>
+    <string name="hora_fin_igual">The end time cannot be the same as the start time</string>
+    <string name="datos_incorrectos">Invalid data</string>
+    <string name="rango_asistentes">min. 5 and max. 300</string>
+    <string name="escoja_fecha">Choose a date.</string>
+    <string name="debe_seleccionar">You must select an option.</string>
+    <string name="completar_campos">You must fill in the fields\nbefore confirming the meeting</string>
+    <string name="reunion_confirmada">All right %1$s, you have %2$s the meeting with the project manager.</string>
+    <string name="estado_aceptado">ACCEPTED</string>
+    <string name="estado_cancelado">CANCELED</string>
+    <string name="sin_app_correo">You need an email app</string>
+    <string name="buscar_toast">%1$s (%2$s)\n%3$s\nLocation: %4$s</string>
+    <string name="reunion_texto">%1$s - %2$s\nClient: %3$s - %4$s</string>
+    <string name="evento_resumen">%1$s (%2$s)\nClient: %3$s - %4$d attendees\nDate: %5$s (%6$s - %7$s) - %8$d services - %9$d hours\nVenue: %10$s</string>
+    <string name="ficha_nombre">Event name: %1$s</string>
+    <string name="ficha_fecha">Event date: %1$s</string>
+    <string name="ficha_tipo">Event type: %1$s</string>
+    <string name="ficha_cliente">Client/company name: %1$s</string>
+    <string name="ficha_asistentes">Number of attendees: %1$d</string>
+    <string name="ficha_servicios">Number of services: %1$d</string>
+    <string name="ficha_duracion">Duration: %1$d hours</string>
+    <string name="ficha_av">Include AV in quote: %1$s</string>
+    <string name="ficha_horario">Schedule: %1$s - %2$s</string>
+    <string name="ficha_lugar">Venue: %1$s</string>
+    <string name="respuesta_si">Yes</string>
+    <string name="respuesta_no">No</string>
+    <string-array name="buscar_categorias">
+        <item>Select category</item>
+        <item>Sound</item>
+        <item>Lighting</item>
+        <item>Video</item>
+    </string-array>
+    <string-array name="buscar_servicios_0">
+        <item>Select service</item>
+    </string-array>
+    <string-array name="buscar_servicios_1">
+        <item>Select service</item>
+        <item>0-50 people</item>
+        <item>50-90 people</item>
+        <item>90+ people</item>
+    </string-array>
+    <string-array name="buscar_servicios_2">
+        <item>Select service</item>
+        <item>Basic pack</item>
+        <item>Intermediate pack</item>
+        <item>Complete pack</item>
+    </string-array>
+    <string-array name="buscar_servicios_3">
+        <item>Select service</item>
+        <item>Projector</item>
+        <item>Plasma screens</item>
+        <item>LED screen + streaming</item>
+    </string-array>
+    <string-array name="buscar_caract_0">
+        <item></item>
+    </string-array>
+    <string-array name="buscar_caract_1">
+        <item></item>
+        <item>2 speakers + 1/2 wired microphones + analog mixing desk.</item>
+        <item>4 speakers + 1/2 wired/wireless microphones + digital mixing desk.</item>
+        <item>6 speakers + up to 4 wireless microphones + digital mixing desk.</item>
+    </string-array>
+    <string-array name="buscar_caract_2">
+        <item></item>
+        <item>8 LED ambient lights.</item>
+        <item>10 LED ambient lights + 2 moving heads + console.</item>
+        <item>16 LED ambient lights + 4 moving heads + 2 front stage lights + console.</item>
+    </string-array>
+    <string-array name="buscar_caract_3">
+        <item></item>
+        <item>5000-lumen projector + 3x2.20m screen + laptop.</item>
+        <item>65\'-86\' plasma screens + stand + laptop.</item>
+        <item>3.5x2.5m LED screen + video control + streaming (optional)</item>
+    </string-array>
+    <string name="compartir_boton">Share</string>
+    <string name="compartir_mensaje">Hi, you are invited to the event «%1$s» (%2$s). Date: %3$s, from %4$s to %5$s. Place: %6$s. Guests: %7$d. Organised with EvenToGo.</string>
+    <string name="compartir_sin_eventos">You have no events to share yet. Add one from My events.</string>
+    <string name="compartir_chooser">Share event with…</string>
+</resources>
